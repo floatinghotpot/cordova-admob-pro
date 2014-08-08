@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	id="com.google.cordova.admob"
+	version="1.0.0">
+      
+    <name>AdMob Plugin Pro</name>
+	<description>Best AdMob plugin for PhoneGap and Cordova, latest SDK for iOS and Android with Google Play Services. Most Flexible. Any size, Any position.</description>
+	<author>Liming Xie</author>
+	<license>MIT</license>
+	<keywords>ad,admob,google,play,services,iad,flurry</keywords>
+    <repo>https://github.com/floatinghotpot/cordova-admob-pro.git</repo>
+    <issue>https://github.com/floatinghotpot/cordova-admob-pro/issues</issue>
+
+	<engines>
+	    <engine name="cordova" version=">=2.9" />
+	</engines>
+
+    <js-module src="www/AdMob.js" name="AdMob">
+        <clobbers target="window.AdMob" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="AdMob">
+                <param name="android-package" value="com.google.cordova.AdMob"/>
+            </feature>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <meta-data android:name="com.google.android.gms.version"
+                android:value="@integer/google_play_services_version"/>
+        </config-file>
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
+			    android:name="com.google.android.gms.ads.AdActivity" 
+			    android:theme="@android:style/Theme.Translucent" />
+          </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+			<uses-permission android:name="android.permission.INTERNET"/>
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+          </config-file>
+          
+        <source-file src="src/android/google-play-services-admob.jar" target-dir="libs" />
+    	<source-file src="src/android/version.xml" target-dir="res/values" />
+     </platform>
+     
+     <!-- ios -->
+     <platform name="ios">
+         <config-file target="config.xml" parent="/*">
+             <feature name="AdMob">
+                 <param name="ios-package" value="CDVAdMob" />
+             </feature>
+         </config-file>
+         <header-file src="src/ios/CDVAdMob.h" />
+         <source-file src="src/ios/CDVAdMob.m" />
+         <framework src="src/ios/AdMobAds.framework" custom="true"/>
+        <framework src="StoreKit.framework"/>
+        <framework src="AdSupport.framework"/>
+        <framework src="MessageUI.framework"/>
+        <framework src="AVFoundation.framework"/>
+        <framework src="Foundation.framework"/>
+        <framework src="UIKit.framework"/>
+        <framework src="CoreGraphics.framework"/>
+        <framework src="SystemConfiguration.framework"/>
+        <framework src="AudioToolbox.framework"/>
+	</platform>
+
+</plugin>

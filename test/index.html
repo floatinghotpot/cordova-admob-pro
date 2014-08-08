@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+        <title>Hello World</title>
+        <script type="text/javascript" src="cordova.js"></script>
+        <style type="text/css">
+            html, body { width:100%; height:100%; margin:0; padding:0; overflow:hidden; background-color:white; }
+            div#fullpage { width:100%; height:100%; margin:0; padding:0; border:0px solid red; text-align:center; vertical-align:middle; }
+            button { font-size: 18px; }
+            </style>
+    </head>
+    <body onload="onDocLoad()">
+        <script>
+        function onDocLoad() {
+            if(( /(ipad|iphone|ipod|android)/i.test(navigator.userAgent) )) {
+                document.addEventListener('deviceready', initApp, false);
+            } else {
+                initApp();
+            }
+        }
+    
+        var ad_units = {
+                ios : {
+                    banner: 'ca-app-pub-6869992474017983/4806197152',
+                    interstitial: 'ca-app-pub-6869992474017983/7563979554'
+                },
+                android : {
+                    banner: 'ca-app-pub-6869992474017983/9375997553',
+                    interstitial: 'ca-app-pub-6869992474017983/1657046752'
+                }
+            };
+        var admobid = ( /(android)/i.test(navigator.userAgent) ) ? ad_units.android : ad_units.ios;
+        
+        function initApp() {
+        	if (! AdMob ) { alert( 'admob plugin not ready' ); return; }
+        	
+            initAd();
+            
+            // display the banner at startup
+            AdMob.createBanner( admobid.banner );
+        }
+        function initAd(){
+            var defaultOptions = {
+                    // publisherId: admobid.banner,
+                    // interstitialAdId: admobid.interstitial,
+                    // adSize: 'SMART_BANNER',
+                    // width: integer, // valid when set adSize 'CUSTOM'
+                    // height: integer, // valid when set adSize 'CUSTOM'
+                    // position: AdMob.AD_POSITION.BOTTOM_CENTER,
+                    // x: integer,		// valid when set position to 0 / POS_XY
+                    // y: integer,		// valid when set position to 0 / POS_XY
+                    // isTesting: false, // set to true, to receiving test ad for testing purpose
+                    // autoShow: true // auto show interstitial ad when loaded, set to false if prepare/show
+                    };
+            AdMob.setOptions( defaultOptions );
+            registerAdEvents();
+        }
+        // optional, in case respond to events or handle error
+        function registerAdEvents() {
+            document.addEventListener('onBannerFailedToReceive', function(data){
+            	alert('error: ' + data.error + ', reason: ' + data.reason);
+            });
+            document.addEventListener('onBannerReceive', function(){});
+            document.addEventListener('onBannerPresent', function(){});
+            document.addEventListener('onBannerLeaveApp', function(){});
+            document.addEventListener('onBannerDismiss', function(){});
+            
+            document.addEventListener('onInterstitialFailedToReceive', function(data){
+            	alert('error: ' + data.error + ', reason: ' + data.reason);
+            });
+            document.addEventListener('onInterstitialReceive', function(){});
+            document.addEventListener('onInterstitialPresent', function(){});
+            document.addEventListener('onInterstitialLeaveApp', function(){});
+            document.addEventListener('onInterstitialDismiss', function(){});
+        }
+        
+        // click button to call following functions
+        function getSelectedAdSize() {
+            var i = document.getElementById("adSize").selectedIndex;
+            var items = document.getElementById("adSize").options;
+            return items[i].value;
+        }
+        function getSelectedPosition() {
+            var i = document.getElementById("adPosition").selectedIndex;
+            var items = document.getElementById("adPosition").options;
+            return parseInt( items[i].value );
+        }
+        function createSelectedBanner() {
+            AdMob.setOptions( {adSize: getSelectedAdSize(), position:getSelectedPosition()} );
+            AdMob.createBanner( admobid.banner );
+        }
+        function createBannerOfGivenSize() {
+            var w = document.getElementById('w').value;
+            var h = document.getElementById('h').value;
+            
+            AdMob.setOptions( {adSize:'CUSTOM', width:w, height:h, position:getSelectedPosition()} );
+            AdMob.createBanner( admobid.banner );
+        }
+        function showBannerAtSelectedPosition() {
+            AdMob.showBanner( getSelectedPosition() );
+        }
+        function showBannerAtGivenXY() {
+            var x = document.getElementById('x').value;
+            var y = document.getElementById('y').value;
+            AdMob.showBannerAtXY(x, y);
+        }
+        function prepareInterstitial() {
+            var autoshow = document.getElementById('autoshow').checked;
+            AdMob.setOptions({autoShow: autoshow});
+            AdMob.prepareInterstitial(admobid.interstitial);
+        }
+        </script>
+        <div id="fullpage">
+            <p>Demo for AdMob Plugin</p>
+            <p>Banner</p>
+            Standard Size<select id="adSize">
+                <option value='BANNER'>BANNER</option>
+                <option value='SMART_BANNER'>SMART_BANNER</option>
+                <option value='MEDIUM_RECTANGLE'>MEDIUM_RECTANGLE</option>
+                <option value='FULL_BANNER'>FULL_BANNER</option>
+                <option value='LEADERBOARD'>LEADERBOARD</option>
+                <option value='SKYSCRAPER'>SKYSCRAPER</option>
+            </select><button onclick="createSelectedBanner();">create</button><br/>
+            
+            Custom Size: (<input id='w' type='text' size=3/> x <input id='h' type='text' size=3>)
+                <button onclick="createBannerOfGivenSize();">create</button><br/>
+                
+                <button onclick="AdMob.removeBanner();">remove banner</button>
+                
+                <hr/>
+                <button onclick="showBannerAtSelectedPosition();">show At</button>: <select id="adPosition">
+                    <option value='1'>Top Left</option>
+                    <option value='2'>Top Center</option>
+                    <option value='3'>Top Right</option>
+                    <option value='4'>Left</option>
+                    <option value='5'>Center</option>
+                    <option value='6'>Right</option>
+                    <option value='7'>Bottom Left</option>
+                    <option value='8'>Bottom Center</option>
+                    <option value='9'>Bottom Right</option>
+                </select><br/>
+                
+                <button onclick="showBannerAtGivenXY();">show At XY</button>(<input id='x' type='text' size=3/>,<input id='y' type='text' size=3>)<br/>
+                
+                    <button onclick="AdMob.hideBanner();">hide banner</button>
+                    <hr/>
+                    
+                    <p>Interstitial</p>
+                    <input type='checkbox' id='autoshow' checked/>auto show when ready<br/>
+                    <button onclick="prepareInterstitial();">Prepare</button>
+                    <br/>
+                    
+                    <button onclick="AdMob.showInterstitial();">Show</button>
+                    </div>
+        
+    </body>
+</html>
