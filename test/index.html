@@ -7,14 +7,14 @@
         <title>Hello World</title>
         <script type="text/javascript" src="cordova.js"></script>
         <style type="text/css">
-            html, body { width:100%; height:100%; margin:0; padding:0; overflow:hidden; background-color:white; }
+            html, body { width:100%; height:100%; margin:0; padding:0; overflow:hidden; background-color:gray; color:white; text-shadow:1px 1px 2px black; }
             div#fullpage { width:100%; height:100%; margin:0; padding:0; border:0px solid red; text-align:center; vertical-align:middle; }
             button { font-size: 18px; }
             </style>
     </head>
-    <body onload="onDocLoad()">
+    <body onload="onLoad()">
         <script>
-        function onDocLoad() {
+        function onLoad() {
             if(( /(ipad|iphone|ipod|android)/i.test(navigator.userAgent) )) {
                 document.addEventListener('deviceready', initApp, false);
             } else {
@@ -52,7 +52,7 @@
                     // position: AdMob.AD_POSITION.BOTTOM_CENTER,
                     // x: integer,		// valid when set position to 0 / POS_XY
                     // y: integer,		// valid when set position to 0 / POS_XY
-                    // isTesting: false, // set to true, to receiving test ad for testing purpose
+                    isTesting: false, // set to true, to receiving test ad for testing purpose
                     // autoShow: true // auto show interstitial ad when loaded, set to false if prepare/show
                     };
             AdMob.setOptions( defaultOptions );
@@ -89,15 +89,15 @@
             return parseInt( items[i].value );
         }
         function createSelectedBanner() {
-            AdMob.setOptions( {adSize: getSelectedAdSize(), position:getSelectedPosition()} );
-            AdMob.createBanner( admobid.banner );
+            AdMob.createBanner( {adId:admobid.banner, adSize: getSelectedAdSize(), position:getSelectedPosition()} );
         }
         function createBannerOfGivenSize() {
             var w = document.getElementById('w').value;
             var h = document.getElementById('h').value;
             
-            AdMob.setOptions( {adSize:'CUSTOM', width:w, height:h, position:getSelectedPosition()} );
-            AdMob.createBanner( admobid.banner );
+            AdMob.createBanner( {adId:admobid.banner, 
+            	adSize:'CUSTOM', width:w, height:h, 
+            	position:getSelectedPosition()} );
         }
         function showBannerAtSelectedPosition() {
             AdMob.showBanner( getSelectedPosition() );
@@ -109,16 +109,15 @@
         }
         function prepareInterstitial() {
             var autoshow = document.getElementById('autoshow').checked;
-            AdMob.setOptions({autoShow: autoshow});
-            AdMob.prepareInterstitial(admobid.interstitial);
+            AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:autoshow});
         }
         </script>
         <div id="fullpage">
             <p>Demo for AdMob Plugin</p>
-            <p>Banner</p>
-            Standard Size<select id="adSize">
-                <option value='BANNER'>BANNER</option>
+            Banner<br/>
+            Standard: <select id="adSize">
                 <option value='SMART_BANNER'>SMART_BANNER</option>
+                <option value='BANNER'>BANNER</option>
                 <option value='MEDIUM_RECTANGLE'>MEDIUM_RECTANGLE</option>
                 <option value='FULL_BANNER'>FULL_BANNER</option>
                 <option value='LEADERBOARD'>LEADERBOARD</option>
@@ -131,9 +130,9 @@
                 <button onclick="AdMob.removeBanner();">remove banner</button>
                 
                 <hr/>
-                <button onclick="showBannerAtSelectedPosition();">show At</button>: <select id="adPosition">
+                <select id="adPosition">
                     <option value='1'>Top Left</option>
-                    <option value='2'>Top Center</option>
+                    <option value='2' selected>Top Center</option>
                     <option value='3'>Top Right</option>
                     <option value='4'>Left</option>
                     <option value='5'>Center</option>
@@ -141,9 +140,10 @@
                     <option value='7'>Bottom Left</option>
                     <option value='8'>Bottom Center</option>
                     <option value='9'>Bottom Right</option>
-                </select><br/>
+                </select><button onclick="showBannerAtSelectedPosition();">show</button><br/>
                 
-                <button onclick="showBannerAtGivenXY();">show At XY</button>(<input id='x' type='text' size=3/>,<input id='y' type='text' size=3>)<br/>
+                (<input id='x' type='text' size=3/>,<input id='y' type='text' size=3>)
+                    <button onclick="showBannerAtGivenXY();">show At XY</button><br/>
                 
                     <button onclick="AdMob.hideBanner();">hide banner</button>
                     <hr/>
@@ -151,8 +151,6 @@
                     <p>Interstitial</p>
                     <input type='checkbox' id='autoshow' checked/>auto show when ready<br/>
                     <button onclick="prepareInterstitial();">Prepare</button>
-                    <br/>
-                    
                     <button onclick="AdMob.showInterstitial();">Show</button>
                     </div>
         

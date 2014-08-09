@@ -23,13 +23,13 @@ APIs:
 ```javascript
 setOptions(options, success, fail);
 
-createBanner(adId, success, fail);
+createBanner(adId/options, success, fail);
 removeBanner();
 showBanner(position, success, fail);
 showBannerAtXY(x, y, success, fail);
 hideBanner();
 
-prepareInterstitial(adId, success, fail);
+prepareInterstitial(adId/options, success, fail);
 showInterstitialAd();
 isInterstitialReady(callback);
 ```
@@ -147,17 +147,21 @@ See the working example code in [demo under test folder](test/index.html).
  
 ## Screenshots (banner Ad / interstitial Ad) ##
 
-iPhone:
+iPhone, banner / medium rect:
 
-![ScreenShot](admob-iphone.jpg)
+![ScreenShot](iphone.jpg)
+![ScreenShot](medium_rect.jpg)
 
-iPad, landscape:
+iPad, medium rect / skyscrapter / interstitial / any position:
 
-![ScreenShot](admob-ipad-landscape.jpg)
+![ScreenShot](ipad_rect.jpg)
+![ScreenShot](ipad_skyscraper.jpg)
+![ScreenShot](ipad_interstitial.jpg)
+![ScreenShot](any_position.jpg)
 
 Android:
 
-![ScreenShot](admob-android.jpg)
+![ScreenShot](android.jpg)
 
 
 ## Credit ##

@@ -51,8 +51,20 @@ admobExport.setOptions = function(options, successCallback, failureCallback) {
 	  }
 	};
 
-admobExport.createBanner = function(adId, successCallback, failureCallback) {
-	  cordova.exec( successCallback, failureCallback, 'AdMob', 'createBanner', [adId] );
+admobExport.createBanner = function(args, successCallback, failureCallback) {
+	var options = {};
+	if(typeof args === 'object') {
+		for(var k in args) {
+			if(k === 'success') { if(args[k] === 'function') successCallback = args[k]; }
+			else if(k === 'fail') { if(args[k] === 'function') failureCallback = args[k]; }
+			else {
+				options[k] = args[k];
+			}
+		}
+	} else if(typeof args === 'string') {
+		options = { adId: args };
+	}
+	cordova.exec( successCallback, failureCallback, 'AdMob', 'createBanner', [ options ] );
 };
 
 admobExport.removeBanner = function(successCallback, failureCallback) {
@@ -68,11 +80,23 @@ admobExport.showBanner = function(position, successCallback, failureCallback) {
 };
 
 admobExport.showBannerAtXY = function(x, y, successCallback, failureCallback) {
-	cordova.exec( successCallback, failureCallback, 'AdMob', 'removeBanner', [{x:x, y:y}] );
+	cordova.exec( successCallback, failureCallback, 'AdMob', 'showBannerAtXY', [{x:x, y:y}] );
 };
 
-admobExport.prepareInterstitial = function(adId, successCallback, failureCallback) {
-	  cordova.exec( successCallback, failureCallback, 'AdMob', 'prepareInterstitial', [adId] );
+admobExport.prepareInterstitial = function(args, successCallback, failureCallback) {
+	var options = {};
+	if(typeof args === 'object') {
+		for(var k in args) {
+			if(k === 'success') { if(args[k] === 'function') successCallback = args[k]; }
+			else if(k === 'fail') { if(args[k] === 'function') failureCallback = args[k]; }
+			else {
+				options[k] = args[k];
+			}
+		}
+	} else if(typeof args === 'string') {
+		options = { adId: args };
+	}
+	cordova.exec( successCallback, failureCallback, 'AdMob', 'prepareInterstitial', [ args ] );
 };
 
 admobExport.showInterstitial = function(successCallback, failureCallback) {

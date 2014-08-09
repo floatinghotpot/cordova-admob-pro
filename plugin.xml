@@ -25,7 +25,7 @@
     <platform name="android">
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="AdMob">
-                <param name="android-package" value="com.google.cordova.AdMob"/>
+                <param name="android-package" value="com.google.cordova.admob.AdMob"/>
             </feature>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/manifest/application">

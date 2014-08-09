@@ -51,7 +51,12 @@
     NSLog(@"createBanner");
 
     if([command.arguments count] > 0) {
-        NSString* adId = [command argumentAtIndex:0];
+        NSDictionary* options = [command argumentAtIndex:0 withDefault:[NSNull null]];
+        if([options count] > 1) {
+            [_admobApi setOptions:options];
+        }
+        
+        NSString* adId = [options objectForKey:@"adId"];
         [_admobApi createBanner:adId];
         
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
@@ -101,7 +106,12 @@
     NSLog(@"prepareInterstitial");
     
     if([command.arguments count] > 0) {
-        NSString* adId = [command argumentAtIndex:0];
+        NSDictionary* options = [command argumentAtIndex:0 withDefault:[NSNull null]];
+        if([options count] > 1) {
+            [_admobApi setOptions:options];
+        }
+        
+        NSString* adId = [options objectForKey:@"adId"];
         [_admobApi prepareInterstitial:adId];
         
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
