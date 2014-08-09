@@ -42,7 +42,8 @@
 			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
           </config-file>
           
-        <source-file src="src/android/google-play-services-admob.jar" target-dir="libs" />
+        <source-file src="src/android/google-play-services.jar" target-dir="libs" />
+        <source-file src="src/android/cordova-admob.jar" target-dir="libs" />
     	<source-file src="src/android/version.xml" target-dir="res/values" />
      </platform>
      
