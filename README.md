@@ -149,19 +149,19 @@ See the working example code in [demo under test folder](test/index.html).
 
 iPhone, banner / medium rect:
 
-![ScreenShot](iphone.jpg)
-![ScreenShot](medium_rect.jpg)
+![ScreenShot](demo/iphone.jpg)
+![ScreenShot](demo/medium_rect.jpg)
 
 iPad, medium rect / skyscrapter / interstitial / any position:
 
-![ScreenShot](ipad_rect.jpg)
-![ScreenShot](ipad_skyscraper.jpg)
-![ScreenShot](ipad_interstitial.jpg)
-![ScreenShot](any_position.jpg)
+![ScreenShot](demo/ipad_rect.jpg)
+![ScreenShot](demo/ipad_skyscraper.jpg)
+![ScreenShot](demo/ipad_interstitial.jpg)
+![ScreenShot](demo/any_position.jpg)
 
 Android:
 
-![ScreenShot](android.jpg)
+![ScreenShot](demo/android.jpg)
 
 
 ## Credit ##
