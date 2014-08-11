@@ -14,7 +14,7 @@ admobExport.AD_SIZE = {
 };
 
 admobExport.AD_POSITION = {
-  POS_XY: 0,
+  NO_CHANGE: 0,
   TOP_LEFT: 1,
   TOP_CENTER: 2,
   TOP_RIGHT: 3,
@@ -23,7 +23,8 @@ admobExport.AD_POSITION = {
   RIGHT: 6,
   BOTTOM_LEFT: 7,
   BOTTOM_CENTER: 8,
-  BOTTOM_RIGHT: 9
+  BOTTOM_RIGHT: 9,
+  POS_XY: 10
 };
 
 /*
@@ -76,10 +77,13 @@ admobExport.hideBanner = function(successCallback, failureCallback) {
 };
 
 admobExport.showBanner = function(position, successCallback, failureCallback) {
+	if(typeof position === 'undefined') position = 0;
 	cordova.exec( successCallback, failureCallback, 'AdMob', 'showBanner', [ position ] );
 };
 
 admobExport.showBannerAtXY = function(x, y, successCallback, failureCallback) {
+	if(typeof x === 'undefined') x = 0;
+	if(typeof y === 'undefined') y = 0;
 	cordova.exec( successCallback, failureCallback, 'AdMob', 'showBannerAtXY', [{x:x, y:y}] );
 };
 

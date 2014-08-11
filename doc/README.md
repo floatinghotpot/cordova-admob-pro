@@ -102,7 +102,7 @@ AdMob.isInterstitialReady(callback);
 key/value for param **options**:
 - **bannerId**, *string*, set the default Ad unit Id for banner, like 'ca-app-pub-xxx/xxx'
 - **interstitialId**, *string*, set the defualt Ad unit Id for interstitial, like 'ca-app-pub-xxx/xxx'
-- **adSize**, *string*, banner Ad size, it can be: (see the screenshots for effects)
+- **adSize**, *string*, banner Ad size, Default:'SMART_BANNER'. it can be: (see the screenshots for effects)
 ```javascript
 'SMART_BANNER', // recommended. auto fit the screen width, auto decide the banner height
 'BANNER', 
@@ -112,11 +112,11 @@ key/value for param **options**:
 'SKYSCRAPER', 
 'CUSTOM', // custom banner size with given width and height, see param 'width' and 'height'
 ```
-- **width**, *integer*, banner width if set adSize:'CUSTOM'
-- **height**, *integer*, banner height if set adSize:'CUSTOM'
-- **position**, *integer*, position of banner Ad, it can be: 
+- **width**, *integer*, banner width if set adSize:'CUSTOM'. Default: 0
+- **height**, *integer*, banner height if set adSize:'CUSTOM'. Default: 0
+- **position**, *integer*, position of banner Ad, Default:TOP_CENTER. Value can be one of: 
 ```javascript
-AdMob.AD_POSITION.POS_XY 		= 0, // use the given X and Y, see params 'x' and 'y'
+AdMob.AD_POSITION.NO_CHANGE  	= 0,
 AdMob.AD_POSITION.TOP_LEFT 		= 1,
 AdMob.AD_POSITION.TOP_CENTER 	= 2,
 AdMob.AD_POSITION.TOP_RIGHT 	= 3,
@@ -126,11 +126,24 @@ AdMob.AD_POSITION.RIGHT 		= 6,
 AdMob.AD_POSITION.BOTTOM_LEFT 	= 7,
 AdMob.AD_POSITION.BOTTOM_RIGHT 	= 8,
 AdMob.AD_POSITION.BOTTOM_RIGHT 	= 9,
+AdMob.AD_POSITION.POS_XY 		= 10, // use the given X and Y, see params 'x' and 'y'
 ```
-- **x**, *integer*, x in pixels. Valid when position:0 or AdMob.AD_POSITION.POS_XY
-- **y**, *integer*, y in pixels. Valid when position:0 or AdMob.AD_POSITION.POS_XY
+- **x**, *integer*, x in pixels. Valid when position:0 or AdMob.AD_POSITION.POS_XY. Default: 0
+- **y**, *integer*, y in pixels. Valid when position:0 or AdMob.AD_POSITION.POS_XY. Default: 0
 - **isTesting**, *boolean*, set to true, to receiving test ad for testing purpose
 - **autoShow**, *boolean*, auto show interstitial ad when loaded, set to false if hope to control the show timing with prepareInterstitial/showInterstitial
+- **orientationRenew**, *boolean*, re-create the banner on web view orientation change (not screen orientation), or else just move the banner. Default:true.
+- **adExtras**, *json object*, set extra color style for Ad.
+```javascript
+{
+	color_bg: 'AAAAFF',
+	color_bg_top: 'FFFFFF',
+	color_border: 'FFFFFF',
+	color_link: '000080',
+	color_text: '808080',
+	color_url: '008000'
+}
+```
 
 Example Code:
 ```javascript
@@ -291,6 +304,29 @@ AdMob.createBanner({
 - 'onInterstitialDismiss'
 
 They are quite similiar to the events of banner Ad.
+
+## Notice for Android Proguard ##
+
+To prevent ProGuard from stripping away required classes, add the following lines in the <project_directory>/platform/android/proguard-project.txt file:
+
+```
+-keep class * extends java.util.ListResourceBundle {
+    protected Object[][] getContents();
+}
+
+-keep public class com.google.android.gms.common.internal.safeparcel.SafeParcelable {
+    public static final *** NULL;
+}
+
+-keepnames @com.google.android.gms.common.annotation.KeepName class *
+-keepclassmembernames class * {
+    @com.google.android.gms.common.annotation.KeepName *;
+}
+
+-keepnames class * implements android.os.Parcelable {
+    public static final ** CREATOR;
+}
+```
 
 ## Credit ##
 

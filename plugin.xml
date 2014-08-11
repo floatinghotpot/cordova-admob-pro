@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.google.cordova.admob"
-	version="1.0.0">
+	version="1.0.1">
       
     <name>AdMob Plugin Pro</name>
 	<description>Best AdMob plugin for PhoneGap and Cordova, latest SDK for iOS and Android with Google Play Services. Most Flexible. Any size, Any position.</description>

@@ -24,8 +24,10 @@
 #define OPT_AUTO_SHOW       @"autoShow"
 #define OPT_AD_EXTRAS       @"adExtras"
 
+#define OPT_ORIENTATION_RENEW   @"orientationRenew"
+
 enum {
-    POS_XY              = 0,
+    POS_NO_CHANGE       = 0,
     POS_TOP_LEFT        = 1,
     POS_TOP_CENTER      = 2,
     POS_TOP_RIGHT       = 3,
@@ -34,7 +36,8 @@ enum {
     POS_RIGHT           = 6,
     POS_BOTTOM_LEFT     = 7,
     POS_BOTTOM_CENTER   = 8,
-    POS_BOTTOM_RIGHT    = 9
+    POS_BOTTOM_RIGHT    = 9,
+    POS_XY              = 10
 };
 
 @protocol AdMobEventDelegate <NSObject>
