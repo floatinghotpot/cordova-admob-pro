@@ -18,8 +18,10 @@ cordova plugin add com.google.cordova.admob
 ```
 
 ## Quick Start Example Code ##
+
+>Step 1: Prepare your AdMob Ad Unit Id for your banner and interstitial
+
 ```javascript
-// create your ad Id from admob for banner and interstitial
 var ad_units = {
 	ios : {
 		banner: 'ca-app-pub-6869992474017983/4806197152',
@@ -32,15 +34,24 @@ var ad_units = {
 };
 // select the right Ad Id according to platform
 var admobid = ( /(android)/i.test(navigator.userAgent) ) ? ad_units.android : ad_units.ios;
+```
+
+> Step 2: Create a banner with single line of javascript
+
+```javascript
 // it will display smart banner at top center, using the default options
 if(AdMob) AdMob.createBanner( admobid.banner );
 ```
 
-## API Reference ##
-Read the detailed [API Reference Documentation](https://github.com/floatinghotpot/cordova-admob-pro/tree/master/doc).
+> Step 3: Prepare an interstitial, and show it when needed
 
-## Complex Example Code ##
-Check the [test/index.html] (https://github.com/floatinghotpot/cordova-admob-pro/blob/master/test/index.html).
+```javascript
+// preppare and load ad resource in background, e.g. at begining of game level
+if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
+
+// show the interstitial later, e.g. at end of game level
+if(AdMob) AdMob.showInterstitial();
+```
 
 ## Javascript API Overview ##
 
@@ -59,36 +70,11 @@ prepareInterstitial(adId/options, success, fail);
 showInterstitial();
 isInterstitialReady(callback);
 ```
+## Detailed Documentation ##
+Read the detailed [API Reference Documentation](https://github.com/floatinghotpot/cordova-admob-pro/tree/master/doc).
 
-Events: 
->// for banner
-- onBannerReceive, 
-- onBannerFailedToReceive, 
-- onBannerPresent, 
-- onBannerDismiss, 
-- onBannerLeaveApp,
-
->// for interstitial
-- onInterstitialReceive, 
-- onInterstitialFailedToReceive, 
-- onInterstitialPresent, 
-- onInterstitialDismiss, 
-- onInterstitialLeaveApp
-
-Ad Size (string):
->- 'BANNER', 
-- 'SMART_BANNER', // recommended
-- 'MEDIUM_RECTANGLE', 
-- 'FULL_BANNER', 
-- 'LEADERBOARD', 
-- 'SKYSCRAPER', 
-- 'CUSTOM' // need give width and height
-
-Ad Position (integer): AdMob.AD_POSITION.*, * can be:
->- TOP_LEFT, TOP_CENTER, TOP_RIGHT, 
-- LEFT, CENTER, RIGHT, 
-- BOTTOM_LEFT, BOTTOM_CENTER, BOTTOM_RIGHT
-- POS_XY, // need give (x,y)
+## Full Example Code ##
+Check the [test/index.html] (https://github.com/floatinghotpot/cordova-admob-pro/blob/master/test/index.html).
 
 ## Screenshots ##
 

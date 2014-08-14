@@ -31,9 +31,9 @@ cordova prepare; cordova run android; cordova run ios;
 // or import into Xcode / eclipse
 ```
 
-## Basic Example Code ##
+## Quick Start Example Code ##
 
-> Note: you need create seperate Ad unit id for banner and interstitial and different platforms. just create it in [AdMob website](https://apps.admob.com/)
+>Step 1: Prepare your AdMob Ad Unit Id for your banner and interstitial
 
 ```javascript
 var ad_units = {
@@ -46,13 +46,29 @@ var ad_units = {
 		interstitial: 'ca-app-pub-6869992474017983/1657046752'
 	}
 };
+// select the right Ad Id according to platform
 var admobid = ( /(android)/i.test(navigator.userAgent) ) ? ad_units.android : ad_units.ios;
+```
 
-// this will display a smart banner at top center, using the default options
+> Step 2: Create a banner with single line of javascript
+
+```javascript
+// it will display smart banner at top center, using the default options
 if(AdMob) AdMob.createBanner( admobid.banner );
 ```
 
-> More complex usage, check the [complete demo code in test/html] (https://github.com/floatinghotpot/cordova-admob-pro/blob/master/test/index.html).
+> Step 3: Prepare an interstitial, and show it when needed
+
+```javascript
+// preppare and load ad resource in background, e.g. at begining of game level
+if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
+
+// show the interstitial later, e.g. at end of game level
+if(AdMob) AdMob.showInterstitial();
+```
+
+## Full Example Code ##
+Check the [test/index.html] (https://github.com/floatinghotpot/cordova-admob-pro/blob/master/test/index.html).
 
 ## API Overview ##
 
@@ -154,8 +170,8 @@ var defaultOptions = {
 	width: 360, // valid when set adSize 'CUSTOM'
 	height: 90, // valid when set adSize 'CUSTOM'
 	position: AdMob.AD_POSITION.BOTTOM_CENTER,
-	x: 0,		// valid when set position to 0 / POS_XY
-	y: 0,		// valid when set position to 0 / POS_XY
+	x: 0,		// valid when set position to POS_XY
+	y: 0,		// valid when set position to POS_XY
 	isTesting: true,
 	autoShow: true
 };
