@@ -19,7 +19,7 @@ cordova plugin add com.google.cordova.admob
 
 ## Quick Start Example Code ##
 
->Step 1: Prepare your AdMob Ad Unit Id for your banner and interstitial
+Step 1: Prepare your AdMob Ad Unit Id for your banner and interstitial
 
 ```javascript
 var ad_units = {
@@ -36,14 +36,14 @@ var ad_units = {
 var admobid = ( /(android)/i.test(navigator.userAgent) ) ? ad_units.android : ad_units.ios;
 ```
 
-> Step 2: Create a banner with single line of javascript
+Step 2: Create a banner with single line of javascript
 
 ```javascript
 // it will display smart banner at top center, using the default options
 if(AdMob) AdMob.createBanner( admobid.banner );
 ```
 
-> Step 3: Prepare an interstitial, and show it when needed
+Step 3: Prepare an interstitial, and show it when needed
 
 ```javascript
 // preppare and load ad resource in background, e.g. at begining of game level
