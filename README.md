@@ -6,7 +6,8 @@ Highlights:
 - [x] Support Banner Ad and Interstitial Ad.
 - [x] Most flexible, put banner at any position.
 - [x] Multiple banner size, also support custom size.
-- [x] Latest SDK, iOS SDK v6.10.0, Android Google play services v19
+- [x] Latest iOS SDK v6.11.1, 
+- [x] Latest Android Google play services v19.
 - [x] Easy-to-use APIs. Can display Ad with single line of Js code.
 - [x] Actively maintained, prompt support.
 
@@ -85,10 +86,10 @@ iPad Medium Rect | iPad SkyScraper
 ![ScreenShot](doc/ipad_rect.jpg) | ![ScreenShot](doc/ipad_skyscraper.jpg)
 iPad interstitial | Any given X,Y:
 ![ScreenShot](doc/ipad_interstitial.jpg) | ![ScreenShot](doc/any_position.jpg)
-
-Android:
-
-![ScreenShot](doc/android.jpg)
+Android Banner | Android Medium Rect
+![ScreenShot](doc/android.jpg) | ![ScreenShot](doc/android_rect.jpg)
+Android Interstitial | 
+![ScreenShot](doc/android_interstitial.jpg) |
 
 ## Credit ##
 You can use this cordova plugin for free. To support this project, donation is welcome.  
