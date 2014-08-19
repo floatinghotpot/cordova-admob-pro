@@ -128,8 +128,9 @@ key/value for param **options**:
 'SKYSCRAPER', 
 'CUSTOM', // custom banner size with given width and height, see param 'width' and 'height'
 ```
-- **width**, *integer*, banner width if set adSize:'CUSTOM'. Default: 0
-- **height**, *integer*, banner height if set adSize:'CUSTOM'. Default: 0
+- **width**, *integer*, banner width, valid when set *adSize*:'CUSTOM'. Default: 0
+- **height**, *integer*, banner height, valid when set *adSize*:'CUSTOM'. Default: 0
+- **overlap**, *boolean@, allow banner overlap webview, or else will push webview up or down to avoid overlap. Default:false
 - **position**, *integer*, position of banner Ad, Default:TOP_CENTER. Value can be one of: 
 ```javascript
 AdMob.AD_POSITION.NO_CHANGE  	= 0,
@@ -144,8 +145,8 @@ AdMob.AD_POSITION.BOTTOM_RIGHT 	= 8,
 AdMob.AD_POSITION.BOTTOM_RIGHT 	= 9,
 AdMob.AD_POSITION.POS_XY 		= 10, // use the given X and Y, see params 'x' and 'y'
 ```
-- **x**, *integer*, x in pixels. Valid when position:0 or AdMob.AD_POSITION.POS_XY. Default: 0
-- **y**, *integer*, y in pixels. Valid when position:0 or AdMob.AD_POSITION.POS_XY. Default: 0
+- **x**, *integer*, x in pixels. Valid when *overlap*:true and *position*:AdMob.AD_POSITION.POS_XY. Default: 0
+- **y**, *integer*, y in pixels. Valid when *overlap*:true and *position*:AdMob.AD_POSITION.POS_XY. Default: 0
 - **isTesting**, *boolean*, set to true, to receiving test ad for testing purpose
 - **autoShow**, *boolean*, auto show interstitial ad when loaded, set to false if hope to control the show timing with prepareInterstitial/showInterstitial
 - **orientationRenew**, *boolean*, re-create the banner on web view orientation change (not screen orientation), or else just move the banner. Default:true.

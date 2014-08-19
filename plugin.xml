@@ -3,13 +3,13 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.google.cordova.admob"
-	version="1.0.3">
+	version="1.0.4">
       
     <name>AdMob Plugin Pro</name>
 	<description>Best AdMob plugin for PhoneGap and Cordova, latest SDK for iOS and Android with Google Play Services. Most Flexible. Any size, Any position.</description>
 	<author>Liming Xie</author>
 	<license>MIT</license>
-	<keywords>ad,admob,google,play,services,iad,flurry</keywords>
+	<keywords>ad,admob,google,play,services,iad,flurry,rjfun</keywords>
     <repo>https://github.com/floatinghotpot/cordova-admob-pro.git</repo>
     <issue>https://github.com/floatinghotpot/cordova-admob-pro/issues</issue>
 

@@ -25,6 +25,7 @@
 #define OPT_AD_EXTRAS       @"adExtras"
 
 #define OPT_ORIENTATION_RENEW   @"orientationRenew"
+#define OPT_OVERLAP         @"overlap"
 
 enum {
     POS_NO_CHANGE       = 0,
