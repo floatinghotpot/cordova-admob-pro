@@ -4,8 +4,10 @@ Present AdMob Ads in Mobile App/Games natively from JavaScript.
 
 Highlights:
 - [x] Support Banner Ad and Interstitial Ad.
-- [x] Most flexible, put banner at any position.
 - [x] Multiple banner size, also support custom size.
+- [x] Fixed and overlapped mode.
+- [x] Most flexible, put banner at any position with overlap mode.
+- [x] Auto fit on orientation change.
 - [x] Latest iOS SDK v6.11.1, 
 - [x] Latest Android Google play services v19.
 - [x] Easy-to-use APIs. Can display Ad with single line of Js code.
@@ -72,9 +74,13 @@ showInterstitial();
 isInterstitialReady(callback);
 ```
 ## Detailed Documentation ##
+The APIs, Events and Options are detailed documented.
+
 Read the detailed [API Reference Documentation](https://github.com/floatinghotpot/cordova-admob-pro/tree/master/doc).
 
 ## Full Example Code ##
+This AdMob Plugin Pro offers the most flexibility and many options.
+
 Check the [test/index.html] (https://github.com/floatinghotpot/cordova-admob-pro/blob/master/test/index.html).
 
 ## Screenshots ##
@@ -91,10 +97,16 @@ Android Banner | Android Medium Rect
 Android Interstitial | 
 ![ScreenShot](doc/android_interstitial.jpg) |
 
-## Credit ##
-You can use this cordova plugin for free. To support this project, donation is welcome.  
+## Credits ##
+This AdMob Plugin Pro is published in a win-win partnership model:
+- It's FREE. 
+- It's closed source.
+- 2% Ad traffic will be shared, as return for the support and maintenance effort.
+- You will get commercial-level support with high priority, prompt and professional.
 
-Donation can be accepted in either of following ways:
-* Share 2% Ad traffic. 
-* [Donate directly via Paypal or Payoneer](http://floatinghotpot.github.io/#donate)
+If you don't like this model, please consider using the open source version. 
+https://github.com/floatinghotpot/cordova-plugin-admob
+
+Project outsourcing and consulting service is also available. 
+Please ![contact us](http://floatinghotpot.github.io) if you have the business needs.
 
