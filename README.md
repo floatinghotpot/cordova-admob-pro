@@ -108,5 +108,5 @@ If you don't like this model, please consider using the open source version.
 https://github.com/floatinghotpot/cordova-plugin-admob
 
 Project outsourcing and consulting service is also available. 
-Please ![contact us](http://floatinghotpot.github.io) if you have the business needs.
+Please [contact us](http://floatinghotpot.github.io) if you have the business needs.
 
