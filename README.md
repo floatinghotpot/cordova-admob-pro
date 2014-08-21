@@ -104,7 +104,7 @@ This AdMob Plugin Pro is published in a win-win partnership model:
 - 2% Ad traffic will be shared, as return for the support and maintenance effort.
 - You will get commercial-level support with high priority, prompt and professional.
 
-If you don't like this model, please consider using the open source version. 
+If you prefer fully open source model, please consider using the open source version. 
 https://github.com/floatinghotpot/cordova-plugin-admob
 
 Project outsourcing and consulting service is also available. 
