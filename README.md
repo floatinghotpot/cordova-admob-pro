@@ -17,8 +17,19 @@ Highlights:
 More Cordova/PhoneGap plugins by Raymond Xie, [click here](http://floatinghotpot.github.io/).
 
 ## How to use? ##
+
+If use with Cordova CLI:
 ```
 cordova plugin add com.google.cordova.admob
+```
+
+If use with Intel XDK:
+Project -> CORDOVA 3.X HYBRID MOBILE APP SETTINGS -> PLUGINS AND PERMISSIONS -> Third-Party Plugins ->
+Add a Third-Party Plugin -> Get Plugin from the Web, input:
+```
+Name: AdMobPluginPro
+Plugin ID: com.google.cordova.admob
+[x] Plugin is located in the Apache Cordova Plugins Registry
 ```
 
 ## Quick Start Example Code ##
