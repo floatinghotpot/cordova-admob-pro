@@ -9,7 +9,8 @@ Highlights:
 - [x] Most flexible, put banner at any position with overlap mode.
 - [x] Auto fit on orientation change.
 - [x] Latest iOS SDK v6.11.1, 
-- [x] Latest Android Google play services v19.
+- [x] Latest Android Google play services r19.
+- [x] Compatible with Intel XDK.
 - [x] Easy-to-use APIs. Can display Ad with single line of Js code.
 - [x] Actively maintained, prompt support.
 
