@@ -58,13 +58,26 @@ Step 2: Create a banner with single line of javascript
 if(AdMob) AdMob.createBanner( admobid.banner );
 
 // or, show a banner at bottom
-if(AdMob) AdMob.createBanner( {adId:admobid.banner, position:AdMob.AD_POSITION.BOTTOM_CENTER, autoShow:true} );
+if(AdMob) AdMob.createBanner( {
+	adId:admobid.banner, 
+	position:AdMob.AD_POSITION.BOTTOM_CENTER, 
+	autoShow:true} );
 
 // or, show a rect ad at bottom in overlap mode
-if(AdMob) AdMob.createBanner( {adId:admobid.banner, adSize:'MEDIUM_RECTANGLE', overlap:true, position:AdMob.AD_POSITION.BOTTOM_CENTER, autoShow:true} );
+if(AdMob) AdMob.createBanner( {
+	adId:admobid.banner, 
+	adSize:'MEDIUM_RECTANGLE', 
+	overlap:true, 
+	position:AdMob.AD_POSITION.BOTTOM_CENTER, 
+	autoShow:true} );
 
 // or, show any size at any position
-if(AdMob) AdMob.createBanner( {adId:admobid.banner, adSize:'CUSTOM', width:200, height:200, overlap:true, position:AdMob.AD_POSITION.POS_XY, x:100, y:200, autoShow:true} );
+if(AdMob) AdMob.createBanner( {
+	adId:admobid.banner, 
+	adSize:'CUSTOM',  width:200, height:200, 
+	overlap:true, 
+	position:AdMob.AD_POSITION.POS_XY, x:100, y:200, 
+	autoShow:true} );
 
 ```
 
