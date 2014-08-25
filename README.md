@@ -14,6 +14,19 @@ Highlights:
 - [x] Easy-to-use APIs. Can display Ad with single line of Js code.
 - [x] Actively maintained, prompt support.
 
+News:
+- This plugin is recommended by Intel XDK team (08/22/2014), [read more ...](https://software.intel.com/en-us/html5/articles/adding-google-play-services-to-your-cordova-application)
+
+Tips: (According to history stat data in past 2 months)
+- [x] Using AdMob Plugin Pro, will get higher fill rate.
+- [x] Using Interstitial, will earn better profit, RPM 10 times higher than Banner. 
+
+Glossary:
+- Fill rate: The number of times ads are shown on your app, divided by the number of times your app requests to show an ad.
+- RPM: Revenue per 1000 impressions (RPM). RPM represents the estimated earnings you'd accrue for every 1000 impressions you receive.
+- Intel XDK: Intel's HTML5 App IDE and service, to build mobile app in clould, allow using 3rd-party plugin from web.
+- Adobe PhoneGap Build: Adobe service, to publish plugin and build app in cloud, only allow using plugins reviewed and approved.
+
 More Cordova/PhoneGap plugins by Raymond Xie, [click here](http://floatinghotpot.github.io/).
 
 ## How to use? ##
