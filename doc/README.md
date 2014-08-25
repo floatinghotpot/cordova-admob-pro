@@ -5,11 +5,31 @@ Present AdMob Ads in Mobile App/Games natively from JavaScript.
 
 Highlights:
 - [x] Support Banner Ad and Interstitial Ad.
-- [x] Most flexible, put banner at any position.
 - [x] Multiple banner size, also support custom size.
-- [x] Latest SDK, iOS SDK v6.10.0, Android Google play services v19
+- [x] Fixed and overlapped mode.
+- [x] Most flexible, put banner at any position with overlap mode.
+- [x] Auto fit on orientation change.
+- [x] Latest iOS SDK v6.11.1, 
+- [x] Latest Android Google play services r19.
+- [x] Compatible with Intel XDK and Crosswalk.
 - [x] Easy-to-use APIs. Can display Ad with single line of Js code.
 - [x] Actively maintained, prompt support.
+
+Tips: (According to history stat data in past 2 months)
+- [x] Using AdMob Plugin Pro, will get higher fill rate.
+- [x] Using Interstitial, will earn better profit, RPM 10 times higher than Banner. 
+
+Glossary:
+- Fill rate: The number of times ads are shown on your app, divided by the number of times your app requests to show an ad.
+- RPM: Revenue per 1000 impressions (RPM). RPM represents the estimated earnings you'd accrue for every 1000 impressions you receive.
+- Intel XDK: Intel's HTML5 App IDE and service, to build mobile app in clould, allow using 3rd-party plugin from web.
+- Adobe PhoneGap Build: Adobe service, to publish plugin and build app in cloud, only allow using plugins reviewed and approved.
+
+News:
+- Recommended by Telerik in Verified Plugins Marketplace. [read more ...](http://plugins.telerik.com/plugin/admob)
+- Recommended by William SerGio in code project (20 Jun 2014), [read more ...](http://www.codeproject.com/Articles/788304/AdMob-Plugin-for-Latest-Version-of-PhoneGap-Cordov)
+- Recommended by Arne in Scirra Game Dev Forum (07 Aug, 2014), [read more ...](https://www.scirra.com/forum/plugin-admob-ads-for-crosswalk_t111940)
+- Recommended by Intel XDK team (08/22/2014), [read more ...](https://software.intel.com/en-us/html5/articles/adding-google-play-services-to-your-cordova-application)
 
 ## How to Use ##
 
@@ -30,6 +50,16 @@ cordova prepare; cordova run android; cordova run ios;
 
 // or import into Xcode / eclipse
 ```
+
+If use with Intel XDK:
+Project -> CORDOVA 3.X HYBRID MOBILE APP SETTINGS -> PLUGINS AND PERMISSIONS -> Third-Party Plugins ->
+Add a Third-Party Plugin -> Get Plugin from the Web, input:
+```
+Name: AdMobPluginPro
+Plugin ID: com.google.cordova.admob
+[x] Plugin is located in the Apache Cordova Plugins Registry
+```
+
 
 ## Quick Start Example Code ##
 
@@ -55,6 +85,29 @@ var admobid = ( /(android)/i.test(navigator.userAgent) ) ? ad_units.android : ad
 ```javascript
 // it will display smart banner at top center, using the default options
 if(AdMob) AdMob.createBanner( admobid.banner );
+
+// or, show a banner at bottom
+if(AdMob) AdMob.createBanner( {
+	adId:admobid.banner, 
+	position:AdMob.AD_POSITION.BOTTOM_CENTER, 
+	autoShow:true} );
+
+// or, show a rect ad at bottom in overlap mode
+if(AdMob) AdMob.createBanner( {
+	adId:admobid.banner, 
+	adSize:'MEDIUM_RECTANGLE', 
+	overlap:true, 
+	position:AdMob.AD_POSITION.BOTTOM_CENTER, 
+	autoShow:true} );
+
+// or, show any size at any position
+if(AdMob) AdMob.createBanner( {
+	adId:admobid.banner, 
+	adSize:'CUSTOM',  width:200, height:200, 
+	overlap:true, 
+	position:AdMob.AD_POSITION.POS_XY, x:100, y:200, 
+	autoShow:true} );
+
 ```
 
 > Step 3: Prepare an interstitial, and show it when needed
@@ -344,15 +397,4 @@ To prevent ProGuard from stripping away required classes, add the following line
     public static final ** CREATOR;
 }
 ```
-
-## Credit ##
-
-This plugin is created and maintained by [Raymond Xie](http://floatinghotpot.github.io/).
-
-You can use this cordova plugin for free. To support this project, donation is welcome. 
-
-Donation can be accepted in either of following ways:
-* Share 2% Ad traffic. 
-* [Donate directly via Paypal](http://floatinghotpot.github.io/#donate)
-
 
