@@ -132,12 +132,12 @@ Android Interstitial |
 
 ## Tips ##
 
-Some tips from recent stat data, for your reference only.
+Some tips from recent stat data. (Fill rate and RPM may vary in different countries. For your reference only.)
 
-- [x] Using AdMob Plugin Pro, will get higher fill rate. 
+- [x] Using AdMob Plugin Pro, higher and more stable fill rate. 
 ![fillrate](doc/admob_fillrate.jpg)
 
-- [x] Using Interstitial, will earn much better profit. 
+- [x] Using Interstitial, much better profit. 
 ![rpm](doc/admob_rpm.png)
 
 Glossary:
