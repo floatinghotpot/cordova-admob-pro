@@ -37,12 +37,12 @@ Step 1: Prepare your AdMob Ad Unit Id for your banner and interstitial
 ```javascript
 var ad_units = {
 	ios : {
-		banner: 'ca-app-pub-6869992474017983/4806197152',
-		interstitial: 'ca-app-pub-6869992474017983/7563979554'
+		banner: 'ca-app-pub-xxx/xxx',
+		interstitial: 'ca-app-pub-xxx/yyy'
 	},
 	android : {
-		banner: 'ca-app-pub-6869992474017983/9375997553',
-		interstitial: 'ca-app-pub-6869992474017983/1657046752'
+		banner: 'ca-app-pub-xxx/zzz',
+		interstitial: 'ca-app-pub-xxx/kkk'
 	}
 };
 // select the right Ad Id according to platform
