@@ -396,4 +396,3 @@ AdMob.createBanner({
     public static final ** CREATOR;
 }
 ```
-
