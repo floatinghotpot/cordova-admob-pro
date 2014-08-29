@@ -109,7 +109,7 @@ isInterstitialReady(callback);
 ## Detailed Documentation ##
 The APIs, Events and Options are detailed documented.
 
-Read the detailed [API Reference Documentation](https://github.com/floatinghotpot/cordova-admob-pro/tree/master/doc).
+Read the detailed API Reference Documentation [English](https://github.com/floatinghotpot/cordova-admob-pro/tree/master/doc) / [ÖÐÎÄ](https://github.com/floatinghotpot/cordova-admob-pro/blob/master/doc/README.zh_cn.md).
 
 ## Full Example Code ##
 This AdMob Plugin Pro offers the most flexibility and many options.
