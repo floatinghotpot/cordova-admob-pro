@@ -140,9 +140,11 @@ Some tips from recent stat data. (Fill rate and RPM may vary in different countr
 - [x] Using Interstitial, much better profit. 
 ![rpm](doc/admob_rpm.png)
 
-- [x] Using SMART_BANNER instead of BANNER or FULL_BANNER
-smart banner will auto detect the screen, and auto set a proper height, to fit whenever it's phone or pad.
-if use FULL_BANNER, when app running on phone with smalll screen, as the screen is not big enough, it will not show banner with error "No fill".
+- [x] Using SMART_BANNER, avoid using BANNER or FULL_BANNER
+
+Smart banner will auto detect the screen, and auto set a proper height, to fit whenever it's phone or pad.
+
+If use FULL_BANNER, when app running on phone with smalll screen, as the screen is not big enough, it will not show banner with error "No fill".
 
 Glossary:
 - Fill rate: The number of times ads are shown on your app, divided by the number of times your app requests to show an ad.
