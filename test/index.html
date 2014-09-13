@@ -1,37 +1,58 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
-        <title>Hello World</title>
-        <script type="text/javascript" src="cordova.js"></script>
-        <style type="text/css">
-            body { width:120%; height:120%; margin:0; padding:0; overflow:hidden; background-color:gray; color:white; }
-            div#fullpage { width:100%; height:200%; margin:0; padding:0; border:0px solid red; text-align:center; vertical-align:middle; }
-            button { font-size: 18px; }
-            </style>
-    </head>
-    <body onload="onLoad()">
-        <script>
-        function onLoad() {
-            if(( /(ipad|iphone|ipod|android)/i.test(navigator.userAgent) )) {
-                document.addEventListener('deviceready', initApp, false);
-            } else {
-                initApp();
-            }
-        }
-    
-        var ad_units = {
-                ios : {
-                    banner: 'ca-app-pub-6869992474017983/4806197152',
-                    interstitial: 'ca-app-pub-6869992474017983/7563979554'
-                },
-                android : {
-                    banner: 'ca-app-pub-6869992474017983/9375997553',
-                    interstitial: 'ca-app-pub-6869992474017983/1657046752'
+<head>
+<meta charset="utf-8" />
+<meta name="format-detection" content="telephone=no" />
+<meta name="viewport"
+	content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+<title>Hello World</title>
+<script type="text/javascript" src="cordova.js"></script>
+<style type="text/css">
+body {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	background-color: gray;
+	color: white;
+}
+
+div#fullpage {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	border: 0px solid red;
+	text-align: center;
+	vertical-align: middle;
+}
+
+button {
+	font-size: 18px;
+}
+</style>
+</head>
+<body onload="onLoad()" onresize="onResize()">
+	<script>
+            function onLoad() {
+                if(( /(ipad|iphone|ipod|android)/i.test(navigator.userAgent) )) {
+                    document.addEventListener('deviceready', initApp, false);
+                } else {
+                    initApp();
                 }
-            };
+            }
+        
+        var ad_units = {
+            ios : {
+                banner: 'ca-app-pub-6869992474017983/4806197152',
+                interstitial: 'ca-app-pub-6869992474017983/7563979554'
+            },
+            android : {
+                banner: 'ca-app-pub-6869992474017983/9375997553',
+                interstitial: 'ca-app-pub-6869992474017983/1657046752'
+            }
+        };
         var admobid = ( /(android)/i.test(navigator.userAgent) ) ? ad_units.android : ad_units.ios;
         
         function initApp() {
@@ -44,34 +65,29 @@
         }
         function initAd(){
             var defaultOptions = {
-                    // publisherId: admobid.banner,
-                    // interstitialAdId: admobid.interstitial,
-                    // adSize: 'SMART_BANNER',
-                    // width: integer, // valid when set adSize 'CUSTOM'
-                    // height: integer, // valid when set adSize 'CUSTOM'
-                    // overlap: false, // set to true, if hope banner floating over web content, or positioin with XY
-                    position: AdMob.AD_POSITION.BOTTOM_CENTER,
-                    // x: integer,		// valid when set position to 0 / POS_XY
-                    // y: integer,		// valid when set position to 0 / POS_XY
-                    isTesting: true, // set to true, to receiving test ad for testing purpose
-                    // autoShow: true // auto show interstitial ad when loaded, set to false if prepare/show
-                    };
+                // bannerId: admobid.banner,
+                // interstitialAdId: admobid.interstitial,
+                // adSize: 'SMART_BANNER',
+                // width: integer, // valid when set adSize 'CUSTOM'
+                // height: integer, // valid when set adSize 'CUSTOM'
+                position: AdMob.AD_POSITION.BOTTOM_CENTER,
+                // x: integer,		// valid when set position to 0 / POS_XY
+                // y: integer,		// valid when set position to 0 / POS_XY
+                isTesting: true, // set to true, to receiving test ad for testing purpose
+                // autoShow: true // auto show interstitial ad when loaded, set to false if prepare/show
+            };
             AdMob.setOptions( defaultOptions );
             registerAdEvents();
         }
         // optional, in case respond to events or handle error
         function registerAdEvents() {
-            document.addEventListener('onBannerFailedToReceive', function(data){
-            	alert('error: ' + data.error + ', reason: ' + data.reason);
-            });
+            document.addEventListener('onBannerFailedToReceive', function(data){ alert('error: ' + data.error + ', reason: ' + data.reason); });
             document.addEventListener('onBannerReceive', function(){});
             document.addEventListener('onBannerPresent', function(){});
             document.addEventListener('onBannerLeaveApp', function(){});
             document.addEventListener('onBannerDismiss', function(){});
             
-            document.addEventListener('onInterstitialFailedToReceive', function(data){
-            	alert('error: ' + data.error + ', reason: ' + data.reason);
-            });
+            document.addEventListener('onInterstitialFailedToReceive', function(data){ alert('error: ' + data.error + ', reason: ' + data.reason); });
             document.addEventListener('onInterstitialReceive', function(){});
             document.addEventListener('onInterstitialPresent', function(){});
             document.addEventListener('onInterstitialLeaveApp', function(){});
@@ -97,9 +113,9 @@
             var w = document.getElementById('w').value;
             var h = document.getElementById('h').value;
             
-            AdMob.createBanner( {adId:admobid.banner, 
-            	adSize:'CUSTOM', width:w, height:h, 
-            	position:getSelectedPosition()} );
+            AdMob.createBanner( {adId:admobid.banner,
+                               adSize:'CUSTOM', width:w, height:h,
+                               position:getSelectedPosition()} );
         }
         function showBannerAtSelectedPosition() {
             AdMob.showBanner( getSelectedPosition() );
@@ -113,48 +129,55 @@
             var autoshow = document.getElementById('autoshow').checked;
             AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:autoshow});
         }
+        function onResize(){
+            var s = document.getElementById('sizeinfo');
+            s.innerHTML = "web view: " + window.innerWidth + " x " + window.innerHeight;
+        }
         </script>
-        <div id="fullpage">
-            <p>Demo for AdMob Plugin</p>
-            Banner<br/>
-            Standard: <select id="adSize">
-                <option value='SMART_BANNER'>SMART_BANNER</option>
-                <option value='BANNER'>BANNER</option>
-                <option value='MEDIUM_RECTANGLE'>MEDIUM_RECTANGLE</option>
-                <option value='FULL_BANNER'>FULL_BANNER</option>
-                <option value='LEADERBOARD'>LEADERBOARD</option>
-                <option value='SKYSCRAPER'>SKYSCRAPER</option>
-            </select><br/><input type='checkbox' id='overlap'/>overlap<button onclick="createSelectedBanner();">create</button><br/>
-            
-            Custom Size: (<input id='w' type='text' size=3/> x <input id='h' type='text' size=3>)
-                <button onclick="createBannerOfGivenSize();">create</button><br/>
-                
-                <button onclick="AdMob.removeBanner();">remove banner</button>
-                
-                <hr/>
-                <select id="adPosition">
-                    <option value='1'>Top Left</option>
-                    <option value='2'>Top Center</option>
-                    <option value='3'>Top Right</option>
-                    <option value='4'>Left</option>
-                    <option value='5'>Center</option>
-                    <option value='6'>Right</option>
-                    <option value='7'>Bottom Left</option>
-                    <option value='8' selected>Bottom Center</option>
-                    <option value='9'>Bottom Right</option>
-                </select><button onclick="showBannerAtSelectedPosition();">show</button><br/>
-                
-                (<input id='x' type='text' size=3/>,<input id='y' type='text' size=3>)
-                    <button onclick="showBannerAtGivenXY();">show At XY</button><br/>
-                
-                    <button onclick="AdMob.hideBanner();">hide banner</button>
-                    <hr/>
-                    
-                    <p>Interstitial</p>
-                    <input type='checkbox' id='autoshow' checked/>auto show when ready<br/>
-                    <button onclick="prepareInterstitial();">Prepare</button>
-                    <button onclick="AdMob.showInterstitial();">Show</button>
-                    </div>
-    <p><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/></p>    
-    </body>
+	<div id="fullpage">
+		<p>Demo for AdMob Plugin</p>
+		Banner<br /> Standard: <select id="adSize">
+			<option value='SMART_BANNER'>SMART_BANNER</option>
+			<option value='BANNER'>BANNER</option>
+			<option value='MEDIUM_RECTANGLE'>MEDIUM_RECTANGLE</option>
+			<option value='FULL_BANNER'>FULL_BANNER</option>
+			<option value='LEADERBOARD'>LEADERBOARD</option>
+			<option value='SKYSCRAPER'>SKYSCRAPER</option>
+		</select><br /> <input type='checkbox' id='overlap' />overlap
+		<button onclick="createSelectedBanner();">create</button>
+		<br /> Custom Size: (<input id='w' type='text' size=3 /> x <input
+			id='h' type='text' size=3>)
+		<button onclick="createBannerOfGivenSize();">create</button>
+		<br />
+
+		<button onclick="AdMob.removeBanner();">remove banner</button>
+
+		<hr />
+		<select id="adPosition">
+			<option value='1'>Top Left</option>
+			<option value='2'>Top Center</option>
+			<option value='3'>Top Right</option>
+			<option value='4'>Left</option>
+			<option value='5'>Center</option>
+			<option value='6'>Right</option>
+			<option value='7'>Bottom Left</option>
+			<option value='8' selected>Bottom Center</option>
+			<option value='9'>Bottom Right</option>
+		</select>
+		<button onclick="showBannerAtSelectedPosition();">show</button>
+		<br /> (<input id='x' type='text' size=3 />,<input id='y'
+			type='text' size=3>)
+		<button onclick="showBannerAtGivenXY();">show At XY</button>
+		<br />
+
+		<button onclick="AdMob.hideBanner();">hide banner</button>
+		<hr />
+
+		<p>Interstitial</p>
+		<input type='checkbox' id='autoshow' checked />auto show when ready<br />
+		<button onclick="prepareInterstitial();">Prepare</button>
+		<button onclick="AdMob.showInterstitial();">Show</button>
+		<div id='sizeinfo'></div>
+	</div>
+</body>
 </html>

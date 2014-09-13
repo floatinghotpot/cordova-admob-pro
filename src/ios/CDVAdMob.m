@@ -19,11 +19,18 @@
 }
 
 - (void) onEvent:(NSString *)eventType withData:(NSString *)jsonString {
+    NSString * js = nil;
     if(jsonString != nil) {
-        [self writeJavascript:[NSString stringWithFormat:@"cordova.fireDocumentEvent('%@', %@ );", eventType, jsonString]];
+        js = [NSString stringWithFormat:@"cordova.fireDocumentEvent('%@', %@ );", eventType, jsonString];
     } else {
-        [self writeJavascript:[NSString stringWithFormat:@"cordova.fireDocumentEvent('%@');", eventType]];
+        js = [NSString stringWithFormat:@"cordova.fireDocumentEvent('%@');", eventType];
     }
+    [self.commandDelegate evalJs:js];
+}
+
+- (void) evalJs:(NSString*) js
+{
+    [self.commandDelegate evalJs:js];
 }
 
 - (CDVPlugin *)initWithWebView:(UIWebView *)theWebView {

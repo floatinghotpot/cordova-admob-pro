@@ -46,6 +46,7 @@ enum {
 -(UIView*) getView;
 -(UIViewController*) getViewController;
 -(void) onEvent:(NSString*) eventType withData:(NSString*) jsonString;
+-(void) evalJs:(NSString*) js;
 @end
 
 @interface AdMobAds : NSObject<GADBannerViewDelegate, GADInterstitialDelegate>
