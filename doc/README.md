@@ -219,7 +219,7 @@ Example Code:
 ```javascript
 var defaultOptions = {
 	bannerId: admobid.banner,
-	interstitialAdId: admobid.interstitial,
+	interstitialId: admobid.interstitial,
 	adSize: 'SMART_BANNER',
 	width: 360, // valid when set adSize 'CUSTOM'
 	height: 90, // valid when set adSize 'CUSTOM'

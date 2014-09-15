@@ -17,7 +17,7 @@
 
 友情提示：（根据最近 2 个月的数据统计）
 - [x] 使用 AdMob Plugin Pro，比开源版本有更高的填充率（fill rate）。
-- [x] 使用全副广告，比广告条的收益更高，高达 5-10 倍。 
+- [x] 使用全屏广告，比广告条的收益更高，高达 5-10 倍。 
 
 名词：
 - 覆盖率（Fill rate）: 在你的App中广告显示的次数，除以广告请求的次数。
@@ -30,6 +30,7 @@
 - 获得推荐：William SerGio，发表在 code project (20 Jun 2014), [更多 ...](http://www.codeproject.com/Articles/788304/AdMob-Plugin-for-Latest-Version-of-PhoneGap-Cordov)
 - 获得推荐：Arne，发表在 Scirra Game Dev Forum (07 Aug, 2014), [更多 ...](https://www.scirra.com/forum/plugin-admob-ads-for-crosswalk_t111940)
 - 获得推荐：Intel XDK团队 (08/22/2014), [更多 ...](https://software.intel.com/en-us/html5/articles/adding-google-play-services-to-your-cordova-application)
+- 获得推荐：Scirra Construct 2 (09/12/2014)官方版本发布, [read more ...](https://www.scirra.com/construct2/releases/r180)
 
 ## 如何使用 ##
 
