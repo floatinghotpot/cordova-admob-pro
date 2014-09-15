@@ -397,4 +397,3 @@ To prevent ProGuard from stripping away required classes, add the following line
     public static final ** CREATOR;
 }
 ```
-
