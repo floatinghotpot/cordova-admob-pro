@@ -119,7 +119,7 @@ Read the detailed API Reference Documentation [English](https://github.com/float
 
 ## FAQ ##
 
-If encounter problem when using the plugin, please read the [FAQ](https://github.com/floatinghotpot/cordova-admob-pro/blob/master/doc/FAQ.md) first.
+If encounter problem when using the plugin, please read the [FAQ](https://github.com/floatinghotpot/cordova-admob-pro/wiki/FAQ) first.
 
 ## Full Example Code ##
 
@@ -164,6 +164,7 @@ Glossary:
 - Adobe PhoneGap Build: Adobe service, to publish plugin and build app in cloud, only allow using plugins reviewed and approved.
 
 ## Credits ##
+
 This AdMob Plugin Pro is published in a win-win partnership model:
 - It's FREE. 
 - It's closed source.
@@ -178,8 +179,8 @@ AdMob Plugin Pro is your best choice for HTML5/Cordova/PhoneGap/XDK/Construct2 a
 - Recommended by Telerik in Verified Plugins Marketplace. [read more ...](http://plugins.telerik.com/plugin/admob)
 - Recommended by William SerGio in code project (20 Jun 2014), [read more ...](http://www.codeproject.com/Articles/788304/AdMob-Plugin-for-Latest-Version-of-PhoneGap-Cordov)
 - Recommended by Arne in Scirra Game Dev Forum (07 Aug, 2014), [read more ...](https://www.scirra.com/forum/plugin-admob-ads-for-crosswalk_t111940)
-- Recommended by Intel XDK / Crosswalk (08/27/2014), [read more ...](https://software.intel.com/en-us/html5/articles/ads-for-crosswalk-and-construct-2)
-- Recommended by Scirra Construct 2 (09/02/2014) official release, [read more ...](https://www.scirra.com/construct2/releases/r180)
+- Recommended by Intel XDK / Crosswalk (08/22/2014), [read more ...](https://software.intel.com/en-us/html5/articles/adding-google-play-services-to-your-cordova-application)
+- Recommended by Scirra Construct 2 (09/12/2014) official release, [read more ...](https://www.scirra.com/construct2/releases/r180)
 
 More Cordova plugins by Raymond Xie, [click here](http://floatinghotpot.github.io/).
 
