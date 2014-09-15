@@ -54,7 +54,11 @@ Step 2: Create a banner with single line of javascript
 ```javascript
 // it will display smart banner at top center, using the default options
 if(AdMob) AdMob.createBanner( admobid.banner );
+```
 
+Or, show the banner Ad in some other way:
+
+```javascript
 // or, show a banner at bottom
 if(AdMob) AdMob.createBanner( {
 	adId:admobid.banner, 
