@@ -169,6 +169,7 @@ AdMob.isInterstitialReady(callback);
 - **options**, *json object*, mapping key to value.
 
 key/value for param **options**:
+- **license**, *string*, set the license key, to remove the 2% Ad traffic sharing
 - **bannerId**, *string*, set the default Ad unit Id for banner, like 'ca-app-pub-xxx/xxx'
 - **interstitialId**, *string*, set the defualt Ad unit Id for interstitial, like 'ca-app-pub-xxx/xxx'
 - **adSize**, *string*, banner Ad size, Default:'SMART_BANNER'. it can be: (see the screenshots for effects)
@@ -218,6 +219,7 @@ AdMob.AD_POSITION.POS_XY 		= 10, // use the given X and Y, see params 'x' and 'y
 Example Code:
 ```javascript
 var defaultOptions = {
+    license: 'username@gmail.com/xxxxxxxxxxxxxxx',
 	bannerId: admobid.banner,
 	interstitialId: admobid.interstitial,
 	adSize: 'SMART_BANNER',

@@ -169,6 +169,7 @@ AdMob.isInterstitialReady(callback);
 - **options**, *json object*, mapping key to value.
 
 参数 **options** 的 key/value:
+- **license**, *string*, 设置授权码, 移除 2% 的广告流量分享
 - **bannerId**, *string*, 设置广告条的默认广告 ID，例如 'ca-app-pub-xxx/xxx'
 - **interstitialId**, *string*, 设置全屏广告的默认广告 ID，例如 'ca-app-pub-xxx/xxx'
 - **adSize**, *string*, 设置广告条的大小，默认值:'SMART_BANNER'. 可以是以下的某个: (效果参见截图)
@@ -218,8 +219,9 @@ AdMob.AD_POSITION.POS_XY 		= 10, // 用于指定位置 X 和 Y, 参见 'x' and 'y'
 例程:
 ```javascript
 var defaultOptions = {
+    license: 'username@gmail.com/xxxxxxxxxxxxxxx',
 	bannerId: admobid.banner,
-	interstitialAdId: admobid.interstitial,
+	interstitialId: admobid.interstitial,
 	adSize: 'SMART_BANNER',
 	width: 360, // valid when set adSize 'CUSTOM'
 	height: 90, // valid when set adSize 'CUSTOM'
