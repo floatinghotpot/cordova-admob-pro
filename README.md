@@ -171,8 +171,8 @@ This AdMob Plugin Pro is published in a win-win partnership model:
 - 2% Ad traffic will be shared, as return for the support and maintenance effort.
 - You will get commercial-level support with high priority, prompt and professional.
 
-If you prefer fully open source model, please consider using the open source version. 
-https://github.com/floatinghotpot/cordova-plugin-admob
+If you hope to make the Ad 100% under your control and keep 100% Ad revenue, you can also consider spending $9.99 to [get a license key](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NRKTFZ88Q9KTW) to remove the 2% Ad traffic sharing.
+It's much cheaper than [the $50.00 AdMob plugin for unity](https://prime31.com/plugins).
 
 AdMob Plugin Pro is your best choice for HTML5/Cordova/PhoneGap/XDK/Construct2 app/games.
 

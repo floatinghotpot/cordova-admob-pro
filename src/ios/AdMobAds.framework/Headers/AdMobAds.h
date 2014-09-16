@@ -9,7 +9,7 @@
 #import "GADAdMobExtras.h"
 #import "GADAdSize.h"
 
-
+#define OPT_LICENSE         @"license"
 #define OPT_BANNER_ID       @"bannerId"
 #define OPT_AD_SIZE         @"adSize"
 #define OPT_AD_WIDTH        @"width"
