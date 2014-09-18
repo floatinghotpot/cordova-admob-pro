@@ -14,6 +14,12 @@ Highlights:
 - [x] Easy-to-use APIs. Can display Ad with single line of Js code.
 - [x] Actively maintained, prompt support.
 
+Tested with:
+
+* Cordova CLI, v3.0+ (do not use the buggy v3.4)
+* Intel XDK, r1095+
+* IBM Worklight, v6.2+
+
 ## How to use? ##
 
 If use with Cordova CLI:
@@ -29,6 +35,9 @@ Name: AdMobPluginPro
 Plugin ID: com.google.cordova.admob
 [x] Plugin is located in the Apache Cordova Plugins Registry
 ```
+
+If use with IBM Worklight:
+As Worklight does not support importing Cordova Plugin directly, please read the [instruction in wiki](https://github.com/floatinghotpot/cordova-admob-pro/wiki/04.-How-to-Use-with-IBM-Worklight)
 
 ## Quick Start Example Code ##
 
