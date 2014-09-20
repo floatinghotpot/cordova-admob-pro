@@ -2,6 +2,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import "GADModules.h"
 #import "GADBannerViewDelegate.h"
 #import "GADInterstitialDelegate.h"
 #import "GADBannerView.h"
