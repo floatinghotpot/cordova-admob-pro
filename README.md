@@ -196,9 +196,14 @@ AdMob Plugin Pro is your best choice for HTML5/Cordova/PhoneGap/XDK/Construct2 a
 - Recommended by Intel XDK / Crosswalk (08/22/2014), [read more ...](https://software.intel.com/en-us/html5/articles/adding-google-play-services-to-your-cordova-application)
 - Recommended by Scirra Construct 2 (09/12/2014) official release, [read more ...](https://www.scirra.com/construct2/releases/r180)
 
-More Cordova plugins by Raymond Xie, [click here](http://floatinghotpot.github.io/).
+## See Also ##
 
-Project outsourcing and consulting service is also available. 
-Please [contact us](http://floatinghotpot.github.io) if you have the business needs.
+* [AdMob Plugin Pro](https://github.com/floatinghotpot/cordova-admob-pro), enhanced Google AdMob plugin, easy API and more features.
+* [MobFox Plugin Pro](https://github.com/floatinghotpot/cordova-mobfox-pro), enhanced MobFox plugin, support video Ad and many other Ad network with server-side intergration.
+* [iAd Plugin](https://github.com/floatinghotpot/cordova-plugin-iad), Apple iAd service. 
+* [FlurryAds Plugin](https://github.com/floatinghotpot/cordova-plugin-flurry), Yahoo Flurry Ads service.
 
+More Cordova/PhoneGap plugins by Raymond Xie, [click here](http://floatinghotpot.github.io/).
+
+Project outsourcing and consulting service is also available. Please [contact us](http://floatinghotpot.github.io) if you have the business needs.
 
