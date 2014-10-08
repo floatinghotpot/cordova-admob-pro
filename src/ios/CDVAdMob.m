@@ -63,9 +63,11 @@
             [_admobApi setOptions:options];
         }
         
-        NSString* adId = [options objectForKey:@"adId"];
-        [_admobApi createBanner:adId];
-        
+        NSString* adId = [options objectForKey:OPT_ADID];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_admobApi createBanner:adId];
+        });
+                       
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
 
     } else {
@@ -94,8 +96,8 @@
 
 - (void) showBannerAtXY:(CDVInvokedUrlCommand *)command {
     NSDictionary *params = [command argumentAtIndex:0];
-    int x = [params integerValueForKey:@"x" defaultValue:0];
-    int y = [params integerValueForKey:@"y" defaultValue:0];
+    int x = (int)[params integerValueForKey:@"x" defaultValue:0];
+    int y = (int)[params integerValueForKey:@"y" defaultValue:0];
     [_admobApi showBannerAtX:x withY:y];
     
     [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
@@ -118,8 +120,10 @@
             [_admobApi setOptions:options];
         }
         
-        NSString* adId = [options objectForKey:@"adId"];
-        [_admobApi prepareInterstitial:adId];
+        NSString* adId = [options objectForKey:OPT_ADID];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [_admobApi prepareInterstitial:adId];
+        });
         
         [self.commandDelegate sendPluginResult:[CDVPluginResult resultWithStatus:CDVCommandStatus_OK] callbackId:command.callbackId];
         

@@ -2,7 +2,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import <AdMobAds/AdMobAds.h>
+#import "AdMobAds.h"
 
 #pragma mark AdMob Plugin
 

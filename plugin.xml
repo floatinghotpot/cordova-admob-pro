@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.google.cordova.admob"
-	version="1.1.1">
+	version="1.1.2">
       
     <name>AdMob Plugin Pro</name>
 	<description>Best AdMob plugin for PhoneGap and Cordova, latest SDK for iOS and Android with Google Play Services. Most Flexible. Any size, Any position.</description>
@@ -14,7 +14,7 @@
     <issue>https://github.com/floatinghotpot/cordova-admob-pro/issues</issue>
 
 	<engines>
-	    <engine name="cordova" version=">=2.9" />
+	    <engine name="cordova" version=">=3.5" />
 	</engines>
 
     <js-module src="www/AdMob.js" name="AdMob">
@@ -42,8 +42,8 @@
 			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
           </config-file>
           
-        <source-file src="src/android/google-play-services.jar" target-dir="libs" />
         <source-file src="src/android/cordova-admob.jar" target-dir="libs" />
+        <source-file src="src/android/google-play-services.jar" target-dir="libs" />
     	<source-file src="src/android/version.xml" target-dir="res/values" />
      </platform>
      
@@ -56,16 +56,22 @@
          </config-file>
          <header-file src="src/ios/CDVAdMob.h" />
          <source-file src="src/ios/CDVAdMob.m" />
-         <framework src="src/ios/AdMobAds.framework" custom="true"/>
-        <framework src="StoreKit.framework"/>
+         <header-file src="src/ios/AdMobAds.h" />
+         <source-file src="src/ios/libCordovaAdMob.a" framework="true"/>
+         <source-file src="src/ios/libGoogleAdMobAds.a" framework="true"/>
+         
         <framework src="AdSupport.framework"/>
-        <framework src="MessageUI.framework"/>
-        <framework src="AVFoundation.framework"/>
-        <framework src="Foundation.framework"/>
-        <framework src="UIKit.framework"/>
-        <framework src="CoreGraphics.framework"/>
-        <framework src="SystemConfiguration.framework"/>
         <framework src="AudioToolbox.framework"/>
+        <framework src="AVFoundation.framework"/>
+        <framework src="CoreGraphics.framework"/>
+        <framework src="CoreTelephony.framework"/>
+        <framework src="EventKit.framework"/>
+        <framework src="EventKitUI.framework"/>
+        <framework src="Foundation.framework"/>
+        <framework src="MessageUI.framework"/>
+        <framework src="StoreKit.framework"/>
+        <framework src="SystemConfiguration.framework"/>
+        <framework src="UIKit.framework"/>
 	</platform>
 
 </plugin>
