@@ -6,7 +6,7 @@
 	version="1.1.2">
       
     <name>AdMob Plugin Pro</name>
-	<description>Best AdMob plugin for PhoneGap and Cordova, latest SDK for iOS and Android with Google Play Services. Most Flexible. Any size, Any position.</description>
+	<description>Best AdMob plugin for Cordova/PhoneGap. Present Google AdMob/DoubleClick Ads in Mobile App/Games natively with single line of JavaScript.</description>
 	<author>Liming Xie</author>
 	<license>MIT</license>
 	<keywords>ad,admob,google,play,services,iad,flurry,rjfun</keywords>

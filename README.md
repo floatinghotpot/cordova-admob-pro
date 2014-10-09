@@ -1,18 +1,16 @@
 # AdMob Plugin Pro #
 
-Present AdMob Ads in Mobile App/Games natively from JavaScript. 
+Present Google AdMob/DoubleClick Ads in Mobile App/Games natively with single line of JavaScript. 
 
 Highlights:
-- [x] Support Banner Ad and Interstitial Ad.
+- [x] Easy-to-use APIs. Can display Ad with single line of Js code.
+- [x] Support banner and interstitial Ad.
+- [x] Support AdMob and DoubleClick in one plugin.
 - [x] Multiple banner size, also support custom size.
 - [x] Fixed and overlapped mode.
 - [x] Most flexible, put banner at any position with overlap mode.
 - [x] Auto fit on orientation change.
-- [x] Latest iOS SDK. 
-- [x] Latest Android Google play services.
-- [x] Compatible with Intel XDK and Crosswalk.
-- [x] Compatible with IBM Worklight.
-- [x] Easy-to-use APIs. Can display Ad with single line of Js code.
+- [x] Latest iOS SDK and Android Google play services.
 - [x] Actively maintained, prompt support.
 
 Tested with:
@@ -47,11 +45,11 @@ Step 1: Prepare your AdMob Ad Unit Id for your banner and interstitial
 ```javascript
 var ad_units = {
 	ios : {
-		banner: 'ca-app-pub-xxx/xxx',
+		banner: 'ca-app-pub-xxx/xxx', // or DFP format "/6253334/dfp_example_ad"
 		interstitial: 'ca-app-pub-xxx/yyy'
 	},
 	android : {
-		banner: 'ca-app-pub-xxx/zzz',
+		banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
 		interstitial: 'ca-app-pub-xxx/kkk'
 	}
 };
