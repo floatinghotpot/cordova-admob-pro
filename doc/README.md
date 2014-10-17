@@ -398,4 +398,7 @@ To prevent ProGuard from stripping away required classes, add the following line
 -keepnames class * implements android.os.Parcelable {
     public static final ** CREATOR;
 }
+
+-keep public class com.google.cordova.admob.**
+
 ```
