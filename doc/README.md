@@ -136,7 +136,7 @@ AdMob.showBannerAtXY(x, y);
 AdMob.hideBanner();
 
 AdMob.prepareInterstitial(adId/options, success, fail);
-AdMob.showInterstitialAd();
+AdMob.showInterstitial();
 AdMob.isInterstitialReady(callback);
 ```
 
