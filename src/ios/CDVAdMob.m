@@ -140,7 +140,7 @@
 
 - (void) showInterstitial:(CDVInvokedUrlCommand *)command
 {
-    NSLog(@"prepareInterstitial");
+    NSLog(@"showInterstitial");
     
     [_admobApi showInterstitial];
     
