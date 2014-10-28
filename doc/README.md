@@ -185,6 +185,7 @@ key/value for param **options**:
 - **width**, *integer*, banner width, valid when set *adSize*:'CUSTOM'. Default: 0
 - **height**, *integer*, banner height, valid when set *adSize*:'CUSTOM'. Default: 0
 - **overlap**, *boolean@, allow banner overlap webview, or else will push webview up or down to avoid overlap. Default:false
+- **offsetTopBar**, *boolean@, offset the banner and webview to avoid overlapped by iOS 7+ status bar. Default:false
 - **position**, *integer*, position of banner Ad, Default:TOP_CENTER. Value can be one of: 
 ```javascript
 AdMob.AD_POSITION.NO_CHANGE  	= 0,
