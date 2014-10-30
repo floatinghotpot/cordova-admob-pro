@@ -5,7 +5,7 @@ N-in-1 AdMob Plugin for Cordova/PhoneGap. Maximize revenue with mediation to AdM
 Highlights:
 - [x] Easy-to-use: Can display Ad with single line of Js code.
 - [x] Powerful: Support banner, interstitial, and video Ad.
-- [x] Max revenue: Support mediation to multiple leading mobile Ad services.
+- [x] Max revenue: Support mediation with up to 8 leading mobile Ad services.
 - [x] Multi-size: Multiple banner size, also support custom size.
 - [x] Flexible: Fixed and overlapped mode, put banner at any position with overlap mode.
 - [x] Smart: Auto fit on orientation change.
@@ -32,8 +32,10 @@ Mediation with:
 If use with Cordova CLI:
 ```bash
 cordova plugin add com.google.cordova.admob
+```
 
-# optional mediations
+Optional mediations (Read about [AdMob Mediation Networks](https://developers.google.com/mobile-ads-sdk/docs/admob/android/mediation-networks)):
+```bash
 cordova plugin add com.google.cordova.admob-facebook
 cordova plugin add com.google.cordova.admob-flurry
 cordova plugin add com.google.cordova.admob-iad
@@ -42,7 +44,7 @@ cordova plugin add com.google.cordova.admob-mmedia
 cordova plugin add com.google.cordova.admob-mobfox
 ```
 
-Notice: Please balance the mediation flexibility and binary size.
+Notice: If you want to add multiple mediations, please balance flexibility and binary size.
 
 If use with Intel XDK:
 Project -> CORDOVA 3.X HYBRID MOBILE APP SETTINGS -> PLUGINS AND PERMISSIONS -> Third-Party Plugins ->

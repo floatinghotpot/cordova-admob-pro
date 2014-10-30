@@ -5,7 +5,7 @@
 	id="com.google.cordova.admob"
 	version="2.0.0">
       
-    <name>AdMob Pro with Mediations</name>
+    <name>AdMob PluginPro with Mediations</name>
 	<description>Most Powerful Ad Plugin for Cordova/PhoneGap. Show Ad with single line of JavaScript. Maximize revenue with mediation to AdMob, DoubleClick, iAd, Flurry, Millennial Media, AdColony, InMobi, Mobfox, and much more.</description>
 	<author>Liming Xie</author>
 	<license>MIT</license>
