@@ -1,30 +1,48 @@
 # AdMob Plugin Pro #
 
-Present Google AdMob/DoubleClick Ads in Mobile App/Games natively with single line of JavaScript. 
+N-in-1 AdMob Plugin for Cordova/PhoneGap. Maximize revenue with mediation to AdMob, DoubleClick, iAd, Flurry, Millennial Media, InMobi, Mobfox, and much more.
 
 Highlights:
-- [x] Easy-to-use APIs. Can display Ad with single line of Js code.
-- [x] Support banner and interstitial Ad.
-- [x] Support AdMob and DoubleClick in one plugin.
-- [x] Multiple banner size, also support custom size.
-- [x] Fixed and overlapped mode.
-- [x] Most flexible, put banner at any position with overlap mode.
-- [x] Auto fit on orientation change.
-- [x] Latest iOS SDK and Android Google play services.
-- [x] Actively maintained, prompt support.
+- [x] Easy-to-use: Can display Ad with single line of Js code.
+- [x] Powerful: Support banner, interstitial, and video Ad.
+- [x] Max revenue: Support mediation to multiple leading mobile Ad services.
+- [x] Multi-size: Multiple banner size, also support custom size.
+- [x] Flexible: Fixed and overlapped mode, put banner at any position with overlap mode.
+- [x] Smart: Auto fit on orientation change.
+- [x] Up to date: Latest SDK and Android Google play services.
+- [x] Good support: Actively maintained, prompt response.
 
 Tested with:
+* [x] Cordova CLI, v3.0+ (do not use the buggy v3.4)
+* [x] Intel XDK, r1095+
+* [x] IBM Worklight, v6.2+
 
-* Cordova CLI, v3.0+ (do not use the buggy v3.4)
-* Intel XDK, r1095+
-* IBM Worklight, v6.2+
+Mediation with:
+* [x] AdMob
+* [x] DFP (DoubleClick for Publisher)
+* [x] Facebook Audience Network
+* [x] Flurry
+* [x] iAd
+* [x] InMobi
+* [x] Millennial Media
+* [x] MobFox
 
 ## How to use? ##
 
 If use with Cordova CLI:
-```
+```bash
 cordova plugin add com.google.cordova.admob
+
+# optional mediations
+cordova plugin add com.google.cordova.admob-facebook
+cordova plugin add com.google.cordova.admob-flurry
+cordova plugin add com.google.cordova.admob-iad
+cordova plugin add com.google.cordova.admob-inmobi
+cordova plugin add com.google.cordova.admob-mmedia
+cordova plugin add com.google.cordova.admob-mobfox
 ```
+
+Notice: Please balance the mediation flexibility and binary size.
 
 If use with Intel XDK:
 Project -> CORDOVA 3.X HYBRID MOBILE APP SETTINGS -> PLUGINS AND PERMISSIONS -> Third-Party Plugins ->
@@ -123,7 +141,7 @@ isInterstitialReady(callback);
 
 The APIs, Events and Options are detailed documented.
 
-Read the detailed API Reference Documentation [English](https://github.com/floatinghotpot/cordova-admob-pro/tree/master/doc) / [中文](https://github.com/floatinghotpot/cordova-admob-pro/blob/master/doc/README.zh_cn.md).
+Read the detailed API Reference Documentation [English](https://github.com/floatinghotpot/cordova-admob-pro/tree/master/docs) / [中文说明](https://github.com/floatinghotpot/cordova-admob-pro/blob/master/docs/README.zh_cn.md).
 
 ## FAQ ##
 
@@ -139,25 +157,25 @@ Check the [test/index.html] (https://github.com/floatinghotpot/cordova-admob-pro
 
 iPhone Banner | iPhone Medium Rect
 -------|---------------
-![ScreenShot](doc/iphone.jpg) | ![ScreenShot](doc/medium_rect.jpg)
+![ScreenShot](docs/iphone.jpg) | ![ScreenShot](docs/medium_rect.jpg)
 iPad Medium Rect | iPad SkyScraper
-![ScreenShot](doc/ipad_rect.jpg) | ![ScreenShot](doc/ipad_skyscraper.jpg)
+![ScreenShot](docs/ipad_rect.jpg) | ![ScreenShot](docs/ipad_skyscraper.jpg)
 iPad interstitial | Any given X,Y:
-![ScreenShot](doc/ipad_interstitial.jpg) | ![ScreenShot](doc/any_position.jpg)
+![ScreenShot](docs/ipad_interstitial.jpg) | ![ScreenShot](docs/any_position.jpg)
 Android Banner | Android Medium Rect
-![ScreenShot](doc/android.jpg) | ![ScreenShot](doc/android_rect.jpg)
+![ScreenShot](docs/android.jpg) | ![ScreenShot](docs/android_rect.jpg)
 Android Interstitial | 
-![ScreenShot](doc/android_interstitial.jpg) |
+![ScreenShot](docs/android_interstitial.jpg) |
 
 ## Tips ##
 
 Some tips from recent stat data. (Fill rate and RPM may vary in different countries. For your reference only.)
 
 - [x] Using AdMob Plugin Pro, higher and more stable fill rate. 
-![fillrate](doc/admob_fillrate.jpg)
+![fillrate](docs/admob_fillrate.jpg)
 
 - [x] Using Interstitial, much better profit. 
-![rpm](doc/admob_rpm.png)
+![rpm](docs/admob_rpm.png)
 
 - [x] Using SMART_BANNER, avoid using BANNER or FULL_BANNER
 
@@ -199,12 +217,13 @@ AdMob Plugin Pro is your best choice for HTML5/Cordova/PhoneGap/XDK/Construct2 a
 
 Cordova/PhoneGap plugins for the world leading Mobile Ad services:
 
-* [AdMob Plugin Pro](https://github.com/floatinghotpot/cordova-admob-pro), enhanced Google AdMob plugin, easy API and more features.
-* [mMedia Plugin Pro](https://github.com/floatinghotpot/cordova-plugin-mmedia), enhanced mMedia plugin, support impressive video Ad.
+* [AdMob Plugin Pro](https://github.com/floatinghotpot/cordova-admob-pro), enhanced Google AdMob plugin, easy API, with mediation to multiple Ad networks.
+* [mMedia Plugin Pro](https://github.com/floatinghotpot/cordova-plugin-mmedia), for Millennial Media Ad service, support impressive video Ad.
 * [iAd Plugin](https://github.com/floatinghotpot/cordova-plugin-iad), Apple iAd service. 
-* [FlurryAds Plugin](https://github.com/floatinghotpot/cordova-plugin-flurry), Yahoo Flurry Ads service.
-* [MoPub Plugin Pro](https://github.com/floatinghotpot/cordova-plugin-mopub), MobPub Ads service.
-* [MobFox Plugin Pro](https://github.com/floatinghotpot/cordova-mobfox-pro), enhanced MobFox plugin, support video Ad and many other Ad network with server-side integration.
+* [FacebookAds Plugin](https://github.com/floatinghotpot/cordova-plugin-facebookads), for Facebook Audience Network Ads service.
+* [FlurryAds Plugin](https://github.com/floatinghotpot/cordova-plugin-flurry), for Yahoo Flurry Ads service.
+* [MoPub Plugin Pro](https://github.com/floatinghotpot/cordova-plugin-mopub), for MobPub Ads service.
+* [MobFox Plugin Pro](https://github.com/floatinghotpot/cordova-mobfox-pro), for MobFox Ads service, support video Ad and many other Ad network with server-side integration.
 
 More Cordova/PhoneGap plugins by Raymond Xie, [click here](http://floatinghotpot.github.io/).
 
