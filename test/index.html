@@ -61,7 +61,7 @@ button {
             initAd();
             
             // display the banner at startup
-            AdMob.createBanner( admobid.banner, function(){}, function(data){alert(JSON.stringify(data));} );
+            createSelectedBanner();
         }
         function initAd(){
             var defaultOptions = {
@@ -81,6 +81,7 @@ button {
         }
         // optional, in case respond to events or handle error
         function registerAdEvents() {
+        	/* deprecated
             document.addEventListener('onBannerFailedToReceive', function(data){ alert('error: ' + data.error + ', reason: ' + data.reason); });
             document.addEventListener('onBannerReceive', function(){});
             document.addEventListener('onBannerPresent', function(){});
@@ -92,6 +93,20 @@ button {
             document.addEventListener('onInterstitialPresent', function(){});
             document.addEventListener('onInterstitialLeaveApp', function(){});
             document.addEventListener('onInterstitialDismiss', function(){});
+            */
+            
+            // new events, with variable to differentiate: adNetwork, adType, adEvent
+            document.addEventListener('onAdFailLoad', function(data){ 
+            	alert('error: ' + data.error + 
+            			', reason: ' + data.reason + 
+            			', adNetwork:' + data.adNetwork + 
+            			', adType:' + data.adType + 
+            			', adEvent:' + data.adEvent); // adType: 'banner' or 'interstitial'
+            });
+            document.addEventListener('onAdLoaded', function(data){});
+            document.addEventListener('onAdPresent', function(data){});
+            document.addEventListener('onAdLeaveApp', function(data){});
+            document.addEventListener('onAdDismiss', function(data){});
         }
         
         // click button to call following functions

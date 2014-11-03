@@ -144,14 +144,21 @@ AdMob.isInterstitialReady(callback);
 > **Syntax**: document.addEventListener(event_name, callback);
 
 ```javascript
-// for banner Ad
+// for both banner and interstitial
+'onAdFailLoad'
+'onAdLoaded'
+'onAdPresent'
+'onAdLeaveapp'
+'onAdDismiss'
+
+// deprecated, for banner Ad
 'onBannerFailedToReceive'
 'onBannerReceive'
 'onBannerPresent'
 'onBannerLeaveApp'
 'onBannerDismiss'
     
-// for interstitial Ad    
+// deprecated, for interstitial Ad    
 'onInterstitialFailedToReceive'
 'onInterstitialReceive'
 'onInterstitialPresent'
@@ -335,21 +342,25 @@ AdMob.isInterstitialReady(function(isready){
 
 ## Events ##
 
-### Banner Events ###
+All following events will come with a data param, with properties:
+* data.adNetwork, the Ad network name, like 'AdMob', 'Flurry', 'iAd', etc.
+* data.adType, 'banner' or 'interstitial'
+* data.adEvent, the event name
 
-'onBannerFailedToReceive'
+'onAdFailLoad'
 > Triggered when failed to receive Ad. 
 ```javascript
-document.addEventListener('onBannerFailedToReceive',function(data){
+document.addEventListener('onAdFailLoad',function(data){
 	console.log( data.error + ',' + data.reason );
-	AdMob.hideBanner();
+	if(data.adType == 'banner') AdMob.hideBanner();
+	else if(data.adType == 'interstitial') interstitialIsReady = false;
 });
 ```
 
-'onBannerReceive'
+'onAdLoaded'
 > Triggered when Ad received.
 ```javascript
-document.addEventListener('onBannerReceive',function(data){
+document.addEventListener('onAdLoaded',function(data){
 	AdMob.showBanner();
 });
 AdMob.createBanner({
@@ -358,24 +369,14 @@ AdMob.createBanner({
 });
 ```
 
-'onBannerPresent'
+'onAdPresent'
 > Triggered when Ad will be showed on screen.
 
-'onBannerLeaveApp'
+'onAdLeaveApp'
 > Triggered when user click the Ad, and will jump out of your App.
 
-'onBannerDismiss'
+'onAdDismiss'
 > Triggered when dismiss the Ad and back to your App.
-
-### Interstitial Events ###
-
-- 'onInterstitialFailedToReceive'
-- 'onInterstitialReceive'
-- 'onInterstitialPresent'
-- 'onInterstitialLeaveApp'
-- 'onInterstitialDismiss'
-
-They are quite similiar to the events of banner Ad.
 
 ## Notice for Android Proguard ##
 

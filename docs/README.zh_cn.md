@@ -4,16 +4,31 @@
 用 Javascript 呈现 AdMob 广告赚钱，一行代码搞定 ！
 
 亮点：
+- [x] 最简单的API，一行代码搞定广告显示。
 - [x] 支持广告条（Banner）和全屏广告（Interstitial）。
+- [x] 可以通过AdMob中介支持多个广告网络。
 - [x] 多种广告条尺寸，甚至可以自定义尺寸。
 - [x] 可以固定广告在屏幕顶端或底部，也可以悬浮模式。
 - [x] 最灵活的广告呈现，可以在任意指定位置显示。
 - [x] 横屏、竖屏，智能广告条自动适应。
-- [x] 支持最新的 iOS SDK v6.11.1。
-- [x] 支持最新的 Android Google play services r19。
-- [x] 完全兼容 Intel XDK 和 Crosswalk。
-- [x] 最简单的API，一行代码搞定广告显示。
+- [x] 支持最新的 iOS SDK。
+- [x] 支持最新的 Android Google play services。
 - [x] 更新维护及时，技术支持到位。
+
+兼容：
+- [x] Cordova/PhoneGap
+- [x] Intel XDK / Crosswalk
+- [x] IBM Worklight
+
+支持广告网络：
+- [x] AdMob
+- [x] DoubleClick
+- [x] Facebook AudienceNetwork
+- [x] Flurry
+- [x] iAd
+- [x] InMobi
+- [x] Millennial Media
+- [x] MobFox
 
 友情提示：（根据最近 2 个月的数据统计）
 - [x] 使用 AdMob Plugin Pro，比开源版本有更高的填充率（fill rate）。
@@ -335,21 +350,26 @@ AdMob.isInterstitialReady(function(isready){
 
 ## 事件 ##
 
-### 广告条的事件 ###
+以下所有的事件，都附带参数，包括：
+* data.adNetwork, 广告网络的名称, 例如 'AdMob', 'Flurry', 'iAd', etc.
+* data.adType, 'banner' 或者 'interstitial'
+* data.adEvent, 事件的名称
+根据这些参数的值，可以做相关的判断。
 
-'onBannerFailedToReceive'
+'onAdFailLoad'
 > 当从广告服务器加载广告资源失败的时候触发. 
 ```javascript
-document.addEventListener('onBannerFailedToReceive',function(data){
+document.addEventListener('onAdFailLoad',function(data){
 	console.log( data.error + ',' + data.reason );
-	AdMob.hideBanner();
+	if(data.adType == 'banner') AdMob.hideBanner();
+	else if(data.adType == 'interstitial') interstitialIsReady = false;
 });
 ```
 
-'onBannerReceive'
+'onAdLoaded'
 > 当广告资源从服务器成功加载之后触发.
 ```javascript
-document.addEventListener('onBannerReceive',function(data){
+document.addEventListener('onAdLoaded',function(data){
 	AdMob.showBanner();
 });
 AdMob.createBanner({
@@ -358,24 +378,14 @@ AdMob.createBanner({
 });
 ```
 
-'onBannerPresent'
+'onAdPresent'
 > 当广告成功显示出来的时候触发.
 
-'onBannerLeaveApp'
+'onAdLeaveApp'
 > 当用户点击广告的时候，即将跳转到广告链接指向的网站时触发。也许，你可以计算用户点击了多少次。
 
-'onBannerDismiss'
+'onAdDismiss'
 > 当广告被关闭，回到应用或者游戏的时候触发。
-
-### 全屏广告的事件 ###
-
-- 'onInterstitialFailedToReceive'
-- 'onInterstitialReceive'
-- 'onInterstitialPresent'
-- 'onInterstitialLeaveApp'
-- 'onInterstitialDismiss'
-
-这几个事件，与广告条类似，不再赘述。
 
 ## 关于使用 Android Proguard 的提醒 （来自谷歌）##
 
