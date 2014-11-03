@@ -152,21 +152,27 @@ AdMob.hideBanner();
 
 AdMob.prepareInterstitial(adId/options, success, fail);
 AdMob.showInterstitialAd();
-AdMob.isInterstitialReady(callback);
 ```
 
 ### 事件 ###
 > **语法**: document.addEventListener(event_name, callback);
 
 ```javascript
-// 以下事件，适用于广告条
+// 以下事件，适用于广告条和全屏广告
+'onAdFailLoad'
+'onAdLoaded'
+'onAdPresent'
+'onAdLeaveApp'
+'onAdDismiss'
+
+// 以下事件，适用于广告条，但即将作废，建议用上面的事件
 'onBannerFailedToReceive'
 'onBannerReceive'
 'onBannerPresent'
 'onBannerLeaveApp'
 'onBannerDismiss'
     
-// 以下事件，适用于全屏广告    
+// 以下事件，适用于全屏广告，但即将作废，建议用上面的事件  
 'onInterstitialFailedToReceive'
 'onInterstitialReceive'
 'onInterstitialPresent'
