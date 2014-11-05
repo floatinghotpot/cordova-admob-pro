@@ -21,7 +21,7 @@
         <clobbers target="window.AdMob" />
     </js-module>
 
-	<dependency id="com.google.admobsdk-googleplay" version=">=5.0.89"/>
+	<dependency id="com.google.playservices" version=">=19.0.0"/>
 	<dependency id="com.google.admobsdk-ios" version=">=6.12.0"/>
 	<dependency id="com.rjfun.cordova.ext" version=">=1.0.0"/>
 
