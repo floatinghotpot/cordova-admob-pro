@@ -136,7 +136,6 @@ hideBanner();
 // for interstitial
 prepareInterstitial(adId/options, success, fail);
 showInterstitial();
-isInterstitialReady(callback);
 ```
 
 ## Detailed Documentation ##
