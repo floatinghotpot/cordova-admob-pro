@@ -34,7 +34,29 @@ If use with Cordova CLI:
 cordova plugin add com.google.cordova.admob
 ```
 
-Optional mediations (Read about [AdMob Mediation Networks](https://developers.google.com/mobile-ads-sdk/docs/admob/android/mediation-networks)):
+## Quick example with cordova CLI ##
+```bash
+	# create a demo project
+    cordova create test1 com.rjfun.test1 Test1
+    cd test1
+    cordova platform add android
+    cordova platform add ios
+
+    # now add the plugin, cordova CLI will handle dependency automatically
+    cordova plugin add com.google.cordova.admob
+
+    # now remove the default www content, copy the demo html file to www
+    rm -r www/*;
+    cp plugins/com.google.cordova.admob/test/* www/;
+
+	# now build and run the demo in your device or emulator
+    cordova prepare; 
+    cordova run android; 
+    cordova run ios;
+    # or import into Xcode / eclipse
+```
+
+Optional mediations to increase your revenue (Read about [AdMob Mediation Networks](https://developers.google.com/mobile-ads-sdk/docs/admob/android/mediation-networks)):
 ```bash
 cordova plugin add com.google.cordova.admob-facebook
 cordova plugin add com.google.cordova.admob-flurry
@@ -186,7 +208,7 @@ If use FULL_BANNER, when app running on phone with smalll screen, as the screen 
 
 Glossary:
 - Fill rate: The number of times ads are shown on your app, divided by the number of times your app requests to show an ad.
-- RPM: Revenue per 1000 impressions (RPM). RPM represents the estimated earnings you'd accrue for every 1000 impressions you receive.
+- eCPM / RPM: Revenue per 1000 impressions (RPM). RPM represents the estimated earnings you'd accrue for every 1000 impressions you receive.
 - Intel XDK: Intel's HTML5 App IDE and service, to build mobile app in clould, allow using 3rd-party plugin from web.
 - Adobe PhoneGap Build: Adobe service, to publish plugin and build app in cloud, only allow using plugins reviewed and approved.
 
@@ -218,15 +240,15 @@ AdMob Plugin Pro is your best choice for HTML5/Cordova/PhoneGap/XDK/Construct2 a
 
 Cordova/PhoneGap plugins for the world leading Mobile Ad services:
 
-* [AdMob Plugin Pro](https://github.com/floatinghotpot/cordova-admob-pro), enhanced Google AdMob plugin, easy API, with mediation to multiple Ad networks.
-* [mMedia Plugin Pro](https://github.com/floatinghotpot/cordova-plugin-mmedia), for Millennial Media Ad service, support impressive video Ad.
-* [iAd Plugin](https://github.com/floatinghotpot/cordova-plugin-iad), Apple iAd service. 
-* [FacebookAds Plugin](https://github.com/floatinghotpot/cordova-plugin-facebookads), for Facebook Audience Network Ads service.
-* [FlurryAds Plugin](https://github.com/floatinghotpot/cordova-plugin-flurry), for Yahoo Flurry Ads service.
-* [MoPub Plugin Pro](https://github.com/floatinghotpot/cordova-plugin-mopub), for MobPub Ads service.
-* [MobFox Plugin Pro](https://github.com/floatinghotpot/cordova-mobfox-pro), for MobFox Ads service, support video Ad and many other Ad network with server-side integration.
+* [AdMob PluginPro](https://github.com/floatinghotpot/cordova-admob-pro), for Google AdMob/DoubleClick.
+* [iAd PluginPro](https://github.com/floatinghotpot/cordova-plugin-iad), for Apple iAd. 
+* [FacebookAds PluginPro](https://github.com/floatinghotpot/cordova-plugin-facebookads), for Facebook Audience Network.
+* [FlurryAds PluginPro](https://github.com/floatinghotpot/cordova-plugin-flurry), for Flurry Ads.
+* [mMedia PluginPro](https://github.com/floatinghotpot/cordova-plugin-mmedia), for Millennial Meida.
+* [MobFox PluginPro](https://github.com/floatinghotpot/cordova-mobfox-pro), for MobFox.
+* [MoPub PluginPro](https://github.com/floatinghotpot/cordova-plugin-mopub), for MoPub.
 
-More Cordova/PhoneGap plugins by Raymond Xie, [click here](http://floatinghotpot.github.io/).
+More Cordova/PhoneGap plugins by Raymond Xie, [visit http://rjfun.github.io/](http://rjfun.github.io/).
 
 Project outsourcing and consulting service is also available. Please [contact us](http://floatinghotpot.github.io) if you have the business needs.
 
