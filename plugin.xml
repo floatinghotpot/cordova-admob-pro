@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.google.cordova.admob"
-	version="2.3.2">
+	version="2.3.5">
       
     <name>AdMob PluginPro with Mediations</name>
 	<description>Most Powerful Ad Plugin for Cordova/PhoneGap. Show Ad with single line of JavaScript. Maximize revenue with mediation to AdMob, DoubleClick, iAd, Facebook Audience Network, Flurry, Millennial Media, InMobi, Mobfox, and much more.</description>
@@ -31,8 +31,8 @@
                 <param name="android-package" value="com.rjfun.cordova.admob.AdMobPlugin"/>
             </feature>
         </config-file>
-          
-        <source-file src="src/android/cordova-admob.jar" target-dir="libs" />
+        <source-file src="src/android/AdMobMediation.java" target-dir="src/com/rjfun/cordova/admob" />
+        <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
      </platform>
      
      <!-- ios -->
@@ -43,7 +43,10 @@
                  <param name="onload" value="true" />
              </feature>
          </config-file>
-         <source-file src="src/ios/libCordovaAdMob.a" framework="true" compiler-flags="-force_load"/>
+         <header-file src="src/ios/CDVAdMobPlugin.h"/>
+         <source-file src="src/ios/CDVAdMobPlugin.m"/>
+         <header-file src="src/ios/AdMobMediation.h"/>
+         <source-file src="src/ios/AdMobMediation.m"/>
 	</platform>
 
 </plugin>

@@ -1,6 +1,6 @@
-# AdMob Plugin Pro #
+# GoogleAds PluginPro #
 
-N-in-1 AdMob Plugin for Cordova/PhoneGap. Maximize revenue with mediation to AdMob, DoubleClick, iAd, Flurry, Millennial Media, InMobi, Mobfox, and much more.
+N-in-1 GoogleAds Plugin. Maximize revenue with mediation to AdMob, DoubleClick, iAd, Flurry, Millennial Media, InMobi, Mobfox, and much more.
 
 Highlights:
 - [x] Easy-to-use: Can display Ad with single line of Js code.
@@ -172,7 +172,7 @@ If encounter problem when using the plugin, please read the [FAQ](https://github
 
 ## Full Example Code ##
 
-This AdMob Plugin Pro offers the most flexibility and many options.
+This GoogleAds PluginPro offers the most flexibility and many options.
 
 Check the [test/index.html] (https://github.com/floatinghotpot/cordova-admob-pro/blob/master/test/index.html).
 
@@ -212,43 +212,17 @@ Glossary:
 - Intel XDK: Intel's HTML5 App IDE and service, to build mobile app in clould, allow using 3rd-party plugin from web.
 - Adobe PhoneGap Build: Adobe service, to publish plugin and build app in cloud, only allow using plugins reviewed and approved.
 
-## Credits ##
-
-This AdMob Plugin Pro is published in a win-win partnership model:
-- It's FREE. 
-- It's closed source.
-- 2% Ad traffic will be shared, as return for the support and maintenance effort.
-- You will get commercial-level support with high priority, prompt and professional.
-
-If you hope to make the Ad 100% under your control and keep 100% Ad revenue, you can also consider spending $20 to [get a license key](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=NRKTFZ88Q9KTW) to remove the 2% Ad traffic sharing.
-It's much cheaper than [the $50.00 AdMob plugin for unity](https://prime31.com/plugins). 
-
-Then set the license key in options (either API setOptions, or createBanner, or prepareInterstitial):
-```javascript
-    license: 'username@gmail.com/xxxxxxxxxxxxxxx',
-```
-
-AdMob Plugin Pro is your best choice for HTML5/Cordova/PhoneGap/XDK/Construct2 app/games.
-
-- Recommended by Telerik in Verified Plugins Marketplace. [read more ...](http://plugins.telerik.com/plugin/admob)
-- Recommended by William SerGio in code project (20 Jun 2014), [read more ...](http://www.codeproject.com/Articles/788304/AdMob-Plugin-for-Latest-Version-of-PhoneGap-Cordov)
-- Recommended by Arne in Scirra Game Dev Forum (07 Aug, 2014), [read more ...](https://www.scirra.com/forum/plugin-admob-ads-for-crosswalk_t111940)
-- Recommended by Intel XDK / Crosswalk (08/22/2014), [read more ...](https://software.intel.com/en-us/html5/articles/adding-google-play-services-to-your-cordova-application)
-- Recommended by Scirra Construct 2 (09/12/2014) official release, [read more ...](https://www.scirra.com/construct2/releases/r180)
-
 ## See Also ##
 
-Cordova/PhoneGap plugins for the world leading Mobile Ad services:
+Ad PluginPro series for the world leading Mobile Ad services:
 
-* [AdMob PluginPro](https://github.com/floatinghotpot/cordova-admob-pro), for Google AdMob/DoubleClick.
-* [iAd PluginPro](https://github.com/floatinghotpot/cordova-plugin-iad), for Apple iAd. 
+* [GoogleAds PluginPro](https://github.com/floatinghotpot/cordova-admob-pro), for Google AdMob/DoubleClick.
+* [iAd PluginPro](https://github.com/floatinghotpot/cordova-iad-pro), for Apple iAd. 
 * [FacebookAds PluginPro](https://github.com/floatinghotpot/cordova-plugin-facebookads), for Facebook Audience Network.
 * [FlurryAds PluginPro](https://github.com/floatinghotpot/cordova-plugin-flurry), for Flurry Ads.
 * [mMedia PluginPro](https://github.com/floatinghotpot/cordova-plugin-mmedia), for Millennial Meida.
 * [MobFox PluginPro](https://github.com/floatinghotpot/cordova-mobfox-pro), for MobFox.
 * [MoPub PluginPro](https://github.com/floatinghotpot/cordova-plugin-mopub), for MoPub.
 
-More Cordova/PhoneGap plugins by Raymond Xie, [visit http://rjfun.github.io/](http://rjfun.github.io/).
-
-Project outsourcing and consulting service is also available. Please [contact us](http://floatinghotpot.github.io) if you have the business needs.
+More Cordova/PhoneGap plugins by Raymond Xie, [find them in plugin registry](http://plugins.cordova.io/#/search?search=rjfun).
 
