@@ -226,7 +226,7 @@ Ad PluginPro series for the world leading Mobile Ad services:
 
 More Cordova/PhoneGap plugins by Raymond Xie, [find them in plugin registry](http://plugins.cordova.io/#/search?search=rjfun).
 
-If use in commercial project or need prompt support, please [buy a license](http://rjfun.github.io/), you will be served with high priority.
+If use in commercial project or need prompt support, please [buy a license](http://rjfun.github.io/), you will be supported with high priority.
 
 Project outsourcing and consulting service is also available. Please [contact us](mailto:rjfun.mobile@gmail.com) if you have the business needs.
 

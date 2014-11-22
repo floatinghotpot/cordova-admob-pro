@@ -210,6 +210,8 @@ AdMob.AD_POSITION.POS_XY 		= 10, // use the given X and Y, see params 'x' and 'y
 - **isTesting**, *boolean*, set to true, to receiving test ad for testing purpose
 - **autoShow**, *boolean*, auto show interstitial ad when loaded, set to false if hope to control the show timing with prepareInterstitial/showInterstitial
 - **orientationRenew**, *boolean*, re-create the banner on web view orientation change (not screen orientation), or else just move the banner. Default:true.
+- **offsetTopBar**, *boolean*, offset position of banner and webview to avoid overlap by status bar (iOS7+)
+- **bgColor**, *string*, background color of parent view, value may be color name like 'black', 'white', etc, or '#RRGGBB'
 - **adExtras**, *json object*, set extra color style for Ad.
 ```javascript
 {

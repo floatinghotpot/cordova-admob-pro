@@ -1,6 +1,11 @@
 
 Change Log:
 
+2014.11.22
+	- re-write code for showing banner, now compatible with status bar plugin
+	- add new option, bgColor
+	- upgrade to iOS sdk v6.12.2
+
 2014.11.3
 	- bugfix license validation in iOS code.
 	

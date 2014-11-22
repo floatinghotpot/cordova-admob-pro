@@ -225,6 +225,8 @@ AdMob.AD_POSITION.POS_XY 		= 10, // 用于指定位置 X 和 Y, 参见 'x' and 'y'
 - **isTesting**, *boolean*, 用于测试，当设置为 true 的时候，可以接收测试广告，发布的时候，请务必设置为 false，否则不计算收益。
 - **autoShow**, *boolean*, 当广告准备就绪时自动显示，否则需要调用 showBanner 或者 showInterstitial
 - **orientationRenew**, *boolean*, 在屏幕方向发生变化时，强制销毁和重新创建广告条，一般情况不用设置。
+- **offsetTopBar**, *boolean*, 偏移广告条和WebView，避免被状态条遮挡 (iOS7+)
+- **bgColor**, *string*, 设置父窗口的背景色, 可用值：'black', 'white'等等, 或者RGB格式 '#RRGGBB'
 - **adExtras**, *json object*, 为广告显示设置额外的色彩风格.
 ```javascript
 {

@@ -71,6 +71,8 @@ button {
                 // width: integer, // valid when set adSize 'CUSTOM'
                 // height: integer, // valid when set adSize 'CUSTOM'
                 position: AdMob.AD_POSITION.BOTTOM_CENTER,
+                // offsetTopBar: false, // avoid overlapped by status bar, for iOS7+
+                bgColor: 'black', // color name, or '#RRGGBB'
                 // x: integer,		// valid when set position to 0 / POS_XY
                 // y: integer,		// valid when set position to 0 / POS_XY
                 isTesting: true, // set to true, to receiving test ad for testing purpose
@@ -122,7 +124,8 @@ button {
         }
         function createSelectedBanner() {
         	var overlap = document.getElementById('overlap').checked;
-            AdMob.createBanner( {adId:admobid.banner, overlap:overlap, adSize: getSelectedAdSize(), position:getSelectedPosition()} );
+            var offsetTopBar = document.getElementById('offsetTopBar').checked;
+            AdMob.createBanner( {adId:admobid.banner, overlap:overlap, offsetTopBar:offsetTopBar, adSize: getSelectedAdSize(), position:getSelectedPosition()} );
         }
         function createBannerOfGivenSize() {
             var w = document.getElementById('w').value;
@@ -158,7 +161,8 @@ button {
 			<option value='FULL_BANNER'>FULL_BANNER</option>
 			<option value='LEADERBOARD'>LEADERBOARD</option>
 			<option value='SKYSCRAPER'>SKYSCRAPER</option>
-		</select><br /> <input type='checkbox' id='overlap' />overlap
+		</select><br /> <input type='checkbox' id='overlap' />overlap<br/>
+         <input type='checkbox' id='offsetTopBar' />offsetTopBar<br/>
 		<button onclick="createSelectedBanner();">create</button>
 		<br /> Custom Size: (<input id='w' type='text' size=3 /> x <input
 			id='h' type='text' size=3>)
