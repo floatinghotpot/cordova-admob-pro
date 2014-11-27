@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.google.cordova.admob"
-	version="2.3.6">
+	version="2.4.0">
       
     <name>AdMob PluginPro with Mediations</name>
 	<description>Most Powerful Ad Plugin for Cordova/PhoneGap. Show Ad with single line of JavaScript. Maximize revenue with mediation to AdMob, DoubleClick, iAd, Facebook Audience Network, Flurry, Millennial Media, InMobi, Mobfox, and much more.</description>
@@ -48,5 +48,31 @@
          <header-file src="src/ios/AdMobMediation.h"/>
          <source-file src="src/ios/AdMobMediation.m"/>
 	</platform>
+
+     <!-- Windows Phone 8 -->
+     <platform name="wp8">
+          <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
+               <Capability Name="ID_CAP_LOCATION" />
+          </config-file>
+          <config-file target="config.xml" parent="/*">
+               <feature name="AdMob">
+                    <param name="wp-package" value="AdMobPlugin"/>
+               </feature>
+          </config-file>
+          <source-file src="src/wp8/AdMobPlugin.cs" />
+     </platform>
+
+     <!-- Windows Phone 8.1+ -->
+     <platform name="windows">
+          <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
+               <Capability Name="ID_CAP_LOCATION" />
+          </config-file>
+          <config-file target="config.xml" parent="/*">
+               <feature name="AdMob">
+                    <param name="wp-package" value="AdMobPlugin"/>
+               </feature>
+          </config-file>
+          <source-file src="src/wp8/AdMobPlugin.cs" />
+     </platform>
 
 </plugin>
