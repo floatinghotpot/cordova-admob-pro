@@ -1,9 +1,11 @@
 # GoogleAds PluginPro #
 
-N-in-1 GoogleAds Plugin. Maximize revenue with mediation to AdMob, DoubleClick, iAd, Flurry, Millennial Media, InMobi, Mobfox, and much more.
+N-in-1 GoogleAds Plugin. 
+
+Maximize revenue with mediation to AdMob, DoubleClick, iAd, Flurry, Millennial Media, InMobi, Mobfox, and much more.
 
 Highlights:
-- [x] Easy-to-use: Can display Ad with single line of Js code.
+- [x] Easy-to-use: Display Ad with single line of javascript code.
 - [x] Powerful: Support banner, interstitial, and video Ad.
 - [x] Max revenue: Support mediation with up to 8 leading mobile Ad services.
 - [x] Multi-size: Multiple banner size, also support custom size.
@@ -12,10 +14,17 @@ Highlights:
 - [x] Up to date: Latest SDK and Android Google play services.
 - [x] Good support: Actively maintained, prompt response.
 
+Platforms supported:
+- [x] Android
+- [x] iOS
+- [x] Windows Phone
+
 Tested with:
-* [x] Cordova CLI, v3.0+ (do not use the buggy v3.4)
-* [x] Intel XDK, r1095+
-* [x] IBM Worklight, v6.2+
+* [x] Apache Cordova CLI, v3.0+ [HowTo](https://github.com/floatinghotpot/cordova-admob-pro/wiki/01.-How-to-Use-with-Cordova-CLI)
+* [x] Intel XDK, r1095+ [HowTo](https://github.com/floatinghotpot/cordova-admob-pro/wiki/02.-How-to-Use-with-Intel-XDK)
+* [x] IBM Worklight, v6.2+ [HowTo](https://github.com/floatinghotpot/cordova-admob-pro/wiki/04.-How-to-Use-with-IBM-Worklight)
+* [x] Google Mobile Chrome App [HowTo](https://github.com/floatinghotpot/cordova-admob-pro/wiki/05.-How-to-Use-with-Mobile-Chrome-App)
+* [ ] Adobe PhoneGap Build, NOT suported (Reason: Binary in official SDK not allowed in PhoneGap Build. What a pity!)
 
 Mediation with:
 * [x] AdMob
