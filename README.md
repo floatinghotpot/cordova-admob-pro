@@ -20,11 +20,11 @@ Platforms supported:
 - [x] Windows Phone
 
 Tested with:
-* [x] Apache Cordova CLI, v3.0+ [HowTo](https://github.com/floatinghotpot/cordova-admob-pro/wiki/01.-How-to-Use-with-Cordova-CLI)
-* [x] Intel XDK, r1095+ [HowTo](https://github.com/floatinghotpot/cordova-admob-pro/wiki/02.-How-to-Use-with-Intel-XDK)
-* [x] IBM Worklight, v6.2+ [HowTo](https://github.com/floatinghotpot/cordova-admob-pro/wiki/04.-How-to-Use-with-IBM-Worklight)
-* [x] Google Mobile Chrome App [HowTo](https://github.com/floatinghotpot/cordova-admob-pro/wiki/05.-How-to-Use-with-Mobile-Chrome-App)
-* [ ] Adobe PhoneGap Build, NOT suported (Reason: Binary in official SDK not allowed in PhoneGap Build. What a pity!)
+* [x] Apache Cordova CLI, v3.0+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/01.-How-to-Use-with-Cordova-CLI))
+* [x] Intel XDK, r1095+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/02.-How-to-Use-with-Intel-XDK))
+* [x] IBM Worklight, v6.2+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/04.-How-to-Use-with-IBM-Worklight))
+* [x] Google Mobile Chrome App ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/05.-How-to-Use-with-Mobile-Chrome-App))
+* [ ] Adobe PhoneGap Build, NOT suported. (Reason: Binary in official SDK not allowed in PhoneGap Build. What a pity!)
 
 Mediation with:
 * [x] AdMob
