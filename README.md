@@ -1,6 +1,4 @@
-# GoogleAds PluginPro #
-
-Show Mobile Ad with 1 line of javascript code. 
+### Show Mobile Ad with 1 line of javascript code ###
 
 Platforms supported:
 - [x] Android
@@ -42,7 +40,7 @@ If use with Cordova CLI:
 cordova plugin add com.google.cordova.admob
 ```
 
-## Quick example with cordova CLI ##
+## Quick start with cordova CLI ##
 ```bash
 	# create a demo project
     cordova create test1 com.rjfun.test1 Test1
@@ -199,19 +197,11 @@ Android Interstitial |
 
 ## Tips ##
 
-Some tips from recent stat data. (Fill rate and RPM may vary in different countries. For your reference only.)
+Some tips from recent stat data, FYI.
 
 - [x] Using AdMob Plugin Pro, higher and more stable fill rate. 
-![fillrate](docs/admob_fillrate.jpg)
-
-- [x] Using Interstitial, much better profit. 
-![rpm](docs/admob_rpm.png)
-
-- [x] Using SMART_BANNER, avoid using BANNER or FULL_BANNER
-
-Smart banner will auto detect the screen, and auto set a proper height, to fit whenever it's phone or pad.
-
-If use FULL_BANNER, when app running on phone with smalll screen, as the screen is not big enough, it will not show banner with error "No fill".
+- [x] Using Interstitial, 5-10 times profit than banner Ad. 
+- [x] Using SMART_BANNER, avoid using BANNER or FULL_BANNER.
 
 ## See Also ##
 
