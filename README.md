@@ -1,18 +1,6 @@
 # GoogleAds PluginPro #
 
-N-in-1 GoogleAds Plugin. 
-
-Maximize revenue with mediation to AdMob, DoubleClick, iAd, Flurry, Millennial Media, InMobi, Mobfox, and much more.
-
-Highlights:
-- [x] Easy-to-use: Display Ad with single line of javascript code.
-- [x] Powerful: Support banner, interstitial, and video Ad.
-- [x] Max revenue: Support mediation with up to 8 leading mobile Ad services.
-- [x] Multi-size: Multiple banner size, also support custom size.
-- [x] Flexible: Fixed and overlapped mode, put banner at any position with overlap mode.
-- [x] Smart: Auto fit on orientation change.
-- [x] Up to date: Latest SDK and Android Google play services.
-- [x] Good support: Actively maintained, prompt response.
+Show Mobile Ad with 1 line of javascript code. 
 
 Platforms supported:
 - [x] Android
@@ -26,9 +14,20 @@ Tested with:
 * [x] Google Mobile Chrome App ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/05.-How-to-Use-with-Mobile-Chrome-App))
 * [ ] Adobe PhoneGap Build, NOT suported. (Reason: PhoneGap Build not accept binary files, even the jar or lib from official SDK)
 
-Mediation with:
-* [x] AdMob
-* [x] DFP (DoubleClick for Publisher)
+Highlights:
+- [x] Easy-to-use: Display Ad with single line of javascript code.
+- [x] Powerful: Support banner, interstitial, and video Ad.
+- [x] Max revenue: Support mediation with up to 8 leading mobile Ad services.
+- [x] Multi-size: Multiple banner size, also support custom size.
+- [x] Flexible: Fixed and overlapped mode, put banner at any position with overlap mode.
+- [x] Smart: Auto fit on orientation change.
+- [x] Same API: Exactly same API with other Ad plugins, easy to switch from one Ad service to another.
+- [x] Up to date: Latest SDK and Android Google play services.
+- [x] Good support: Actively maintained, prompt response.
+
+Maximize your revenue with mediation adapters:
+* [x] AdMob (built-in)
+* [x] DFP (DoubleClick for Publisher, built-in)
 * [x] Facebook Audience Network
 * [x] Flurry
 * [x] iAd
@@ -86,8 +85,22 @@ Plugin ID: com.google.cordova.admob
 [x] Plugin is located in the Apache Cordova Plugins Registry
 ```
 
-If use with IBM Worklight:
-As Worklight does not support importing Cordova Plugin directly, please read the [instruction in wiki](https://github.com/floatinghotpot/cordova-admob-pro/wiki/04.-How-to-Use-with-IBM-Worklight)
+## Javascript API Overview ##
+
+Methods:
+```javascript
+// use banner
+createBanner(adId/options, success, fail);
+removeBanner();
+showBanner(position);
+showBannerAtXY(x, y);
+hideBanner();
+// use interstitial
+prepareInterstitial(adId/options, success, fail);
+showInterstitial();
+// set default value for other methods
+setOptions(options, success, fail);
+```
 
 ## Quick Start Example Code ##
 
@@ -152,38 +165,23 @@ if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false}
 if(AdMob) AdMob.showInterstitial();
 ```
 
-## Javascript API Overview ##
+### Detailed Wiki ###
 
-Methods:
-```javascript
-// set default value for other methods
-setOptions(options, success, fail);
-// for banner
-createBanner(adId/options, success, fail);
-removeBanner();
-showBanner(position);
-showBannerAtXY(x, y);
-hideBanner();
-// for interstitial
-prepareInterstitial(adId/options, success, fail);
-showInterstitial();
-```
+Quick start, simply copy & paste:
+* [Example Code](https://github.com/floatinghotpot/cordova-admob-pro/wiki/1.0-Quick-Start-Example-Code)
+* [Complete Demo index.html](https://github.com/floatinghotpot/cordova-admob-pro/blob/master/test/index.html)
 
-## Detailed Documentation ##
+API Reference:
+* [API Overview](https://github.com/floatinghotpot/cordova-admob-pro/wiki/1.1-API-Overview)
+* [How to Use Banner](https://github.com/floatinghotpot/cordova-admob-pro/wiki/1.3-Methods-for-Banner)
+* [How to Use Interstitial](https://github.com/floatinghotpot/cordova-admob-pro/wiki/1.4-Methods-for-Interstitial)
+* [How to Handle Ad Events](https://github.com/floatinghotpot/cordova-admob-pro/wiki/1.5-Events)
+* [Chinese/中文文档](https://github.com/floatinghotpot/cordova-admob-pro/wiki/%E4%B8%AD%E6%96%87%E6%96%87%E6%A1%A3)
 
-The APIs, Events and Options are detailed documented.
-
-Read the detailed API Reference Documentation [English](https://github.com/floatinghotpot/cordova-admob-pro/tree/master/docs) / [中文说明](https://github.com/floatinghotpot/cordova-admob-pro/blob/master/docs/README.zh_cn.md).
-
-## FAQ ##
-
-If encounter problem when using the plugin, please read the [FAQ](https://github.com/floatinghotpot/cordova-admob-pro/wiki/FAQ) first.
-
-## Full Example Code ##
-
-This GoogleAds PluginPro offers the most flexibility and many options.
-
-Check the [test/index.html] (https://github.com/floatinghotpot/cordova-admob-pro/blob/master/test/index.html).
+Other Documentations:
+* [ChangeLog](https://github.com/floatinghotpot/cordova-admob-pro/wiki/ChangeLog)
+* [FAQ](https://github.com/floatinghotpot/cordova-admob-pro/wiki/FAQ)
+* [Notice for Android Proguard](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Notice-for-Android-Proguard)
 
 ## Screenshots ##
 
@@ -214,12 +212,6 @@ Some tips from recent stat data. (Fill rate and RPM may vary in different countr
 Smart banner will auto detect the screen, and auto set a proper height, to fit whenever it's phone or pad.
 
 If use FULL_BANNER, when app running on phone with smalll screen, as the screen is not big enough, it will not show banner with error "No fill".
-
-Glossary:
-- Fill rate: The number of times ads are shown on your app, divided by the number of times your app requests to show an ad.
-- eCPM / RPM: Revenue per 1000 impressions (RPM). RPM represents the estimated earnings you'd accrue for every 1000 impressions you receive.
-- Intel XDK: Intel's HTML5 App IDE and service, to build mobile app in clould, allow using 3rd-party plugin from web.
-- Adobe PhoneGap Build: Adobe service, to publish plugin and build app in cloud, only allow using plugins reviewed and approved.
 
 ## See Also ##
 
