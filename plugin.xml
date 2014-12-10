@@ -3,10 +3,10 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.google.cordova.admob"
-	version="2.4.0">
+	version="2.5.0">
       
     <name>AdMob PluginPro with Mediations</name>
-	<description>Most Powerful Ad Plugin for Cordova/PhoneGap. Show Ad with single line of JavaScript. Maximize revenue with mediation to AdMob, DoubleClick, iAd, Facebook Audience Network, Flurry, Millennial Media, InMobi, Mobfox, and much more.</description>
+	<description>Powerful Ad Plugin for Cordova/PhoneGap. Show Ad with single line of JavaScript. Maximize revenue with mediation to AdMob, DoubleClick, iAd, Facebook Audience Network, Flurry, Millennial Media, InMobi, Mobfox, and much more.</description>
 	<author>Liming Xie</author>
 	<license>MIT</license>
 	<keywords>rjfun,ad,admob,google,play,services,iad,flurry,mmedia,mobfox,inmobi,dfp</keywords>
@@ -21,8 +21,14 @@
         <clobbers target="window.AdMob" />
     </js-module>
 
-	<dependency id="com.rjfun.cordova.ad"/>
-	<dependency id="com.google.admobsdk"/>
+	<!-- cordova registry, for cordova/plugman CLI, Intel XDK -->
+	<dependency id="com.rjfun.cordova.extension" />
+	<dependency id="com.google.admobsdk" />
+	
+	<!-- github repo, for PhoneGap Build
+	<dependency id="com.rjfun.cordova.extension" url="https://github.com/floatinghotpot/cordova-extension"/>
+	<dependency id="com.google.admobsdk" url="https://github.com/floatinghotpot/google-admob-sdk"/>
+	//-->
 	
     <!-- android -->
     <platform name="android">
