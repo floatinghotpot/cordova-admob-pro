@@ -21,14 +21,8 @@
         <clobbers target="window.AdMob" />
     </js-module>
 
-	<!-- cordova registry, for cordova/plugman CLI, Intel XDK -->
 	<dependency id="com.rjfun.cordova.extension" />
 	<dependency id="com.google.admobsdk" />
-	
-	<!-- github repo, for PhoneGap Build
-	<dependency id="com.rjfun.cordova.extension" url="https://github.com/floatinghotpot/cordova-extension"/>
-	<dependency id="com.google.admobsdk" url="https://github.com/floatinghotpot/google-admob-sdk"/>
-	//-->
 	
     <!-- android -->
     <platform name="android">

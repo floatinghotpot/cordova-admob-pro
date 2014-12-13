@@ -107,9 +107,5 @@ admobExport.showInterstitial = function(successCallback, failureCallback) {
 	cordova.exec( successCallback, failureCallback, 'AdMob', 'showInterstitial', [] );
 };
 
-admobExport.isInterstitialReady = function(successCallback, failureCallback) {
-	cordova.exec( successCallback, failureCallback, 'AdMob', 'isInterstitialReady', [] );
-};
-
 module.exports = admobExport;
 
