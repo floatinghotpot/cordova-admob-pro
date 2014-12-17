@@ -3,13 +3,13 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.google.cordova.admob"
-	version="2.5.0">
+	version="2.6.0">
       
     <name>AdMob PluginPro with Mediations</name>
-	<description>Powerful Ad Plugin for Cordova/PhoneGap. Show Ad with single line of JavaScript. Maximize revenue with mediation to AdMob, DoubleClick, iAd, Facebook Audience Network, Flurry, Millennial Media, InMobi, Mobfox, and much more.</description>
+	<description>Powerful Ad Plugin for Cordova/PhoneGap. Show Ad with single line of JavaScript. Latest SDK.</description>
 	<author>Liming Xie</author>
 	<license>MIT</license>
-	<keywords>rjfun,ad,admob,google,play,services,iad,flurry,mmedia,mobfox,inmobi,dfp</keywords>
+	<keywords>rjfun,admob,google,ad</keywords>
     <repo>https://github.com/floatinghotpot/cordova-admob-pro.git</repo>
     <issue>https://github.com/floatinghotpot/cordova-admob-pro/issues</issue>
 
@@ -22,10 +22,20 @@
     </js-module>
 
 	<dependency id="com.rjfun.cordova.extension" />
-	<dependency id="com.google.admobsdk" />
 	
     <!-- android -->
     <platform name="android">
+        <dependency id="com.google.playservices" />
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
+			    android:name="com.google.android.gms.ads.AdActivity"
+			    android:theme="@android:style/Theme.Translucent" />
+          </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+			<uses-permission android:name="android.permission.INTERNET"/>
+			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+          </config-file>
+          
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="AdMob">
                 <param name="android-package" value="com.rjfun.cordova.admob.AdMobPlugin"/>
@@ -48,6 +58,51 @@
          <source-file src="src/ios/CDVAdMobPlugin.m"/>
          <header-file src="src/ios/AdMobMediation.h"/>
          <source-file src="src/ios/AdMobMediation.m"/>
+         
+         <header-file src="src/ios/GADAdMobExtras.h" />
+         <header-file src="src/ios/GADAdNetworkExtras.h" />
+         <header-file src="src/ios/GADAdSize.h" />
+         <header-file src="src/ios/GADBannerView.h" />
+         <header-file src="src/ios/GADBannerViewDelegate.h" />
+         <header-file src="src/ios/GADInAppPurchase.h" />
+         <header-file src="src/ios/GADInAppPurchaseDelegate.h" />
+         <header-file src="src/ios/GADInterstitial.h" />
+         <header-file src="src/ios/GADInterstitialDelegate.h" />
+         <header-file src="src/ios/GADModules.h" />
+         <header-file src="src/ios/GADRequest.h" />
+         <header-file src="src/ios/GADRequestError.h" />
+         
+         <header-file src="src/ios/Add-ons/DoubleClick/DFPBannerView.h" />
+         <header-file src="src/ios/Add-ons/DoubleClick/DFPInterstitial.h" />
+         <header-file src="src/ios/Add-ons/DoubleClick/GADSwipeableBannerViewDelegate.h" />
+         <header-file src="src/ios/Add-ons/DoubleClick/DFPSwipeableBannerView.h" />
+         <header-file src="src/ios/Add-ons/DoubleClick/GADAppEventDelegate.h" />
+         <header-file src="src/ios/Add-ons/DoubleClick/GADAdSizeDelegate.h" />
+
+         <header-file src="src/ios/Add-ons/Mediation/GADCustomEventBanner.h" />
+         <header-file src="src/ios/Add-ons/Mediation/GADCustomEventBannerDelegate.h" />
+         <header-file src="src/ios/Add-ons/Mediation/GADCustomEventInterstitial.h" />
+         <header-file src="src/ios/Add-ons/Mediation/GADCustomEventInterstitialDelegate.h" />
+         <header-file src="src/ios/Add-ons/Mediation/GADCustomEventRequest.h" />
+         <header-file src="src/ios/Add-ons/Mediation/GADCustomEventExtras.h" />
+
+         <header-file src="src/ios/Add-ons/Search/GADSearchBannerView.h" />
+         <header-file src="src/ios/Add-ons/Search/GADSearchRequest.h" />
+         
+         <source-file src="src/ios/libGoogleAdMobAds.a" framework="true" />
+         
+         <framework src="AdSupport.framework" />
+         <framework src="AudioToolbox.framework" />
+         <framework src="AVFoundation.framework" />
+         <framework src="CoreGraphics.framework" />
+         <framework src="CoreTelephony.framework" />
+         <framework src="EventKit.framework" />
+         <framework src="EventKitUI.framework" />
+         <framework src="Foundation.framework" />
+         <framework src="MessageUI.framework" />
+         <framework src="StoreKit.framework" />
+         <framework src="SystemConfiguration.framework" />
+         <framework src="UIKit.framework" />
 	</platform>
 
      <!-- Windows Phone 8 -->
@@ -61,6 +116,8 @@
                </feature>
           </config-file>
           <source-file src="src/wp8/AdMobPlugin.cs" />
+          
+          <framework src="src/wp8/GoogleAds.dll" custom="true" />
      </platform>
 
      <!-- Windows Phone 8.1+ -->
@@ -74,6 +131,8 @@
                </feature>
           </config-file>
           <source-file src="src/wp8/AdMobPlugin.cs" />
+          
+          <framework src="src/wp8/GoogleAds.dll" custom="true" />
      </platform>
 
 </plugin>

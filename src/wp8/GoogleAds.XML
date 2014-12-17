@@ -1,0 +1,2681 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>GoogleAds</name>
+    </assembly>
+    <members>
+        <member name="T:GoogleAds.AdErrorCode">
+            <summary>Error codes that could be sent by the ads SDK.</summary>
+        </member>
+        <member name="F:GoogleAds.AdErrorCode.NoError">
+            <summary>No error occurred.</summary>
+        </member>
+        <member name="F:GoogleAds.AdErrorCode.InvalidRequest">
+            <summary>The ad request is invalid.</summary>
+        </member>
+        <member name="F:GoogleAds.AdErrorCode.NoFill">
+            <summary>Successful ad request, but no ad returned due to lack of inventory.</summary>
+        </member>
+        <member name="F:GoogleAds.AdErrorCode.NetworkError">
+            <summary>The ad request was unsuccessful due to network connectivity issues.</summary>
+        </member>
+        <member name="F:GoogleAds.AdErrorCode.InternalError">
+            <summary>Something happened internally.</summary>
+        </member>
+        <member name="F:GoogleAds.AdErrorCode.StaleInterstitial">
+            <summary>The interstitial ad has already been shown and must be reloaded.</summary>
+        </member>
+        <member name="F:GoogleAds.AdErrorCode.Cancelled">
+            <summary>The ad request is cancelled.</summary>
+        </member>
+        <member name="T:GoogleAds.AdEventType">
+            <summary>The type of AdEvent being raised.</summary>
+        </member>
+        <member name="F:GoogleAds.AdEventType.AdReceived">
+            <summary>An ad was received.</summary>
+        </member>
+        <member name="F:GoogleAds.AdEventType.AdRequestFailed">
+            <summary>The ad request failed. See error code for the reason.</summary>
+        </member>
+        <member name="F:GoogleAds.AdEventType.PresentScreen">
+            <summary>The ad is displaying a full-screen overlay.</summary>
+        </member>
+        <member name="F:GoogleAds.AdEventType.DismissScreen">
+            <summary>The ad overlay is being dismissed.</summary>
+        </member>
+        <member name="F:GoogleAds.AdEventType.LeaveApplication">
+            <summary>The user is being navigated away from the app.</summary>
+        </member>
+        <member name="T:GoogleAds.AdEventArgs">
+            <summary>
+            Event args for ad events.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.AdErrorEventArgs">
+            <summary>
+            Event args for error-related events.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.IAdNotifier">
+            <summary>
+            Ad units subscribe to this interface so they can send events to the host app.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.IAdNotifier.ReceivedAd">
+            <summary>
+            Raised when an ad is successfully received.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.IAdNotifier.FailedToReceiveAd">
+            <summary>
+            Raised in case an ad could not be loaded successfully due to either of the following
+            reasons:
+            - There was a network issue.
+            - The request made was determined to be invalid.
+            - Successful ad request, but no ad returned due to lack of inventory.
+            - Something went wrong internally.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.IAdNotifier.ShowingOverlay">
+            <summary>
+            Raised before an interstitial/overlay is shown.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.IAdNotifier.DismissingOverlay">
+            <summary>
+            Raised after an interstitial/overlay is dismissed.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.IAdNotifier.LeavingApplication">
+            <summary>
+            Raised when the action taken by the user caused an external app to open.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.UserGender">
+            <summary>
+            A structure representing gender of the user for targeting purposes.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.UserGender.Unknown">
+            <summary>Unknown gender.</summary>
+        </member>
+        <member name="F:GoogleAds.UserGender.Male">
+            <summary> Male gender.</summary>
+        </member>
+        <member name="F:GoogleAds.UserGender.Female">
+            <summary>Female gender.</summary>
+        </member>
+        <member name="P:GoogleAds.AdRequest.Birthday">
+             <summary>The user's birthday.</summary>
+        </member>
+        <member name="P:GoogleAds.AdRequest.Extras">
+            <summary>Extra parameters to pass to the ad request.</summary>
+        </member>
+        <member name="P:GoogleAds.AdRequest.Keywords">
+            <summary>
+            Keywords to use for ad selection.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.AdRequest.ForceTesting">
+            <summary>
+            When true, this will not send real ad requests. This is to be used to test the SDK.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.AdRequest.Gender">
+            <summary>The user's gender.</summary>
+        </member>
+        <member name="P:GoogleAds.AdRequest.Location">
+            <summary>The user's location.</summary>
+        </member>
+        <member name="P:GoogleAds.AdRequest.Format">
+            <summary>
+            The ad format.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.AdRequest.AdUnitId">
+            <summary>
+            The unit ID for the ad.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.AdFormatsInternal">
+            <summary>
+            Predefined ad formats.
+            Even though arbitrarily-size ads are supported, In order to get the most fill rate for
+            requests, these formats need to be used.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.AdFormatsInternal.FillFormatsMap">
+            <summary>
+            Fills the map of string->AdFormat dictionary through simple reflection so that
+            we don't need to add new formats everytime and care about phone/rt specific formats.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.AdFormatsInternal.GetFormatFromEnum(GoogleAds.AdFormats)">
+            <summary>
+            Gets the object representation of a given string. There is 1-1 correspondance between
+            <paramref name="format" /> and the AdFormats enum.
+            </summary>
+            <param name="format">Format string, e.g. Banner, MediumRectangle.</param>
+            <returns></returns>
+        </member>
+        <member name="P:GoogleAds.AdFormatsInternal.Interstitial">
+            <summary>
+            The ad format for interstitial
+            </summary>
+        </member>
+        <member name="P:GoogleAds.AdFormatsInternal.Banner">
+            <summary>
+            The ad format for banner type.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.AdFormatsInternal.SmartBanner">
+            <summary>
+            The ad format for banner type.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.IAdFormat">
+            <summary>
+            The interface for the ad formats.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.IAdFormat.Format">
+            <summary>
+            The string representation of the format.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.AdViewAdFormat">
+            <summary>
+            Formats that are supported by AdView.
+            These formats have particular width and height.
+            In order to account for multiple platforms (phone and desktop/tablet), the ad request size
+            and display size could be different.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.AdViewAdFormat.Postfix">
+            <summary>
+            The postfix for ads.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.AdViewAdFormat.RequestSizeFunc">
+            <summary>
+            Request size for the ad. For 320x250_mb format, the request size is 320x50 for both
+            platforms for example.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.AdViewAdFormat.DisplaySizeFunc">
+            <summary>
+            Request size for the ad. For 320x250_mb format, the display size for phone
+            is 480x75 for example.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.AdViewAdFormat.DisplaySize">
+            <summary>
+            Sets the display size.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.AdViewAdFormat.Format">
+            <summary>
+            The string representation of the ad.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.InterstitialAdFormat">
+            <summary>
+            Interstitial ad format.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.AdView.FormatProperty">
+            <summary>
+            Dependency property for the Format.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.AdView.AdUnitIDProperty">
+            <summary>
+            Dependency property for the Ad Unit ID.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.AdView.ParametersProperty">
+            <summary>
+            Dependency property for the ad parameters/request.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.AdView.#ctor">
+            <summary>
+            Initializes the AdView.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.AdView.MeasureOverride(System.Windows.Size)">
+            <summary>
+            This method is called when WPF rendering mechanism asks for the user control size.
+            </summary>
+            <param name="availableSize"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.AdView.BindDesignModeContent">
+            <summary>
+            Binds the ad to a static image so that in design time, things are easier for developer.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.AdView.SendEvent(GoogleAds.AdEventType,GoogleAds.AdErrorCode)">
+            <summary>
+            Fires an event to the host app.
+            </summary>
+            <param name="eventType">The type of event.</param>
+            <param name="errorCode">The error code or NO_ERROR if not an error.</param>
+        </member>
+        <member name="M:GoogleAds.AdView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:GoogleAds.AdView.AdUnitID">
+            <summary>
+            Ad Unit ID for the ad.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.AdView.Format">
+             <summary>
+             Ad AdFormat for the ad. Suggested values:
+             For phone:
+             AdFormats.Banner
+            
+             For tablet and desktop:
+             AdFormats.Banner
+             AdFormats.MediumRectangle
+             AdFormats.FullBanner
+             AdFormats.Leaderboard
+            
+             In order to use a random-sized ad format, please change the width and the height
+             of this control.
+             </summary>
+        </member>
+        <member name="P:GoogleAds.AdView.Parameters">
+            <summary>
+            Parameters for additional information about the requested ad.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.AdView.ReceivedAd">
+            <summary>
+            Raised when an ad is successfully received.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.AdView.FailedToReceiveAd">
+            <summary>
+            Raised in case an ad could not be loaded successfully due to either of the following
+            reasons:
+            - There was a network issue.
+            - The request made was determined to be invalid.
+            - Successful ad request, but no ad returned due to lack of inventory.
+            - Something went wrong internally.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.AdView.ShowingOverlay">
+            <summary>
+            Raised before an interstitial/overlay is shown.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.AdView.DismissingOverlay">
+            <summary>
+            Raised after an interstitial/overlay is dismissed.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.AdView.LeavingApplication">
+            <summary>
+            Raised when the action taken by the user caused an external app to open.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Constants.SdkPrefix">
+            <summary>The identifier for the windows SDK.</summary>
+        </member>
+        <member name="M:GoogleAds.Constants.GetAssemblyVersion">
+            <summary>
+            Gets the assembly version through reflection. This removes the need to duplicate
+            assembly version in constants and also in assembly info file.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:GoogleAds.Constants.Version">
+            <summary>The version number of the SDK.</summary>
+        </member>
+        <member name="T:GoogleAds.Core.AdInformation">
+            <summary>
+            The class that holds information about ads.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdInformation.Request">
+            <summary>
+            Request used to pull information from the server.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdInformation.TrackingUrls">
+            <summary>
+            Tracking Urls to ping.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdInformation.ImpressionUrls">
+            <summary>
+            Impression Urls to ping.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdInformation.NoFillUrls">
+            <summary>
+            No fill pings - temporarily used for mediation.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdInformation.Url">
+            <summary>
+            The Url for the ad.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdInformation.UrlRedirectChain">
+            <summary>
+            Url redirect chain.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdInformation.Content">
+            <summary>
+            Content.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdInformation.PingedTrackings">
+            <summary>
+            Did we ping the trackings?
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdInformation.PingedImpressions">
+            <summary>
+            Did we ping the impressions?
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdInformation.DebugInfo">
+            <summary>
+            Debug information.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.OpenOverlay(System.String)">
+            <summary>
+            Begins the process of opening the ad overlay.
+            </summary>
+            <param name="overlayContent">Either a URI, HTML prefixed with "html:" or null.</param>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.NavigateAway">
+            <summary>
+            Called when the user navigates away from the ad.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.SendEvent(GoogleAds.AdEventType,GoogleAds.AdErrorCode)">
+            <summary>
+            Sends an event back to the AdView or InterstitialAd.
+            </summary>
+            <param name="eventType">The type of the event.</param>
+            <param name="errorCode">The error code or NO_ERROR if there was no error.</param>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.LoadAd(GoogleAds.AdRequest)">
+            <summary>
+            This initiates the loading of an ad. It will create a WebView sourcing sdk_core.js.
+            </summary>
+            <param name="adRequest">The AdRequest object containing additional parameters.</param>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.SetWebView(GoogleAds.Core.UI.GWebView,`0)">
+            <summary>
+            Sets the GWebView and related AdInformation and assigns them to class variables.
+            Child classes should use override this to modify their viewmodels.
+            </summary>
+            <param name="webView">The WebView instance showing the ad.</param>
+            <param name="adInformation">The information for the ad.</param>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.LoadAd">
+            <summary>
+            Actually loads the ad if an ad is not already loading. Clears the click and impression
+            URLs and constructs the request building WebView.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.SDKCoreLoaded(System.Object,GoogleAds.Core.UI.LoadCompletedEventArgs)">
+            <summary>
+            This function is invoked asynchronously when the webview containing the
+            request-building JS is loaded. It constructs a JSON blob with the request parameters
+            and then calls into the JS to build the ad request.
+            </summary>
+            <param name="sender">Unused.</param>
+            <param name="e">Unused.</param>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.SDKCoreLoadFailed(System.Object,GoogleAds.Core.UI.NavigationFailedEventArgs)">
+            <summary>Fired when we cannot load the WebView used to build SDK core.</summary>
+            <param name="sender">Unused.</param>
+            <param name="e">Unused.</param>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.FetchAdWithURL(System.String)">
+            <summary>
+            Fetches the ad using AdLoaders.
+            </summary>
+            <param name="requestUrl">The request url.</param>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.ReleaseURLBuilderView">
+            <summary>
+            Release the web view used for url construction.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.AdRequestDidNotFill">
+            <summary>
+            Called if the ad request did not fill. Notifies the publisher and releases the lock.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.AdRequestCancelled">
+            <summary>
+            Called if the ad request did not fill. Notifies the publisher and releases the lock.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.AdRequestFailedNetworkError">
+            <summary>
+            Called if the ad request did not fill. Notifies the publisher and releases the lock.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.AdRequestFailedInternalError">
+            <summary>
+            Called if the ad request did not fill. Notifies the publisher and releases the lock.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.AdLoaded(System.Object,GoogleAds.Core.UI.LoadCompletedEventArgs)">
+            <summary>
+            Called when the ad has finished loading. Attaches the redirect listener and releases
+            the lock.
+            </summary>
+            <param name="sender">Unused.</param>
+            <param name="e">Unused.</param>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.OnAdShown">
+            <summary>
+            Called when the ad is shown to the user.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.PingClickUrls">
+            <summary>
+            Pings and clears the click URLs sent in the X-Afma-Click-Tracking-Urls header.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.PingImpressionUrls">
+            <summary>
+            Pings and clears the impression URLs sent in the X-Afma-Tracking-Urls header.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.ViewModelBase">
+            <summary>
+            Base class for view models.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.ViewModelBase.NotifyOfPropertyChange(System.String)">
+            <summary>
+            Triggered when the value of a property changes.
+            </summary>
+            <param name="propertyName">Name of the property.</param>
+        </member>
+        <member name="M:GoogleAds.Core.ViewModelBase.NotifyOfPropertyChange``1(System.Linq.Expressions.Expression{System.Func{``0}})">
+            <summary>
+            Extracts the name of the property from a lambda function and
+            triggers PropertyChanged with that property.
+            </summary>
+            <typeparam name="TProperty"></typeparam>
+            <param name="property"></param>
+        </member>
+        <member name="M:GoogleAds.Core.ViewModelBase.OnPropertyChanged(System.String)">
+            <summary>
+            Triggers the event.
+            </summary>
+            <param name="propertyName">The name of the property changing.</param>
+        </member>
+        <member name="E:GoogleAds.Core.ViewModelBase.PropertyChanged">
+            <summary>
+            This method is triggered when a property under observation
+            changes.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.AdViewViewModel.adManager">
+            <summary>
+            The ad manager in possession of the adview.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.AdViewViewModel.adFormat">
+            <summary>
+            The ad format selected for the adview.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.AdViewViewModel.adInformation">
+            <summary>
+            The ad loaded that is loaded/about to be loaded into adview.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.AdViewViewModel.adUnitID">
+            <summary>
+            The unit id for the ad.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.AdViewViewModel.currentView">
+            <summary>
+            The current view shown in the ad. This can be a WebView or in case of tablet, it
+            can be the snapshot of the webview.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.AdViewViewModel.height">
+            <summary>
+            The height of the ad.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.AdViewViewModel.request">
+            <summary>
+            The last request made.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.AdViewViewModel.webView">
+            <summary>
+            The WebView that handles the last ad shown.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.AdViewViewModel.width">
+            <summary>
+            The width of the ad.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdViewViewModel.Load">
+            <summary>
+            Loads the ad with an empty parameter set.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdViewViewModel.Load(GoogleAds.AdRequest)">
+            <summary>
+            Loads the ad with a given parameter set.
+            </summary>
+            <param name="newRequest"></param>
+        </member>
+        <member name="M:GoogleAds.Core.AdViewViewModel.ReturnFromOverlay">
+            <summary>
+            Notifies the AdView of DismissScreen event.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdViewViewModel.StartAdServing">
+            <summary>
+            Starts ad serving.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdViewViewModel.StopAdServing">
+            <summary>
+            Stops ad serving.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdViewViewModel.OpenOverlay(System.String)">
+            <summary>
+            Opens the overlay when commanded by AdCommunicator or AdManager.
+            </summary>
+            <param name="overlayContent"></param>
+        </member>
+        <member name="M:GoogleAds.Core.AdViewViewModel.OpenOverlayNoContent">
+            <summary>
+            In case of internal WebView navigation, the overlay needs to be opened with the
+            same WebView.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdViewViewModel.OpenOverlayWithHtmlContent(System.String)">
+            <summary>
+            Opens the html content in a new WebView.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdViewViewModel.OpenExternalBrowser(System.String)">
+            <summary>
+            Opens the url in external browser.
+            </summary>
+            <param name="url">The URL to open.</param>
+        </member>
+        <member name="M:GoogleAds.Core.AdViewViewModel.OpenOverlayWithUrl(System.String,System.Boolean)">
+            <summary>
+            Opens the url in a new WebView.
+            </summary>
+            <param name="url">The URL to open.</param>
+            <param name="fromInlineNavigation">
+            True if this is opening a URL that was navigated to (not opened via a GMSG).
+            </param>
+        </member>
+        <member name="M:GoogleAds.Core.AdViewViewModel.OnWebViewContentLoaded(System.Object,GoogleAds.Core.UI.LoadCompletedEventArgs)">
+            <summary>
+            Triggered when the content of the webview has been loaded.
+            This will open the overlay and transition into new page.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="P:GoogleAds.Core.AdViewViewModel.FireShowAndHideEvents">
+            <summary>
+            If true, when opening an overlay, the SDK should fire the onshow and onhide events.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdViewViewModel.CurrentView">
+            <summary>
+            Gets or sets the view shown in the AdView.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdViewViewModel.WebView">
+            <summary>
+            Gets or sets the WebView to be shown in the AdView.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdViewViewModel.Width">
+            <summary>
+            Gets or sets the width of the AdView.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdViewViewModel.Height">
+            <summary>
+            Gets or sets the height of the AdView.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdViewViewModel.AdFormat">
+            <summary>
+            Gets or sets the AdFormat of the AdView.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdViewViewModel.AdUnitID">
+            <summary>
+            Gets or sets the AdUnitID of the AdView.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdViewViewModel.AdInformation">
+            <summary>
+            Gets or sets the information about the ad being shown in the adview.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.AdViewViewModel.SendEvent">
+            <summary>
+            Gets or sets the delegate that is used to propagate events to the AdView.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.AdViewViewModel.SendEventDelegate">
+            <summary>
+            The delegate for sending events back to the adview.
+            </summary>
+            <param name="adEventType">The event type.</param>
+            <param name="error">The error type.</param>
+        </member>
+        <member name="T:GoogleAds.Core.BannerAdInformation">
+            <summary>
+            The class that holds information about Banner type of ads.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.BannerAdInformation.RefreshRate">
+            <summary>
+            The refresh interval between consecutive ads.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.BannerAdManager.adViewViewModel">
+            <summary>
+            The view model that this AdManager operates on.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.BannerAdManager.timer">
+            <summary>
+            A timer used for allowing our banners to refresh.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.BannerAdManager.RefreshAd(System.Object,System.Object)">
+            <summary>
+            Called when the timer ticks if an X-Afma-Refresh-Rate specified a refresh timeout.
+            </summary>
+            <param name="sender">Unused</param>
+            <param name="e">Unused</param>
+        </member>
+        <member name="M:GoogleAds.Core.BannerAdManager.StartTimer">
+            <summary>
+            Restarts the refresh timer.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.BannerAdManager.SetWebView(GoogleAds.Core.UI.GWebView,GoogleAds.Core.BannerAdInformation)">
+            <summary>
+            Sets the webview that has the ad on view model.
+            </summary>
+            <param name="webView">The webview that holds the ad/</param>
+            <param name="adInformation">The ad information instance.</param>
+        </member>
+        <member name="M:GoogleAds.Core.BannerAdManager.AdLoaded(System.Object,GoogleAds.Core.UI.LoadCompletedEventArgs)">
+            <summary>
+            Called when an ad is loaded. This does the following:
+            1) Displays the view if it is collapsed.
+            2) Pings any impression URLs passed in the headers.
+            3) Starts the refresh timer.
+            4) Sends an event to notify the publisher.
+            </summary>
+            <param name="sender">Unused.</param>
+            <param name="e">Unused.</param>
+        </member>
+        <member name="M:GoogleAds.Core.BannerAdManager.AdRequestDidNotFill">
+            <summary>
+            Called when the ad request did not fill. Hides the view and restarts the timer.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.BannerAdManager.NavigateAway">
+            <summary>
+            Called when the user navigates away from the ad. Stops the timer.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.BannerAdManager.OpenOverlay(System.String)">
+            <summary>Opens the ad overlay with the given string as content.</summary>
+            <param name="overlayContent">
+            The content to put in the overlay. May be a URL or HTML prefixed with "html:"
+            </param>
+        </member>
+        <member name="M:GoogleAds.Core.BannerAdManager.SendEvent(GoogleAds.AdEventType,GoogleAds.AdErrorCode)">
+            <summary>Sends an event to the AdView who owns this AdManager instance.</summary>
+            <param name="eventType">The type of event.</param>
+            <param name="errorCode">The error code or NO_ERROR if event is not an error.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.HandleScriptNotify(System.Object,GoogleAds.Core.UI.NotifiedEventArgs)">
+            <summary>
+            Receives a GMSG and dispatches it to the correct handler.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.CanOpenUrls(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
+             <summary>
+             This GMSG is invoked to determine if URLs are openable. This will in turn call back into
+             the WebView with a JSON object with the URLs as keys and a boolean indicating if they
+             are openable. e.g. { "http://www.url.com": true, "tel:5555555555": false }
+            
+             Right now this will return true for all URLs.
+             </summary>
+             <param name="sender">The GWebView sending the GMSG.</param>
+             <param name="paramMap">The query parameters of the GMSG.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.Click(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>This GMSG is used to asynchronously ping the specified URL.</summary>
+            <param name="sender">The GWebView sending the GMSG.</param>
+            <param name="paramMap">The query parameters of the GMSG.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.InvalidRequest(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>This GMSG is passed when the ad request is invalid.</summary>
+            <param name="sender">The GWebView sending the GMSG.</param>
+            <param name="paramMap">The query parameters of the GMSG.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.LoadAdURL(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            This GMSG is sent by sdk_core when it has finished constructing the ad request URL.
+            Upon receiving the ad URL, the AdManager instance will fetch the ad.
+            </summary>
+            <param name="sender">The GWebView sending the GMSG.</param>
+            <param name="paramMap">The query parameters of the GMSG.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.LoadSdkConstants(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>This GMSG is passed when the SDK constants are loaded.</summary>
+            <param name="sender">The GWebView sending the GMSG.</param>
+            <param name="paramMap">The query parameters of the GMSG.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.Log(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            This GMSG will cause the SDK to log to the Visual Studio error console.
+            </summary>
+            <param name="sender">The GWebView sending the GMSG.</param>
+            <param name="paramMap">The query parameters of the GMSG.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.NavigatingAway(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            This GMSG is raised when the ad is navigated away from. Ping the click tracking URLs
+            and do additional cleanup.
+            </summary>
+            <param name="sender">The GWebView sending the GMSG.</param>
+            <param name="paramMap">The query parameters of the GMSG.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.Open(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Uses the SDK to perform an open action. This could be:
+            - A URL in the browser.
+            - Something specified by a particular protocol.
+            - A URL in the in-app overlay.
+            - HTML in the in-app overlay.
+            </summary>
+            <param name="sender">The GWebView sending the GMSG.</param>
+            <param name="paramMap">The query parameters of the GMSG.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.OpenApp(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Performs the open function within an overlay.
+            </summary>
+            <param name="sender">The GWebView sending the GMSG.</param>
+            <param name="paramMap">The query parameters of the GMSG.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.NullHandler(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Null handler for messages that we do not care.
+            </summary>
+            <param name="sender">The GWebView sending the GMSG.</param>
+            <param name="paramMap">The query parameters of the GMSG.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.Unsupported(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            The fallback handler for unknown or unimplemented GMSGs.
+            </summary>
+            <param name="sender">The GWebView sending the GMSG.</param>
+            <param name="paramMap">The query parameters of the GMSG.</param>
+        </member>
+        <member name="T:GoogleAds.Core.Communication.AdCommunicator`1.MessageHandler">
+            <summary>
+            Delegate definition for the handler functions.
+            </summary>
+            <param name="sender">The GWebView sending the GMSG.</param>
+            <param name="paramMap">The query parameters of the GMSG.</param>
+        </member>
+        <member name="T:GoogleAds.Core.GMsg">
+            <summary>
+            Represents a message sent by the core/ads js.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.GMsg.Scheme">
+            <summary>
+            Uri Scheme. "gmsg" for this class.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.GMsg.Parameters">
+            <summary>
+            Paramaters obtained from the message.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.GMsg.Path">
+            <summary>
+            Path.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.Http.HttpClient">
+            <summary>
+            Http client for Phone. Sends the request and gets the response.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.Http.IHttpClient">
+            <summary>
+            Interface for platform specific clients.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.Http.HttpClient.CopyToHttpWebRequest(GoogleAds.Core.Http.HttpRequest,System.Net.HttpWebRequest)">
+            <summary>
+            This is used to convert <see cref="T:GoogleAds.Core.Http.HttpRequest"/>, which are common to both Phone and
+            Windows RT to platform-specific <see cref="T:System.Net.HttpWebRequest"/>.
+            </summary>
+            <param name="request">The request instance.</param>
+            <param name="httpWebRequest">The platform specific request instance</param>
+        </member>
+        <member name="M:GoogleAds.Core.Http.HttpClient.CopyToHttpResponse(System.Net.HttpWebResponse,GoogleAds.Core.Http.HttpResponse)">
+            <summary>
+            This is used to convert <see cref="T:System.Net.HttpWebResponse"/> which is Windows RT specific to
+            <see cref="T:GoogleAds.Core.Http.HttpResponse"/>.
+            </summary>
+            <param name="response">The platform specific response instance</param>
+            <param name="httpWebResponse">The response instance.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Http.HttpClient.SendAsync(GoogleAds.Core.Http.HttpRequest)">
+            <summary>
+            Sends the request and gets the response asynchronously.
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="T:GoogleAds.Core.Http.HttpClient.HeaderPropertyDelegate">
+            <summary>
+            This delegate is used to transform some of the HttpHeaders to property assignments
+            on <paramref name="req"/>.
+            </summary>
+            <param name="req"></param>
+            <param name="str"></param>
+        </member>
+        <member name="T:GoogleAds.Core.Http.HttpContent">
+            <summary>
+            Base class for Http contents.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.Http.HttpContent.BufferSize">
+            <summary>
+            Buffer size for copy operations.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.Http.HttpContent.CreateContentReadStreamAsync">
+            <summary>
+            Creates the stream for reading response stream.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Core.Http.HttpContent.CopyToAsync(System.IO.Stream)">
+            <summary>
+            Copies the stream to <paramref name="destination"/>.
+            </summary>
+            <param name="destination">The stream to copy to.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Http.HttpContent.ReadAsByteArrayAsync">
+            <summary>
+            Reads the response stream into a byte array.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Core.Http.HttpContent.ReadAsStringAsync">
+            <summary>
+            Reads the response stream into a string.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:GoogleAds.Core.Http.HttpHeaders">
+            <summary>
+            The header class for response and request.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.Http.HttpHeaders.GetFirstOrEmpty(System.String)">
+            <summary>
+            Gets the first header value for given <paramref name="key"/>.
+            </summary>
+            <param name="key">The header key.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Core.Http.HttpHeaders.Set(System.String,System.String)">
+            <summary>
+            Sets the header for <paramref name="key"/>. Note that this overwrites the previous
+            value for the header.
+            </summary>
+            <param name="key">The header key.</param>
+            <param name="value">The header value.</param>
+            <returns></returns>
+        </member>
+        <member name="P:GoogleAds.Core.Http.HttpHeaders.Item(System.String)">
+            <summary>
+            Gets the list of header values for given <paramref name="key"/>.
+            </summary>
+            <param name="key">The header key.</param>
+            <returns></returns>
+        </member>
+        <member name="T:GoogleAds.Core.Http.HttpMethod">
+            <summary>
+            The class for representing HTTP method.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.Http.HttpMethod.Get">
+            <summary>
+            Get Method.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.Http.HttpMethod.Post">
+            <summary>
+            Post Method
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.Http.HttpMethod.#ctor(System.String)">
+            <summary>
+            Initializes the class with string representation of the method.
+            </summary>
+            <param name="method"></param>
+        </member>
+        <member name="M:GoogleAds.Core.Http.HttpMethod.Equals(GoogleAds.Core.Http.HttpMethod)">
+            <summary>
+            Checks if this object is equal to <paramref name="other"/>.
+            </summary>
+            <param name="other">The object to compare to.</param>
+            <returns></returns>
+        </member>
+        <member name="T:GoogleAds.Core.Http.HttpRequest">
+            <summary>
+            Class representing an HTTP request.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.Http.HttpRequest.Version">
+            <summary>
+            The version. 1.1 by default.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.Http.HttpRequest.RequestUri">
+            <summary>
+            The Uri for the request.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.Http.HttpRequest.Headers">
+            <summary>
+            Headers for the request.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.Http.HttpRequest.Method">
+            <summary>
+            Request method.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.Http.HttpRequest.Content">
+            <summary>
+            Http content.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.Http.HttpResponse">
+            <summary>
+            Class representing the response for an HTTP request.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.Http.HttpResponse.StatusCode">
+            <summary>
+            The status code for the response.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.Http.HttpResponse.Headers">
+            <summary>
+            The headers.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.Http.HttpResponse.Content">
+            <summary>
+            The content for the response.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.Http.HttpResponse.ResponseUri">
+            <summary>
+            The response Uri.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.Http.StreamHttpContent">
+            <summary>
+            Http Content implementation for streams.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.Http.StreamHttpContent.#ctor(System.IO.Stream)">
+            <summary>
+            Initializes the object with stream.
+            </summary>
+            <param name="stream">The stream.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Http.StreamHttpContent.CreateContentReadStreamAsync">
+            <summary>
+            Creates the stream from the stream.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:GoogleAds.Core.IAppInstance">
+            <summary>
+            Class to decouple information related to current app.
+            CurrentApp of Windows Store apps is static and makes testing harder.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.InterstitialAdInformation">
+            <summary>
+            The class that holds information about interstitial ads.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.InterstitialAdInformation.RequestTimeout">
+            <summary>
+            Timeout for requesting the interstitial content.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.InterstitialAdManager.NavigateAway">
+            <summary>
+            Not needed.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.InterstitialAdManager.OpenOverlay(System.String)">
+            <summary>
+            Not needed.
+            </summary>
+            <param name="overlayContent">Unused.</param>
+        </member>
+        <member name="T:GoogleAds.Core.Loaders.RequestStatus">
+            <summary>
+            Represents the result of an ad load.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.Loaders.AdLoader`1">
+            <summary>
+            An AdLoader is a class that contains information about ad loading.
+            </summary>
+            <typeparam name="TAdInformation"></typeparam>
+        </member>
+        <member name="F:GoogleAds.Core.Loaders.AdLoader`1.ImpressionHeader">
+            <summary>
+            This header notifies the client code of the URLs that should be pinged when the ad
+            is shown.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.Loaders.AdLoader`1.ClickTrackingHeader">
+            <summary>
+            This header notifies the client code of the URLs that should be pinged when the ad
+            is clicked (i.e. when user interacts with the ad).
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.Loaders.AdLoader`1.DebugDialogHeader">
+            <summary>
+            This header is used for debug gesture.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.Loaders.AdLoader`1.httpClient">
+            <summary>
+            Http client to make the requests.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.Loaders.AdLoader`1.#ctor(GoogleAds.Core.Http.IHttpClient)">
+            <summary>
+            Initializes the class with given IHttpClient instance to fetch the ad content.
+            </summary>
+            <param name="httpClient">The HttpClient instance to fetch the content.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Loaders.AdLoader`1.LoadAd(`0)">
+            <summary>
+            Loads the ad by first constructing Ad URL using SDK core AFMA_buildAdURL function,
+            and then fetching the content through Http request.
+            </summary>
+            <param name="adInformation">The ad information to populate.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Core.Loaders.AdLoader`1.RequestAd(`0)">
+            <summary>
+            Fetches the content of the ad.
+            </summary>
+            <param name="adInformation">The ad information to populate.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Core.Loaders.AdLoader`1.ProcessHeaders(`0,GoogleAds.Core.Http.HttpResponse)">
+            <summary>
+            Processes the headers.
+            </summary>
+            <param name="adInformation">The ad information to populate.</param>
+            <param name="adResponse">The HttpResponse instance to process.</param>
+        </member>
+        <member name="T:GoogleAds.Core.Loaders.BannerAdLoader">
+            <summary>
+            Specialized banner ad loader.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.Loaders.BannerAdLoader.ProcessHeaders(GoogleAds.Core.BannerAdInformation,GoogleAds.Core.Http.HttpResponse)">
+            <summary>
+            In addition to default processing, this collects the refresh rate information
+            for banner ads.
+            </summary>
+            <param name="bannerAdInformation">The ad information to populate.</param>
+            <param name="adResponse">The HttpResponse instance to process.</param>
+        </member>
+        <member name="T:GoogleAds.Core.Loaders.InterstitialAdLoader">
+            <summary>
+            Specialized interstitial loaders.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.Loaders.InterstitialAdLoader.InterstitialTimeoutHeader">
+            <summary>
+            When this header is returned in the ad response, subsequent interstitial requests will
+            timeout in that amount of time (in seconds).
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.Loaders.InterstitialAdLoader.ProcessHeaders(GoogleAds.Core.InterstitialAdInformation,GoogleAds.Core.Http.HttpResponse)">
+            <summary>
+            In addition to default processing, this collects the timeout information
+            for interstitial ads.
+            </summary>
+            <param name="adInformation"></param>
+            <param name="adResponse"></param>
+        </member>
+        <member name="T:GoogleAds.Core.RelayCommand">
+            <summary>
+            This class represents a command that invokes a delegate,
+            and also takes a parameter.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.RelayCommand.#ctor(System.Action)">
+            <summary>
+            Initializes the command
+            </summary>
+            <param name="command">The delegate to be executed</param>
+        </member>
+        <member name="M:GoogleAds.Core.RelayCommand.CanExecute(System.Object)">
+            <summary>
+            Determines if the command can be executed.
+            Returns true for now.
+            </summary>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Core.RelayCommand.Execute(System.Object)">
+            <summary>
+            Executes the command.
+            </summary>
+            <param name="parameter">Not used.</param>
+        </member>
+        <member name="T:GoogleAds.Core.RelayWithParameter">
+            <summary>
+            This class represents a command that invokes a delegate,
+            and also takes a parameter.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.RelayWithParameter.#ctor(System.Action{System.Object})">
+            <summary>
+            Initializes the command using a delegate.
+            </summary>
+            <param name="command">The delegate to be invoked.</param>
+        </member>
+        <member name="M:GoogleAds.Core.RelayWithParameter.CanExecute(System.Object)">
+            <summary>
+            Determines if the command can be executed.
+            Returns true for now.
+            </summary>
+            <param name="parameter"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Core.RelayWithParameter.Execute(System.Object)">
+            <summary>
+            Executes the command with a given parameter.
+            </summary>
+            <param name="parameter">Not used.</param>
+        </member>
+        <member name="E:GoogleAds.Core.RelayWithParameter.CanExecuteChanged">
+            <summary>
+            Triggered when command executability is changed.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.StoreAppInstance">
+            <summary>
+            Wraps CurrentApp and provides necessary methods.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.UI.IWebView.Navigate(System.Uri)">
+            <summary>
+            Navigates to a given Uri.
+            </summary>
+            <param name="source"></param>
+        </member>
+        <member name="M:GoogleAds.Core.UI.IWebView.NavigateToString(System.String)">
+            <summary>
+            Navigates to a given HTML code.
+            </summary>
+            <param name="text"></param>
+        </member>
+        <member name="M:GoogleAds.Core.UI.IWebView.InvokeScriptFunction(System.String,System.String[])">
+            <summary>
+            Invokes a given function.
+            </summary>
+            <param name="functionName">The name of the function to invoke.</param>
+            <param name="args">The arguments.</param>
+            <returns></returns>
+        </member>
+        <member name="P:GoogleAds.Core.UI.IWebView.AllowedScriptNotifyUris">
+            <summary>
+            The list of urls that are allowed to notify the host.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.UI.IWebView.SourceUri">
+            <summary>
+            The source uri of the page.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.UI.IWebView.SourceCode">
+            <summary>
+            The source code of the page.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.UI.IWebView.IsScrollDisabled">
+            <summary>
+            Decides whether the scrolling functionality is disabled or not.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.Core.UI.IWebView.Navigating">
+            <summary>
+            Triggered when the WebView is navigating. This is going to trigger for every
+            redirect request.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.Core.UI.IWebView.Navigated">
+            <summary>
+            Triggered when the navigation completes.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.Core.UI.IWebView.NavigationFailed">
+            <summary>
+            Triggered when a navigation fails.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.Core.UI.IWebView.LoadCompleted">
+            <summary>
+            Triggered when the page completes the load.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.Core.UI.IWebView.ScriptNotify">
+            <summary>
+            Triggered when the javascript inside the webview notifies the host.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.UI.GWebView.DirectoryName">
+            <summary>
+            Location for temporary files.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.UI.GWebView.store">
+            <summary>
+            The isolated storage for the application;
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.UI.GWebView.fileName">
+            <summary>
+            Holds the name of the file used to store ad content.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.UI.GWebView.#ctor">
+            <summary>
+            Initializes the class.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.UI.GWebView.Navigate(System.Uri)">
+            <summary>
+            Navigates to a Uri.
+            </summary>
+            <param name="source">The uri to navigte to.</param>
+        </member>
+        <member name="M:GoogleAds.Core.UI.GWebView.NavigateToString(System.String)">
+            <summary>
+            Navigates to an HTML code.
+            </summary>
+            <param name="text">The HTML code to navigate.</param>
+        </member>
+        <member name="M:GoogleAds.Core.UI.GWebView.InvokeScript(System.String)">
+            <summary>
+            Invokes a script.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Core.UI.GWebView.InvokeScriptFunction(System.String,System.String[])">
+            <summary>
+            Invokes a script function.
+            </summary>
+            <param name="functionName">The name of the function.</param>
+            <param name="args">The args to pass to.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Core.UI.GWebView.AttachScrollHandlers(System.Object,System.Windows.RoutedEventArgs)">
+            <summary>
+            Attaches to the events that are fired when user tries to scroll the page.
+            The hierarchy of a WebView is (roughly) as follows:
+            WebView - Border - Border - WebBrowserInteropCanvas - PanZoomContainer - Grid.
+            Events are passed into actual TileHost (which is the native IE10 component). TileHost
+            does not handle manipulation events. Grid seems to be the place we can prevent events
+            from bubbling up to the higher levels.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:GoogleAds.Core.UI.GWebView.ManipulationCompletedSuppress(System.Object,System.Windows.Input.ManipulationCompletedEventArgs)">
+            <summary>
+            Manipulation is completed when the user finishes touching the screen. This doesn't mean
+            much for scroll, as we are interested in the delta behavior. But for zoom,  the final
+            zoom level is computed when the touch is completed, hence we suppress them here.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:GoogleAds.Core.UI.GWebView.ManipulationDeltaSupress(System.Object,System.Windows.Input.ManipulationDeltaEventArgs)">
+            <summary>
+            The respective event is triggered when the input event (e.g. touch) changes position.
+            Since scroll and zoom are the gestures that are using this events at a lower level,
+            we can prevent them from happening here.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:GoogleAds.Core.UI.GWebView.DeleteTemporaryFileAfterLoad(System.Object,System.Windows.Navigation.NavigationEventArgs)">
+            <summary>
+            Deletes the file after the ad is displayed successfully. This is to delete temporary
+            files from the storage.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
+        </member>
+        <member name="M:GoogleAds.Core.UI.GWebView.InitializeEvents">
+            <summary>
+            Initializes the events to null handlers.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.UI.GWebView.ReleaseEventHandlers">
+            <summary>
+            Release event handlers.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.UI.GWebView.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.UI.GWebView.AllowedScriptNotifyUris">
+            <summary>
+            Sets the list of urls that can notify the host app.
+            Phone browser doesn't seem to have this capability.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.UI.GWebView.SourceUri">
+            <summary>
+            Gets/sets the source Uri.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.UI.GWebView.SourceCode">
+            <summary>
+            Gets the source code.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.UI.GWebView.IsScrollDisabled">
+            <summary>
+            Determines whether the scrolling functionality is disabled or not.
+            The default is true.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.Core.UI.GWebView.Navigated">
+            <summary>
+            Triggered when the navigation completes.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.Core.UI.GWebView.Navigating">
+            <summary>
+            Triggered when the WebView is navigating. This is going to trigger for every
+            redirect request.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.Core.UI.GWebView.NavigationFailed">
+            <summary>
+            Triggered when a navigation fails.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.Core.UI.GWebView.LoadCompleted">
+            <summary>
+            Triggered when the page completes the load.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.Core.UI.GWebView.ScriptNotify">
+            <summary>
+            Triggered when the javascript inside the webview notifies the host.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.UI.NavigatedEventArgs">
+            <summary>
+            Event args for Navigating event of webview.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.UI.NavigatingEventArgs">
+            <summary>
+            Event args for Navigating event of webview.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.UI.NavigatingEventArgs.cancelGetter">
+            <summary>
+            Cancellation getter function.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Core.UI.NavigatingEventArgs.cancelSetter">
+            <summary>
+            Cancellation setter function.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.UI.NavigatingEventArgs.#ctor">
+            <summary>
+            Initializes the class.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.UI.NavigatingEventArgs.#ctor(System.Func{System.Boolean},System.Action{System.Boolean})">
+            <summary>
+            Initializes the class with given <paramref name="cancelGetter"/> and
+            <paramref name="cancelSetter"/>. When these functions are provided,
+            calling Cancel = True will invoke the <paramref name="cancelSetter"/>.
+            </summary>
+            <param name="cancelGetter"></param>
+            <param name="cancelSetter"></param>
+        </member>
+        <member name="P:GoogleAds.Core.UI.NavigatingEventArgs.Uri">
+            <summary>
+            The Uri the page is navigating to.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.UI.NavigatingEventArgs.Cancel">
+            <summary>
+            Setting this to true will cancel the request.
+            Doesn't work on WinRT.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.UI.NavigatingEventArgs.VariableReference">
+            <summary>
+            Helper class for consistency in cancelling.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.UI.NavigationFailedEventArgs">
+            <summary>
+            Event args to be used for NavigationFailed event of GWebView
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.UI.NavigationFailedEventArgs.Uri">
+            <summary>
+            The Uri the page GWebView is trying to navigate to.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.UI.LoadCompletedEventArgs">
+            <summary>
+            Event args to be used for LoadCompleted event of GWebView
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Core.UI.LoadCompletedEventArgs.Uri">
+            <summary>
+            The Uri the page navigated.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Core.UI.NotifiedEventArgs">
+            <summary>
+            Event args to be used for Notified event of GWebView
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Debugging.DebugInformationPanel">
+            <summary>
+            The panel to show debug information.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Debugging.DebugInformationPanel.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Debugging.DebugInformationViewModel">
+            <summary>
+            The view model for <see cref="T:GoogleAds.Debugging.DebugInformationPanel"/> and <see cref="T:GoogleAds.Debugging.DebugPanel"/>.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Debugging.DebugInformationViewModel.Report">
+            <summary>
+            Reports the debug information to BadAd.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Debugging.DebugInformationViewModel.CopyToClipboard">
+            <summary>
+            Copies the debug headers to clipboard.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Debugging.DebugInformationViewModel.AdInformation">
+            <summary>
+            The information about which the bug report is going to be filed.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Debugging.DebugPanel">
+            <summary>
+            User control to catch debug informations.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Debugging.DebugPanel.Tolerance">
+            <summary>
+            When moving pointer from, say, bottom left to top right, the direction change occurs
+            frequently due to resolution and noise in location. Thus, we have to put a threshold
+            such that any direction change should occur at least this far from the last point.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Debugging.DebugPanel.informationPanel">
+            <summary>
+            The panel that's holding the window.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Debugging.DebugPanel.popup">
+            <summary>
+            The pop up.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Debugging.DebugPanel.currentDirection">
+            <summary>
+            The direction the pointer should take to realize the next step in gesture.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Debugging.DebugPanel.currentVelocityDirection">
+            <summary>
+            The direction pointer should move to realize the next step in gesture recognition.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Debugging.DebugPanel.limitLeft">
+            <summary>
+            Limit on the left we should pass to realize the next step of the gesture, if going
+            the next direction is Left.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Debugging.DebugPanel.limitRight">
+            <summary>
+            Limit on the right we should pass to realize the next step of the gesture, if going
+            the next direction is Right.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Debugging.DebugPanel.segmentCount">
+            <summary>
+            Number of segments we have completed so far in the gesture.
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Debugging.DebugPanel.startX">
+            <summary>
+            Start location for the gesture. We need to have this because there doesn't seem to
+            be a way to access current pointer location without manually calculating it.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Debugging.DebugPanel.#ctor">
+            <summary>
+            Initializes the debug panel. It's an overlay on current ad views, and it will
+            recognize debug gesture and will open up an overlay.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Debugging.DebugPanel.OnManipulationStarted(System.Object,System.Windows.Input.ManipulationStartedEventArgs)">
+            <summary>
+            Does the initialization each time a gesture is started.
+            </summary>
+            <param name="sender">Unused.</param>
+            <param name="ea">Unused.</param>
+        </member>
+        <member name="M:GoogleAds.Debugging.DebugPanel.OnManipulationDelta(System.Object,System.Windows.Input.ManipulationDeltaEventArgs)">
+            <summary>
+            Checks if there is a direction change in the gesture, and bookkeeps it.
+            </summary>
+            <param name="sender"></param>
+            <param name="ea">The delta event args to be investigated.</param>
+        </member>
+        <member name="M:GoogleAds.Debugging.DebugPanel.OnManipulationCompleted(System.Object,System.Windows.Input.ManipulationCompletedEventArgs)">
+            <summary>
+            When a gesture ends, we check if we reach enough number of moves to activate the
+            debug dialog.
+            </summary>
+            <param name="sender"></param>
+            <param name="ea">The delta event args to be investigated.</param>
+        </member>
+        <member name="M:GoogleAds.Debugging.DebugPanel.GetGestureDirection(System.Windows.Input.ManipulationDeltaEventArgs)">
+            <summary>
+            Gets the gesture direction for a manipulation event args. Gives Right if manipulation
+            is positive, Left otherwise.
+            </summary>
+            <param name="e">The manipulation delta event for the gesture.</param>
+        </member>
+        <member name="M:GoogleAds.Debugging.DebugPanel.ChangeGestureDirection">
+            <summary>
+            Changes the gesture direction.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Debugging.DebugPanel.OpenPopUpControl">
+            <summary>
+            In case a debug gesture is realized, it opens up a popup window.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Debugging.DebugPanel.PageOnBackKeyPress(System.Object,System.ComponentModel.CancelEventArgs)">
+            <summary>
+            Handles the page back button one time, and deregisters itself.
+            </summary>
+            <param name="sender"></param>
+            <param name="cancelEventArgs"></param>
+        </member>
+        <member name="P:GoogleAds.Debugging.DebugPanel.AdInformation">
+            <summary>
+            The ad instance whose information is to be shown.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Debugging.DebugPanel.GestureDirection">
+            <summary>
+            The direction for the gesture. If a positive manipulation delta is used,
+            the direction is right, otherwise it's left.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Debugging.DebugReporter">
+            <summary>
+            The class to report X-Afma-Debug-Dialog to bad ad server.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.InterstitialAd.InitializeEvents">
+            <summary>
+            Initializes the events with empty methods.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.InterstitialAd.LoadAd(GoogleAds.AdRequest)">
+            <summary>
+            Loads an ad and triggers the OnAdReceived event when the ad is fully loaded.
+            </summary>
+            <param name="adRequest">An AdRequest object with additional ad parameters.</param>
+        </member>
+        <member name="M:GoogleAds.InterstitialAd.ShowAd">
+            <summary>Once an ad is loaded, this will open the ad in an overlay.</summary>
+        </member>
+        <member name="M:GoogleAds.InterstitialAd.ReturnFromOverlay">
+            <summary>
+            Called by the overlay when dismissed. Sends an event to the event handler.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.InterstitialAd.SendEvent(GoogleAds.AdEventType,GoogleAds.AdErrorCode)">
+            <summary>
+            Fires an event to the host app.
+            </summary>
+            <param name="eventType">The type of event.</param>
+            <param name="errorCode">The error code or NO_ERROR if not an error.</param>
+        </member>
+        <member name="E:GoogleAds.InterstitialAd.ReceivedAd">
+            <summary>
+            Raised when an ad is successfully received.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.InterstitialAd.FailedToReceiveAd">
+            <summary>
+            Raised in case an ad could not be loaded successfully due to either of the following
+            reasons:
+            - There was a network issue.
+            - The request made was determined to be invalid.
+            - Successful ad request, but no ad returned due to lack of inventory.
+            - Something went wrong internally.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.InterstitialAd.ShowingOverlay">
+            <summary>
+            Raised before an interstitial/overlay is shown.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.InterstitialAd.DismissingOverlay">
+            <summary>
+            Raised after an interstitial/overlay is dismissed.
+            </summary>
+        </member>
+        <member name="E:GoogleAds.InterstitialAd.LeavingApplication">
+            <summary>
+            Raised when the action taken by the user caused an external app to open.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Logging.ILogger">
+            <summary>
+            Interface for the logger.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Logging.ILogger.Trace(System.String,System.Exception)">
+            <summary>
+            The shortcut for Trace log level.
+            </summary>
+            <param name="message">The message to be logged.</param>
+            <param name="exception">The exception to be logged.</param>
+        </member>
+        <member name="M:GoogleAds.Logging.ILogger.Debug(System.String,System.Exception)">
+            <summary>
+            The shortcut for Debug log level.
+            </summary>
+            <param name="message">The message to be logged.</param>
+            <param name="exception">The exception to be logged.</param>
+        </member>
+        <member name="M:GoogleAds.Logging.ILogger.Info(System.String,System.Exception)">
+            <summary>
+            The shortcut for Info log level.
+            </summary>
+            <param name="message">The message to be logged.</param>
+            <param name="exception">The exception to be logged.</param>
+        </member>
+        <member name="M:GoogleAds.Logging.ILogger.Warn(System.String,System.Exception)">
+            <summary>
+            The shortcut for Warn log level.
+            </summary>
+            <param name="message">The message to be logged.</param>
+            <param name="exception">The exception to be logged.</param>
+        </member>
+        <member name="M:GoogleAds.Logging.ILogger.Fatal(System.String,System.Exception)">
+            <summary>
+            The shortcut for Fatal log level.
+            </summary>
+            <param name="message">The message to be logged.</param>
+            <param name="exception">The exception to be logged.</param>
+        </member>
+        <member name="M:GoogleAds.Logging.ILogger.Error(System.String,System.Exception)">
+            <summary>
+            The shortcut for Error log level.
+            </summary>
+            <param name="message">The message to be logged.</param>
+            <param name="exception">The exception to be logged.</param>
+        </member>
+        <member name="T:GoogleAds.Logging.LogEventInfo">
+            <summary>
+            The structured data for log events.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Logging.LogEventInfo.SetStackTrace(System.Diagnostics.StackTrace)">
+            <summary>
+            Sets the stack trace.
+            </summary>
+            <param name="stackTrace"></param>
+        </member>
+        <member name="M:GoogleAds.Logging.LogEventInfo.FindCallingMethod(System.Diagnostics.StackTrace)">
+            <summary>
+            Determines which method made call to the logger.
+            </summary>
+            <param name="trace">The stack trace</param>
+            <returns>Returns the frame number that user made call to the logger to.</returns>
+        </member>
+        <member name="M:GoogleAds.Logging.LogEventInfo.ShouldSkipAssembly(System.Reflection.Assembly)">
+            <summary>
+            This method determines if we should any given assembly when determining the
+            user frame.
+            </summary>
+            <param name="assembly"></param>
+            <returns></returns>
+        </member>
+        <member name="P:GoogleAds.Logging.LogEventInfo.Name">
+            <summary>
+            The name of the logger that created this logging event.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Logging.LogEventInfo.Message">
+            <summary>
+            The message to be logged.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Logging.LogEventInfo.Exception">
+            <summary>
+            The exception to be logged.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Logging.LogEventInfo.TimeStamp">
+            <summary>
+            Time stamp.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Logging.LogEventInfo.Level">
+            <summary>
+            The severity.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Logging.LogEventInfo.HasStackTrace">
+            <summary>
+            Do we have stack trace?
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Logging.LogEventInfo.StackTrace">
+            <summary>
+            The stack trace.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Logging.LogEventInfo.UserStackFrame">
+            <summary>
+            The stack frame that made call to the logger. This helps excluding method calls
+            within this assembly.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Logging.LogEventInfo.UserStackFrameNumber">
+            <summary>
+            The stack frame number.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Logging.Logger.Trace(System.String,System.Exception)">
+            <summary>
+            The shortcut for Trace log level.
+            </summary>
+            <param name="message">The message to be logged.</param>
+            <param name="exception">The exception to be logged.</param>
+        </member>
+        <member name="M:GoogleAds.Logging.Logger.Debug(System.String,System.Exception)">
+            <summary>
+            The shortcut for Debug log level.
+            </summary>
+            <param name="message">The message to be logged.</param>
+            <param name="exception">The exception to be logged.</param>
+        </member>
+        <member name="M:GoogleAds.Logging.Logger.Info(System.String,System.Exception)">
+            <summary>
+            The shortcut for Info log level.
+            </summary>
+            <param name="message">The message to be logged.</param>
+            <param name="exception">The exception to be logged.</param>
+        </member>
+        <member name="M:GoogleAds.Logging.Logger.Warn(System.String,System.Exception)">
+            <summary>
+            The shortcut for Warn log level.
+            </summary>
+            <param name="message">The message to be logged.</param>
+            <param name="exception">The exception to be logged.</param>
+        </member>
+        <member name="M:GoogleAds.Logging.Logger.Fatal(System.String,System.Exception)">
+            <summary>
+            The shortcut for Fatal log level.
+            </summary>
+            <param name="message">The message to be logged.</param>
+            <param name="exception">The exception to be logged.</param>
+        </member>
+        <member name="M:GoogleAds.Logging.Logger.Error(System.String,System.Exception)">
+            <summary>
+            The shortcut for Error log level.
+            </summary>
+            <param name="message">The message to be logged.</param>
+            <param name="exception">The exception to be logged.</param>
+        </member>
+        <member name="M:GoogleAds.Logging.Logger.Log(GoogleAds.Logging.LogLevel,System.String,System.Exception)">
+            <summary>
+            Logs the event to targets associated with this logger.
+            </summary>
+            <param name="level">The severity of the event.</param>
+            <param name="message">The message to be logged.</param>
+            <param name="exception">The exception to be logged.</param>
+        </member>
+        <member name="M:GoogleAds.Logging.Logger.Log(GoogleAds.Logging.LogEventInfo)">
+            <summary>
+            Logs a given log event by checking if the event satisfies any given rule, and then
+            logs to the target specified.
+            </summary>
+            <param name="logEvent"></param>
+        </member>
+        <member name="T:GoogleAds.Logging.LogLevel">
+            <summary>
+            Log levels. The values (and the order of severity - ascending) is as follows:
+            Trace = 0
+            Debug = 1
+            Info = 2
+            Warn = 3
+            Error = 4
+            Fatal = 5
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Logging.LogManager">
+            <summary>
+            The log manager that keeps instances of different loggers.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Logging.LogManager.GetLogger(System.String)">
+            <summary>
+            Gets the logger with a given name.
+            </summary>
+            <param name="loggerName">The name of the logger.</param>
+            <returns>The logger.</returns>
+        </member>
+        <member name="M:GoogleAds.Logging.LogManager.GetLogger(System.Type)">
+            <summary>
+            Gets the logger for a given type.
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Logging.LogManager.GetSimplifiedName(System.Type)">
+            <summary>
+            Gets the simplified name for the type.
+            Instead of giving GoogleAds.Core.AdCommnicator`[GoogleAds.Core.AdManager`[...]]
+            this will give AdCommunicator[AdManager[..]] sort of name.
+            </summary>
+            <param name="type"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Logging.LogManager.GetLogger(System.String,System.Type)">
+            <summary>
+            Gets the logger for given name and loggerType.
+            </summary>
+            <param name="name">Name of the logger.</param>
+            <param name="loggerType">Type of the class requesting logger.</param>
+            <returns></returns>
+        </member>
+        <member name="T:GoogleAds.Logging.LoggerKey">
+            <summary>
+            The key for loggers.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Logging.Targets.DebugTarget">
+            <summary>
+            Debug target that prints out to Debug console.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Logging.Targets.Target">
+            <summary>
+            Internal base implementation for targets.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Logging.Targets.ITarget">
+            <summary>
+            The interface for debug targets.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Logging.Targets.ITarget.Initialize">
+            <summary>
+            Initialization method. Implementors should do things necessary for the
+            proper execution of the logger. This includes opening files, and sockets etc.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Logging.Targets.ITarget.Write(GoogleAds.Logging.LogEventInfo)">
+            <summary>
+            Writes the log events to the output.
+            </summary>
+            <param name="logEvent"></param>
+        </member>
+        <member name="M:GoogleAds.Logging.Targets.ITarget.Finish">
+            <summary>
+            Finish sequence. This is the method which should destroy resources and such.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Logging.Targets.ITarget.Name">
+            <summary>
+            The name of the target. It is set during when it is registered with the
+            LogManager.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Logging.Targets.ITarget.IsInitialized">
+            <summary>
+            Gets if the target is initialized.
+            </summary>
+            <returns>True if this target has already been initialized.</returns>
+        </member>
+        <member name="M:GoogleAds.Logging.Targets.Target.Initialize">
+            <summary>
+            Initialization method. Implementors should do things necessary for the
+            proper execution of the logger. This includes opening files, and sockets etc.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Logging.Targets.Target.Write(GoogleAds.Logging.LogEventInfo)">
+            <summary>
+            Writes the log events to the output.
+            </summary>
+            <param name="logEvent"></param>
+        </member>
+        <member name="M:GoogleAds.Logging.Targets.Target.Finish">
+            <summary>
+            Finish sequence. This is the method which should destroy resources and such.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Logging.Targets.Target.Name">
+            <summary>
+            The name of the target. It is set during when it is registered with the
+            LogManager.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Logging.Targets.Target.IsInitialized">
+            <summary>
+            Gets if the target is initialized.
+            </summary>
+            <returns>True if this target has already been initialized.</returns>
+        </member>
+        <member name="T:GoogleAds.Logging.Targets.Targets">
+            <summary>
+            Built-in target source..
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Logging.Targets.Targets.DebugTarget(System.String)">
+            <summary>
+            This target prints the output to the debug console.
+            </summary>
+            <param name="name">The name of the target.</param>
+            <returns>The debug target that prints to the debug console.</returns>
+        </member>
+        <member name="T:GoogleAds.Overlay">
+            <summary>
+            A basic page that acts as a full screen in-app browser for interstitials and click to
+            overlay requests.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Overlay.InitializeComponent">
+            <summary>
+            InitializeComponent
+            </summary>
+        </member>
+        <member name="M:GoogleAds.OverlayViewModel.FireOnShow">
+            <summary>
+            The default action when the overlay is opened. Fires the onshow event if the bit is set.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.OverlayViewModel.FireOnHide">
+            <summary>
+            The default action when the overlay is dismissed. Fires the onhide event if the bit is
+            set.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.OverlayViewModel.FireShowAndHide">
+            <summary>
+            When called, this will tell the overlay it should call onshow and onhide.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.OverlayViewModel.OnShow">
+            <summary>
+            Actions to occur when the overlay is shown.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.OverlayViewModel.OnHide">
+            <summary>
+            Actions to occur when the overlay is dismissed.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.OverlayViewModel.WebView">
+            <summary>
+            The WebView used within the overlay.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.OverlayViewModel.AdInformation">
+            <summary>
+            The information about ad.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.ServiceFactory.RequestModifier">
+            <summary>
+            The pipeline that constructs a dictionary of key-value pairs that are to be sent to
+            SDK Core.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Services.Cryptography.IHasher">
+            <summary>
+            The interface for potential hashing mechanisms.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Services.Cryptography.IHasher.Hash(System.String,System.String)">
+            <summary>
+            Hashes the given <paramref name="input"/> value after appending
+            <paramref name="salt"/> for increased security.
+            </summary>
+            <param name="input">The input to be hashed.</param>
+            <param name="salt">The salt to be used.</param>
+            <returns>Returns the hash of the given input and salt.</returns>
+        </member>
+        <member name="T:GoogleAds.Services.Cryptography.SHA1Hasher">
+            <summary>
+            Hasher for SHA-1 Algorithm.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Services.Cryptography.SHA1Hasher.Hash(System.String,System.String)">
+            <summary>
+            Hashes the input and returns the hex output.
+            </summary>
+            <param name="input">The input to be hashed.</param>
+            <param name="salt">The salt.</param>
+            <returns></returns>
+        </member>
+        <member name="T:GoogleAds.Services.Identification.IdentificationService">
+            <summary>
+            The class to obtain user ID and device ids for Windows Phone.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Services.Identification.IIdentificationService">
+            <summary>
+            The interface for device and user identifiers.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Services.Identification.IIdentificationService.UserId">
+            <summary>
+            Gets the identifier for the current user.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:GoogleAds.Services.Identification.IIdentificationService.ApplicationId">
+            <summary>
+            Gets the identifier for the current application.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:GoogleAds.Services.Identification.IIdentificationService.PackageSpecificUserId">
+            <summary>
+            Gets the package specific user id.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Services.Identification.IdentificationService.GetApplicationIdentifier">
+            <summary>
+            Generates the application identifier.
+            The default order:
+            1. CurrentApp.AppId
+            2. Market Receipt App Id
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Services.Identification.IdentificationService.GetPackageSpecificUserId">
+            <summary>
+            Generates a user id that's going to be stored in the isolated storage, and returns it.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Services.Identification.IdentificationService.ChainEvaluate(GoogleAds.Services.Identification.IdentificationService.IdentifierDelegate[])">
+            <summary>
+            Evaluate the delegates sequentially. Whenever one returns true, it means a valid
+            identifier is found, and the later ones do not need to be invoked.
+            </summary>
+            <param name="identifiers"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Services.Identification.IdentificationService.GenerateAndGetPackageSpecificUserId(System.String@)">
+            <summary>
+            Generates a globally-unique identifier and stores it in the storage.
+            </summary>
+            <param name="packageSpecificId">The generated id.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Services.Identification.IdentificationService.GetApplicationIdFromCurrentApp(System.String@)">
+            <summary>
+            Returns the App Id generated by the store.
+            </summary>
+            <param name="appId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Services.Identification.IdentificationService.GetApplicationIdFromPackage(System.String@)">
+            <summary>
+            Gets the app id through package information.
+            </summary>
+            <param name="appId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Services.Identification.IdentificationService.GetDeviceIdFromMarketReceipt(System.String@)">
+            <summary>
+            Gets the device id from market receipt.
+            </summary>
+            <param name="deviceId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Services.Identification.IdentificationService.GetNetworkAdapterId(System.String@)">
+            <summary>
+            Gets the network adapter id.
+            </summary>
+            <param name="adapterId"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Services.Identification.IdentificationService.GetANID(System.String@)">
+            <summary>
+            Gets the ANID for the current user.
+            </summary>
+            <param name="identifier"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Services.Identification.IdentificationService.GetDeviceUniqueID(System.String@)">
+            <summary>
+            Gets the identifier for the device.
+            </summary>
+            <param name="identifier"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Services.Identification.IdentificationService.GetUserIdentifier">
+            <summary>
+            Gets the user identifier in the following order:
+            1. Gets ANID
+            2. Gets Device Unique ID
+            3. Gets first Network Adapter Id.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:GoogleAds.Services.Identification.IdentificationService.UserId">
+            <summary>
+            Gets the user id of the user.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Services.Identification.IdentificationService.ApplicationId">
+            <summary>
+            Gets the application id of the app.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Services.Identification.IdentificationService.PackageSpecificUserId">
+            <summary>
+            Gets the package specific user id.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Services.Identification.IdentificationService.IdentifierDelegate">
+            <summary>
+            Delegate for identifier functions.
+            </summary>
+            <param name="identifier"></param>
+            <returns></returns>
+        </member>
+        <member name="F:GoogleAds.Services.Location.EncryptedLocationSerializerImpl.locationSerializer">
+            <summary>
+            Location serializer.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Services.Location.EncryptedLocationSerializerImpl.#ctor(GoogleAds.Services.Location.ILocationSerializer)">
+            <summary>
+            Initializes the encrypting serializer with a clear-text serializer.
+            </summary>
+            <param name="locationSerializer">The serializer to use before encryption.</param>
+        </member>
+        <member name="M:GoogleAds.Services.Location.EncryptedLocationSerializerImpl.LocationToOolong(Windows.Devices.Geolocation.Geocoordinate)">
+            <summary>
+            Converts a given coordinate to proto and encrypts it.
+            </summary>
+            <param name="coordinate">The coordinates to encrypt.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Services.Location.EncryptedLocationSerializerImpl.EncryptProto(System.String)">
+            <summary>
+            Takes the ASCII representation of the unified location proto and AES encrypts, then
+            base64 encodes it to be sent across the network.
+            </summary>
+            <param name="proto">The ASCII representation of the unified location proto.</param>
+            <returns>The encrypted string to be inserted into the UULE param.</returns>
+        </member>
+        <member name="M:GoogleAds.Services.Location.LocationSerializerImpl.LocationToOolong(Windows.Devices.Geolocation.Geocoordinate)">
+            <summary>
+            Takes a location and returns the uule parameter.
+            </summary>
+            <param name="location">The geoposition object containing location data.</param>
+            <returns>The formatted uule parameter.</returns>
+        </member>
+        <member name="M:GoogleAds.Services.Location.LocationSerializerImpl.LocationToProtoString(Windows.Devices.Geolocation.Geocoordinate)">
+            <summary>
+            Takes a Geoposition and returns the ASCII representation of the unified location proto.
+            </summary>
+            <param name="coordinate">The Geocoordinate object containing location data.</param>
+            <returns>The ASCII representation of the unified location proto.</returns>
+        </member>
+        <member name="T:GoogleAds.Services.RequestModifiers.IRequestModifier">
+            <summary>
+            A request modifier is a class that will act on a given dictionary
+            based on the information provided in the given AdRequest.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Services.RequestModifiers.IRequestModifier.ModifyRequest(GoogleAds.AdRequest,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Modifies <paramref name="output"/> based on the information provided in
+            <paramref name="request"/> and other environmental information.
+            </summary>
+            <param name="request">The request to collect data from.</param>
+            <param name="output">The output dictionary.</param>
+        </member>
+        <member name="T:GoogleAds.Services.RequestModifiers.LocalizationModifier">
+            <summary>
+            Adds the language information to the output.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Services.RequestModifiers.LocalizationModifier.ModifyRequest(GoogleAds.AdRequest,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Appends the language information to <paramref name="output"/>.
+            </summary>
+            <param name="request">The request to collect data from.</param>
+            <param name="output">The output dictionary.</param>
+        </member>
+        <member name="T:GoogleAds.Services.RequestModifiers.LocationModifier">
+            <summary>
+            Appends the location information to the output.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Services.RequestModifiers.LocationModifier.#ctor(GoogleAds.Services.Location.ILocationSerializer)">
+            <summary>
+            Initializes the class with the <paramref name="locationSerializer"/>.
+            </summary>
+            <param name="locationSerializer">The serializer to use to convert location
+            information to string</param>
+        </member>
+        <member name="M:GoogleAds.Services.RequestModifiers.LocationModifier.ModifyRequest(GoogleAds.AdRequest,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Appends the location information to <paramref name="output"/>.
+            </summary>
+            <param name="request">The request to collect data from.</param>
+            <param name="output">The output dictionary.</param>
+        </member>
+        <member name="T:GoogleAds.Services.RequestModifiers.RequestModificationPipeline">
+            <summary>
+            Modifies the request output using an array of modifiers.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Services.RequestModifiers.RequestModificationPipeline.#ctor(GoogleAds.Services.RequestModifiers.IRequestModifier[])">
+            <summary>
+            Initializes the class with given <paramref name="requestModifiers"/>.
+            </summary>
+            <param name="requestModifiers">An array of modifiers to act on
+            an AdRequest
+            </param>
+        </member>
+        <member name="M:GoogleAds.Services.RequestModifiers.RequestModificationPipeline.ModifyRequest(GoogleAds.AdRequest,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Modifies the request output using the array of modifiers.
+            </summary>
+            <param name="request">The request to collect data from.</param>
+            <param name="output">The output dictionary.</param>
+        </member>
+        <member name="T:GoogleAds.Services.RequestModifiers.AudioState">
+            <summary>
+            An enum representing the various states the phone's audio can be in.
+            </summary>
+        </member>
+        <member name="T:GoogleAds.Services.RequestModifiers.VolumeStatusModifier">
+            <summary>
+            Appends the device volume status to the output.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Services.RequestModifiers.VolumeStatusModifier.ModifyRequest(GoogleAds.AdRequest,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Appends the device volume status to <paramref name="output"/>.
+            </summary>
+            <param name="request">The request to collect data from.</param>
+            <param name="output">The output dictionary.</param>
+        </member>
+        <member name="T:GoogleAds.Services.RequestModifiers.ScreenInformationModifier">
+            <summary>
+            Appends the screen related information to the output.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Services.RequestModifiers.ScreenInformationModifier.ModifyRequest(GoogleAds.AdRequest,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Appends the screen related information, such as density, height and width
+            to the dictionary.
+            </summary>
+            <param name="request">The request to collect data from.</param>
+            <param name="output">The output dictionary.</param>
+        </member>
+        <member name="T:GoogleAds.Services.RequestModifiers.SdkInformationModifier">
+            <summary>
+            Appends the SDK related information to the output.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Services.RequestModifiers.SdkInformationModifier.ModifyRequest(GoogleAds.AdRequest,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Appends the SDK related information to <paramref name="output"/>.
+            </summary>
+            <param name="request">The request to collect data from.</param>
+            <param name="output">The output dictionary.</param>
+        </member>
+        <member name="T:GoogleAds.Services.RequestModifiers.SimpleRequestModifier">
+            <summary>
+            Appends the basic information that are available in the AdRequest.
+            This informatio includes Age, Keywords, Gender and so on.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Services.RequestModifiers.SimpleRequestModifier.ModifyRequest(GoogleAds.AdRequest,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Appends the basic information such as Age and Keywords to
+            the <paramref name="output"/>.
+            </summary>
+            <param name="request">The request to collect data from.</param>
+            <param name="output">The output dictionary.</param>
+        </member>
+        <member name="M:GoogleAds.Util.AdUtil.GetIntHeader(GoogleAds.Core.Http.HttpResponse,System.String)">
+            <summary>Extracts an integer HTTP header, returning -1 in the case of error.</summary>
+            <param name="httpResponse">The HTTP response.</param>
+            <param name="headerName">The name of the header.</param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Util.AdUtil.PingUrl(System.String)">
+            <summary>
+            Pings the specified URL, ignoring any response content.
+            NOTE: This will automatically follow redirects and therefore no handling is necessary
+            to detect them.
+            </summary>
+            <param name="url">The URL to ping.</param>
+        </member>
+        <member name="M:GoogleAds.Util.AdUtil.PingUrls(System.Collections.Generic.IEnumerable{System.String})">
+            <summary>Pings each URL in the specified collection.</summary>
+            <param name="urls">An IEnumerable of URLs to ping.</param>
+        </member>
+        <member name="M:GoogleAds.Util.AdUtil.ReadTrackingHeader(GoogleAds.Core.Http.HttpResponse,System.String)">
+            <summary>
+            Reads the specified tracking URL header from the HTTP response, where the header is a
+            space-delimited list of URLs, and returns the list.
+            </summary>
+            <param name="httpResponse">The HTTP response</param>
+            <param name="headerName">The name of the header to process</param>
+            <returns>An enumerable containing the tracking URLs</returns>
+        </member>
+        <member name="T:GoogleAds.Util.DataStore">
+            <summary>
+            The data store that is used to pass data to navigated pages.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Util.DataStore.#cctor">
+            <summary>
+            Initializes the singleton instance.
+            </summary>
+        </member>
+        <member name="P:GoogleAds.Util.DataStore.Instance">
+            <summary>
+            The singleton instance
+            </summary>
+        </member>
+        <member name="F:GoogleAds.Util.DeviceProperties.lockObject">
+            <summary>
+            Lock object.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Util.DeviceProperties.GetUserAgent">
+            <summary>
+            Fetches the user agent by invoking some javascript on the GWebView.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Util.DeviceProperties.SetUserAgent(System.String)">
+            <summary>
+            Sets the user agent.
+            </summary>
+            <param name="agent"></param>
+        </member>
+        <member name="M:GoogleAds.Util.Extensions.EnumerableExtensions.ForEach``1(System.Collections.Generic.IEnumerable{``0},System.Action{``0})">
+            <summary>
+            Iterates through the <paramref name="source"/> and invokes action on the elements.
+            </summary>
+            <typeparam name="T">Type of the elements of the enumerable.</typeparam>
+            <param name="source">The source of the elements.</param>
+            <param name="action">The action to be invoked on the elements.</param>
+        </member>
+        <member name="M:GoogleAds.Util.Extensions.StatusCodeExtensions.IsSuccessStatusCode(System.Net.HttpStatusCode)">
+            <summary>
+            Returns true if the code is within [200,299].
+            </summary>
+            <param name="statusCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Util.Extensions.StatusCodeExtensions.IsRedirectStatusCode(System.Net.HttpStatusCode)">
+            <summary>
+            Returns true if the code is a redirect code.
+            </summary>
+            <param name="statusCode"></param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Util.GMsgUtil.ParseMessage(System.String)">
+            <summary>
+            Parses a GMsg from a given Uri string.
+            </summary>
+            <param name="uriString"></param>
+            <returns></returns>
+        </member>
+        <member name="T:GoogleAds.Util.Guard">
+            <summary>
+            Utility class to check for inputs
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Util.Guard.GetNameAndValue(System.Linq.Expressions.Expression{System.Func{System.Object}},System.String@,System.Object@)">
+            <summary>
+            Gets the name and value of a given Linq expression.
+            </summary>
+            <param name="expression">The expression to evaluate.</param>
+            <param name="name">The output for name.</param>
+            <param name="value">The output for value.</param>
+        </member>
+        <member name="M:GoogleAds.Util.Guard.EnsureNotNullOrEmpty(System.Linq.Expressions.Expression{System.Func{System.Object}})">
+            <summary>
+            Given an expression, checks if the expression evaluates to
+            null/empty string or not, and throws exception.
+            </summary>
+            <param name="expression">The expression to evaluate.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the exception
+            evaluates to null</exception>
+        </member>
+        <member name="M:GoogleAds.Util.Guard.EnsureNotNull(System.Linq.Expressions.Expression{System.Func{System.Object}})">
+            <summary>
+            Given an expression, checks if the expression evaluates to
+            null or not, and throws exception.
+            </summary>
+            <param name="expression">The expression to evaluate.</param>
+            <exception cref="T:System.ArgumentNullException">Thrown when the exception
+            evaluates to null</exception>
+        </member>
+        <member name="M:GoogleAds.Util.Guard.EnsureNotNull(System.Object,System.String)">
+            <summary>
+            Checks if the given object is not null, throws exception otherwise
+            </summary>
+            <param name="o">Object to check for.</param>
+            <param name="name">Name of the object.</param>
+        </member>
+        <member name="M:GoogleAds.Util.Guard.EnsureNotNullOrEmpty(System.String,System.String)">
+            <summary>
+            Checks if the given object is not null or empty string, throws exception otherwise
+            </summary>
+            <param name="o">Object to check for.</param>
+            <param name="name">Name of the object.</param>
+        </member>
+        <member name="M:GoogleAds.Util.Json.JsonGenerator.GenerateJson(System.Object)">
+            <summary>
+            Returns the JSON string representing the object <paramref name="o"/>.
+            </summary>
+            <param name="o">The object to be serialized</param>
+            <returns></returns>
+        </member>
+        <member name="M:GoogleAds.Util.Json.JsonGenerator.ConstructInt(System.Text.StringBuilder,System.Int32)">
+            <summary>
+            Appends the int <paramref name="value"/> to the JSON output.
+            </summary>
+            <param name="builder">The string builder to append to.</param>
+            <param name="value">The int value.</param>
+        </member>
+        <member name="M:GoogleAds.Util.Json.JsonGenerator.ConstructDouble(System.Text.StringBuilder,System.Double)">
+            <summary>
+            Appends the double <paramref name="value"/> to the JSON output.
+            </summary>
+            <param name="builder">The string builder to append to.</param>
+            <param name="value">The double value.</param>
+        </member>
+        <member name="M:GoogleAds.Util.Json.JsonGenerator.ConstructString(System.Text.StringBuilder,System.String)">
+            <summary>
+            Appends the string <paramref name="value"/> to the JSON output.
+            </summary>
+            <param name="builder">The string builder to append to.</param>
+            <param name="value">The string value to be serialized.</param>
+        </member>
+        <member name="M:GoogleAds.Util.Json.JsonGenerator.ConstructArray(System.Text.StringBuilder,System.Object[])">
+            <summary>
+            Appends the object array <paramref name="array"/> to the JSON output.
+            </summary>
+            <param name="builder">The string builder to append to.</param>
+            <param name="array">The array to be serialized.</param>
+        </member>
+        <member name="M:GoogleAds.Util.Json.JsonGenerator.ConstructObject(System.Text.StringBuilder,System.Object)">
+            <summary>
+            Appends the JSON representation of <paramref name="value"/> to
+            <paramref name="builder"/>. This method determines the object type and calls
+            other functions to properly serialize an object
+            </summary>
+            <param name="builder">The string builder to append to.</param>
+            <param name="value">The object to be serialized.</param>
+        </member>
+        <member name="M:GoogleAds.Util.Json.JsonGenerator.ConstructDictionary(System.Text.StringBuilder,System.Collections.Generic.IDictionary{System.String,System.Object})">
+            <summary>
+            Appends the dictionary <paramref name="dictionary"/> to the JSON output.
+            </summary>
+            <param name="builder">The string builder to append to.</param>
+            <param name="dictionary">The dictionary value.</param>
+        </member>
+        <member name="M:GoogleAds.Util.Extensions.ListUtil.AddRange``1(System.Collections.Generic.IList{``0},System.Collections.Generic.IEnumerable{``0})">
+            <summary>
+            Adds the items in <paramref name="source"/> into <paramref name="destination"/>.
+            </summary>
+            <typeparam name="T">Type of the items.</typeparam>
+            <param name="destination">List to put the elements into.</param>
+            <param name="source">List to put the elements from.</param>
+        </member>
+        <member name="M:GoogleAds.Util.Extensions.UriExtensions.ParseQueryString(System.Uri)">
+            <summary>
+            Parses the uri and gives back the query parameters.
+            </summary>
+            <param name="uri"></param>
+            <returns></returns>
+        </member>
+        <member name="T:GoogleAds.Util.UiDispatcher">
+            <summary>
+            Class to dispatch actions to the UI thread.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Util.UiDispatcher.Initialize(System.Threading.SynchronizationContext)">
+            <summary>
+            Initializes the class with a specific dispatcher instance.
+            </summary>
+            <param name="context">The synchronization context.</param>
+        </member>
+        <member name="M:GoogleAds.Util.UiDispatcher.Initialize">
+            <summary>
+            Fetches the instance of the UI dispatcher if it is the first time
+            this class is being used.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Util.UiDispatcher.InvokeAsync(System.Action)">
+            <summary>
+            Asynchronously invokes the given action on the UI thread.
+            </summary>
+            <param name="action">The action to invoke.</param>
+        </member>
+        <member name="M:GoogleAds.Util.UiDispatcher.Invoke``1(System.Func{``0})">
+            <summary>
+            Invokes the given function on the UI thread and returns the
+            result.
+            </summary>
+            <param name="action">The function to invoke.</param>
+        </member>
+        <member name="M:GoogleAds.Util.UiDispatcher.Invoke(System.Action)">
+            <summary>
+            Invokes the given function on the UI thread.
+            </summary>
+            <param name="action">The function to invoke.</param>
+        </member>
+    </members>
+</doc>
