@@ -1,4 +1,45 @@
-### Show Mobile Ad with 1 line of javascript code ###
+# AdMob Plugin Pro #
+
+### Show Mobile Ad with single line of javascript code ###
+
+Step 1: Create Ad Unit Id for your banner and interstitial, in [AdMob portal](http://www.admob.com/), then write it in your javascript code.
+
+```javascript
+var ad_units = {
+	ios : {
+		banner: 'ca-app-pub-xxx/xxx', // or DFP format "/6253334/dfp_example_ad"
+		interstitial: 'ca-app-pub-xxx/yyy'
+	},
+	android : {
+		banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
+		interstitial: 'ca-app-pub-xxx/kkk'
+	}
+};
+// select the right Ad Id according to platform
+var admobid = ( /(android)/i.test(navigator.userAgent) ) ? ad_units.android : ad_units.ios;
+```
+
+Step 2: Want a banner? single line of javascript code.
+
+```javascript
+// it will display smart banner at top center, using the default options
+if(AdMob) AdMob.createBanner( {
+	adId: admobid.banner, 
+	position: AdMob.AD_POSITION.TOP_CENTER, 
+	autoShow: true } );
+```
+
+Step 3: Want full screen Ad? Easy, 2 lines of code. 
+
+```javascript
+// preppare and load ad resource in background, e.g. at begining of game level
+if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
+
+// show the interstitial later, e.g. at end of game level
+if(AdMob) AdMob.showInterstitial();
+```
+
+### Features ###
 
 Platforms supported:
 - [x] Android
@@ -35,9 +76,23 @@ Maximize your revenue with mediation adapters:
 
 ## How to use? ##
 
-If use with Cordova CLI:
+* If use with Cordova CLI:
 ```bash
 cordova plugin add com.google.cordova.admob
+```
+
+* If use with PhoneGap Buid, just configure in config.xml:
+```javascript
+<gap:plugin id="com.google.cordova.admob" source="plugins.cordova.io"/>
+```
+
+* If use with Intel XDK:
+Project -> CORDOVA 3.X HYBRID MOBILE APP SETTINGS -> PLUGINS AND PERMISSIONS -> Third-Party Plugins ->
+Add a Third-Party Plugin -> Get Plugin from the Web, input:
+```
+Name: AdMobPluginPro
+Plugin ID: com.google.cordova.admob
+[x] Plugin is located in the Apache Cordova Plugins Registry
 ```
 
 ## Quick start with cordova CLI ##
@@ -74,15 +129,6 @@ cordova plugin add com.google.cordova.admob-mobfox
 
 Notice: If you want to add multiple mediations, please balance flexibility and binary size.
 
-If use with Intel XDK:
-Project -> CORDOVA 3.X HYBRID MOBILE APP SETTINGS -> PLUGINS AND PERMISSIONS -> Third-Party Plugins ->
-Add a Third-Party Plugin -> Get Plugin from the Web, input:
-```
-Name: AdMobPluginPro
-Plugin ID: com.google.cordova.admob
-[x] Plugin is located in the Apache Cordova Plugins Registry
-```
-
 ## Javascript API Overview ##
 
 Methods:
@@ -98,69 +144,6 @@ prepareInterstitial(adId/options, success, fail);
 showInterstitial();
 // set default value for other methods
 setOptions(options, success, fail);
-```
-
-## Quick Start Example Code ##
-
-Step 1: Prepare your AdMob Ad Unit Id for your banner and interstitial
-
-```javascript
-var ad_units = {
-	ios : {
-		banner: 'ca-app-pub-xxx/xxx', // or DFP format "/6253334/dfp_example_ad"
-		interstitial: 'ca-app-pub-xxx/yyy'
-	},
-	android : {
-		banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
-		interstitial: 'ca-app-pub-xxx/kkk'
-	}
-};
-// select the right Ad Id according to platform
-var admobid = ( /(android)/i.test(navigator.userAgent) ) ? ad_units.android : ad_units.ios;
-```
-
-Step 2: Create a banner with single line of javascript
-
-```javascript
-// it will display smart banner at top center, using the default options
-if(AdMob) AdMob.createBanner( admobid.banner );
-```
-
-Or, show the banner Ad in some other way:
-
-```javascript
-// or, show a banner at bottom
-if(AdMob) AdMob.createBanner( {
-	adId:admobid.banner, 
-	position:AdMob.AD_POSITION.BOTTOM_CENTER, 
-	autoShow:true} );
-
-// or, show a rect ad at bottom in overlap mode
-if(AdMob) AdMob.createBanner( {
-	adId:admobid.banner, 
-	adSize:'MEDIUM_RECTANGLE', 
-	overlap:true, 
-	position:AdMob.AD_POSITION.BOTTOM_CENTER, 
-	autoShow:true} );
-
-// or, show any size at any position
-if(AdMob) AdMob.createBanner( {
-	adId:admobid.banner, 
-	adSize:'CUSTOM',  width:200, height:200, 
-	overlap:true, 
-	position:AdMob.AD_POSITION.POS_XY, x:100, y:200, 
-	autoShow:true} );
-
-```
-
-Step 3: Prepare an interstitial, and show it when needed
-
-```javascript
-// preppare and load ad resource in background, e.g. at begining of game level
-if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
-
-// show the interstitial later, e.g. at end of game level
-if(AdMob) AdMob.showInterstitial();
 ```
 
 ### Detailed Wiki ###
@@ -185,15 +168,15 @@ Other Documentations:
 
 iPhone Banner | iPhone Medium Rect
 -------|---------------
-![ScreenShot](docs/iphone.jpg) | ![ScreenShot](docs/medium_rect.jpg)
+![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/iphone.jpg) | ![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/medium_rect.jpg)
 iPad Medium Rect | iPad SkyScraper
-![ScreenShot](docs/ipad_rect.jpg) | ![ScreenShot](docs/ipad_skyscraper.jpg)
+![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/ipad_rect.jpg) | ![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/ipad_skyscraper.jpg)
 iPad interstitial | Any given X,Y:
-![ScreenShot](docs/ipad_interstitial.jpg) | ![ScreenShot](docs/any_position.jpg)
+![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/ipad_interstitial.jpg) | ![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/any_position.jpg)
 Android Banner | Android Medium Rect
-![ScreenShot](docs/android.jpg) | ![ScreenShot](docs/android_rect.jpg)
+![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/android.jpg) | ![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/android_rect.jpg)
 Android Interstitial | 
-![ScreenShot](docs/android_interstitial.jpg) |
+![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/android_interstitial.jpg) |
 
 ## Tips ##
 
@@ -217,7 +200,7 @@ Ad PluginPro series for the world leading Mobile Ad services:
 
 More Cordova/PhoneGap plugins by Raymond Xie, [find them in plugin registry](http://plugins.cordova.io/#/search?search=rjfun).
 
-If use in commercial project or need prompt support, please [buy a license](http://rjfun.github.io/), you will be supported with high priority.
+If use in commercial project and need email/skype support, please [buy a license](http://rjfun.github.io/), you will be supported with high priority.
 
 Project outsourcing and consulting service is also available. Please [contact us](mailto:rjfun.mobile@gmail.com) if you have the business needs.
 

@@ -3,34 +3,6 @@
 
 Present AdMob Ads in Mobile App/Games natively from JavaScript. 
 
-Highlights:
-- [x] Support Banner Ad and Interstitial Ad.
-- [x] Multiple banner size, also support custom size.
-- [x] Fixed and overlapped mode.
-- [x] Most flexible, put banner at any position with overlap mode.
-- [x] Auto fit on orientation change.
-- [x] Latest iOS SDK v6.11.1, 
-- [x] Latest Android Google play services r19.
-- [x] Compatible with Intel XDK and Crosswalk.
-- [x] Easy-to-use APIs. Can display Ad with single line of Js code.
-- [x] Actively maintained, prompt support.
-
-Tips: (According to history stat data in past 2 months)
-- [x] Using AdMob Plugin Pro, will get higher fill rate.
-- [x] Using Interstitial, will earn better profit, RPM 10 times higher than Banner. 
-
-Glossary:
-- Fill rate: The number of times ads are shown on your app, divided by the number of times your app requests to show an ad.
-- RPM: Revenue per 1000 impressions (RPM). RPM represents the estimated earnings you'd accrue for every 1000 impressions you receive.
-- Intel XDK: Intel's HTML5 App IDE and service, to build mobile app in clould, allow using 3rd-party plugin from web.
-- Adobe PhoneGap Build: Adobe service, to publish plugin and build app in cloud, only allow using plugins reviewed and approved.
-
-News:
-- Recommended by Telerik in Verified Plugins Marketplace. [read more ...](http://plugins.telerik.com/plugin/admob)
-- Recommended by William SerGio in code project (20 Jun 2014), [read more ...](http://www.codeproject.com/Articles/788304/AdMob-Plugin-for-Latest-Version-of-PhoneGap-Cordov)
-- Recommended by Arne in Scirra Game Dev Forum (07 Aug, 2014), [read more ...](https://www.scirra.com/forum/plugin-admob-ads-for-crosswalk_t111940)
-- Recommended by Intel XDK team (08/22/2014), [read more ...](https://software.intel.com/en-us/html5/articles/adding-google-play-services-to-your-cordova-application)
-
 ## How to Use ##
 
 Add the plugin to your cordova project with [Cordova CLI](https://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-Line%20Interface):
@@ -149,21 +121,6 @@ AdMob.showInterstitial();
 'onAdPresent'
 'onAdLeaveapp'
 'onAdDismiss'
-
-// deprecated, for banner Ad
-'onBannerFailedToReceive'
-'onBannerReceive'
-'onBannerPresent'
-'onBannerLeaveApp'
-'onBannerDismiss'
-    
-// deprecated, for interstitial Ad    
-'onInterstitialFailedToReceive'
-'onInterstitialReceive'
-'onInterstitialPresent'
-'onInterstitialLeaveApp'
-'onInterstitialDismiss'
-```
 
 ## Methods ##
 

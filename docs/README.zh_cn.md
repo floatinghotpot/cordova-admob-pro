@@ -16,9 +16,11 @@
 - [x] 更新维护及时，技术支持到位。
 
 兼容：
-- [x] Cordova/PhoneGap
+- [x] Apache Cordova
 - [x] Intel XDK / Crosswalk
 - [x] IBM Worklight
+- [x] Google Chrome App
+- [x] Adobe PhoneGap Build
 
 支持广告网络：
 - [x] AdMob
