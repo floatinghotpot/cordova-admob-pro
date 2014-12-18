@@ -83,7 +83,7 @@ cordova plugin add com.google.cordova.admob
 
 * If use with PhoneGap Buid, just configure in config.xml:
 ```javascript
-<gap:plugin id="com.google.cordova.admob" source="plugins.cordova.io"/>
+<gap:plugin name="com.google.cordova.admob" source="plugins.cordova.io"/>
 ```
 
 * If use with Intel XDK:
