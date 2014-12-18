@@ -100,10 +100,10 @@ namespace Cordova.Extension.Commands
 		protected int posX = 0;
 		protected int posY = 0;
 		
-		protected boolean autoShowBanner = true;
-		protected boolean autoShowInterstitial = false;
+		protected Boolean autoShowBanner = true;
+		protected Boolean autoShowInterstitial = false;
 		
-		protected boolean bannerVisible = false;
+		protected Boolean bannerVisible = false;
 		
 		private const string UI_LAYOUT_ROOT = "LayoutRoot";
 		private const string UI_CORDOVA_VIEW = "CordovaView";
