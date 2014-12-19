@@ -6,14 +6,14 @@ using System.Globalization;
 using System.Runtime.Serialization;
 using System.Windows;
 using System.Windows.Controls;
-using Windows.Devices.Geolocation;
 using Microsoft.Phone.Controls;
+//using Windows.Devices.Geolocation;
+//using Windows.UI.Core;
 
 using WPCordovaClassLib;
 using WPCordovaClassLib.Cordova;
 using WPCordovaClassLib.Cordova.Commands;
 using WPCordovaClassLib.Cordova.JSON;
-
 using GoogleAds;
 
 namespace Cordova.Extension.Commands
@@ -26,6 +26,7 @@ namespace Cordova.Extension.Commands
 		// ad size
 		// only banner and smart banner supported on windows phones, see:
 		// https://developers.google.com/mobile-ads-sdk/docs/admob/wp/banner
+		
 		public const string ADSIZE_BANNER = "BANNER";
 		public const string ADSIZE_SMART_BANNER = "SMART_BANNER";
 		//public const string ADSIZE_MEDIUM_RECTANGLE = "MEDIUM_RECTANGLE";
@@ -133,7 +134,7 @@ namespace Cordova.Extension.Commands
 			try {
 				string[] inputs = JsonHelper.Deserialize<string[]>(args);
 				if (inputs != null && inputs.Length >= 1) {
-					Dictionary<string, string> options = JsonHelp.Deserialize<Dictionary<string, string>>(inputs[0]);
+					Dictionary<string, string> options = JsonHelper.Deserialize<Dictionary<string, string>>(inputs[0]);
 					__setOptions(options);
 				}
 			} catch (Exception ex) {
@@ -168,7 +169,7 @@ namespace Cordova.Extension.Commands
 				bannerId = options [OPT_BANNER_ID];
 			
 			if (options.ContainsKey (OPT_INTERSTITIAL_ID)) 
-				interstialId = options [OPT_INTERSTITIAL_ID];
+				interstitialId = options [OPT_INTERSTITIAL_ID];
 			
 			if (options.ContainsKey (OPT_AD_SIZE)) {
 				adSize = adSizeFromString(options[OPT_AD_SIZE]);
@@ -181,7 +182,7 @@ namespace Cordova.Extension.Commands
 			try {
 				string[] inputs = JsonHelper.Deserialize<string[]>(args);
 				if (inputs != null && inputs.Length >= 1) {
-					Dictionary<string, string> options = JsonHelp.Deserialize<Dictionary<string, string>>(inputs[0]);
+					Dictionary<string, string> options = JsonHelper.Deserialize<Dictionary<string, string>>(inputs[0]);
 					
 					if(options.Count > 1) __setOptions(options);
 					
@@ -209,7 +210,7 @@ namespace Cordova.Extension.Commands
 			if (isTesting)
 				adId = TEST_BANNER_ID;
 			
-			if (adId && (adId.Length > 0))
+			if ((adId!=null) && (adId.Length > 0))
 				bannerId = adId;
 			else
 				adId = bannerId;
@@ -217,7 +218,7 @@ namespace Cordova.Extension.Commands
 			autoShowBanner = autoShow;
 			
 			// Asynchronous UI threading call
-			Deployment.Current.Dispatcher.BeginInvoke (() => {
+			Deployment.Current.Dispatcher.BeginInvoke(() => {
 				if(bannerAd == null) {
 					bannerAd = new AdView {
 						Format = adSize,
@@ -236,7 +237,7 @@ namespace Cordova.Extension.Commands
 				
 				AdRequest adRequest = new AdRequest();
 				adRequest.ForceTesting = isTesting;
-				bannerAd.loadAd( adRequest );
+				bannerAd.LoadAd( adRequest );
 				
 				if(autoShowBanner) {
 					__showBanner(adPosition, posX, posY);
@@ -282,45 +283,40 @@ namespace Cordova.Extension.Commands
 		}
 
 		protected void __showBanner(int argPos, int argX, int argY) {
-			if (! bannerAd) {
+			if (bannerAd == null) {
 				if(logVerbose) Debug.WriteLine("banner is null, call createBanner() first.");
 				return;
 			}
 			
 			// Asynchronous UI threading call
-			Deployment.Current.Dispatcher.BeginInvoke (() => {
-				PhoneApplicationFrame frame = Application.Current.RootVisual as PhoneApplicationFrame;
-				if(! frame) return;
-
-				PhoneApplicationPage page = frame.Content as PhoneApplicationPage;
-				if(! page) return;
-
-				Grid grid = page.FindName(UI_LAYOUT_ROOT) as Grid;
-				if(! grid) return;
-
-				CordovaView view = page.FindName(UI_CORDOVA_VIEW) as CordovaView;
-				if(! view) return;
-
-				if(grid.Children.Contains(bannerAd)) grid.Children.Remove(bannerAd);
-				
-				if(overlap) {
-					__showBannerOverlap(grid, adPosition);
-
-				} else {
-					if(! bannerVisible) {
-						initialViewHeight = view.ActualHeight;
-						initialViewWidth = view.ActualWidth;
-
-						frame.OrientationChanged += onOrientationChanged;
-					}
+			Deployment.Current.Dispatcher.BeginInvoke(() => {
+				PhoneApplicationFrame frame;
+				PhoneApplicationPage page;
+				CordovaView view;
+				Grid grid;
+				if (TryCast(Application.Current.RootVisual, out frame) &&
+				    TryCast(frame.Content, out page) &&
+				    TryCast(page.FindName(UI_CORDOVA_VIEW), out view) &&
+				    TryCast(page.FindName(UI_LAYOUT_ROOT), out grid)) {
+				    
+					if(grid.Children.Contains(bannerAd)) grid.Children.Remove(bannerAd);
 					
-					__showBannerSplit(grid, view, adPosition);
-
-					setCordovaViewHeight(frame, view);
+					if(overlap) {
+						__showBannerOverlap(grid, adPosition);
+	
+					} else {
+						if(! bannerVisible) {
+							initialViewHeight = view.ActualHeight;
+							initialViewWidth = view.ActualWidth;
+							frame.OrientationChanged += onOrientationChanged;
+						}
+						__showBannerSplit(grid, view, adPosition);
+						setCordovaViewHeight(frame, view);
+					}
+	
+					bannerAd.Visibility = Visibility.Visible;
+					bannerVisible = true;
 				}
-
-				bannerAd.Visibility = Visibility.Visible;
-				bannerVisible = true;
 			});
 		}
 
@@ -383,28 +379,26 @@ namespace Cordova.Extension.Commands
 		protected void __hideBanner() {
 			// Asynchronous UI threading call
 			Deployment.Current.Dispatcher.BeginInvoke(() => {
-				PhoneApplicationFrame frame = Application.Current.RootVisual as PhoneApplicationFrame;
-				if(! frame) return;
-				
-				PhoneApplicationPage page = frame.Content as PhoneApplicationPage;
-				if(! page) return;
-				
-				Grid grid = page.FindName(UI_LAYOUT_ROOT) as Grid;
-				if(! grid) return;
-				
-				CordovaView view = page.FindName(UI_CORDOVA_VIEW) as CordovaView;
-				if(! view) return;
+				PhoneApplicationFrame frame;
+				PhoneApplicationPage page;
+				CordovaView view;
+				Grid grid;
+				if (TryCast(Application.Current.RootVisual, out frame) &&
+				    TryCast(frame.Content, out page) &&
+				    TryCast(page.FindName(UI_CORDOVA_VIEW), out view) &&
+				    TryCast(page.FindName(UI_LAYOUT_ROOT), out grid)) {
 
-				grid.Children.Remove(bannerAd);
-				grid.RowDefinitions.Remove(row);
-				row = null;
-
-				bannerAd.Visibility = Visibility.Collapsed;
-				bannerVisible = false;
-
-				if(! overlap) {
-					frame.OrientationChanged -= onOrientationChanged;
-					setCordovaViewHeight(frame, view);
+					grid.Children.Remove(bannerAd);
+					grid.RowDefinitions.Remove(row);
+					row = null;
+	
+					bannerAd.Visibility = Visibility.Collapsed;
+					bannerVisible = false;
+	
+					if(! overlap) {
+						frame.OrientationChanged -= onOrientationChanged;
+						setCordovaViewHeight(frame, view);
+					}
 				}
 			});
 		}
@@ -430,7 +424,7 @@ namespace Cordova.Extension.Commands
 		}
 		
 		public void prepareInterstitial(string args) {
-			if(logVerbose) Debug.WriteLine("AdMob.createInterstitialView: " + args);
+			if(logVerbose) Debug.WriteLine("AdMob.prepareInterstitial: " + args);
 			
 			string adId = "";
 			Boolean autoShow = false;
@@ -438,7 +432,7 @@ namespace Cordova.Extension.Commands
 			try {
 				string[] inputs = JsonHelper.Deserialize<string[]>(args);
 				if (inputs != null && inputs.Length >= 1) {
-					Dictionary<string, string> options = JsonHelp.Deserialize<Dictionary<string, string>>(inputs[0]);
+					Dictionary<string, string> options = JsonHelper.Deserialize<Dictionary<string, string>>(inputs[0]);
 
 					if(options.Count > 1) __setOptions(options);
 
@@ -462,7 +456,7 @@ namespace Cordova.Extension.Commands
 			if (isTesting)
 				adId = TEST_INTERSTITIAL_ID;
 
-			if (adId && (adId.Length > 0)) {
+			if ((adId != null) && (adId.Length > 0)) {
 				interstitialId = adId;
 			} else {
 				adId = interstitialId;
@@ -487,12 +481,12 @@ namespace Cordova.Extension.Commands
 		}
 
 		protected void __showInterstitial() {
-			if (! interstitialAd) {
+			if (interstitialAd == null) {
 				if(logVerbose) Debug.WriteLine("interstitial is null, call prepareInterstitial() first.");
 				return;
 			}
 
-			Deployment.Current.Dispatcher.BeginInvoke (() => {
+			Deployment.Current.Dispatcher.BeginInvoke(() => {
 				interstitialAd.ShowAd ();
 			});
 		}
@@ -500,7 +494,7 @@ namespace Cordova.Extension.Commands
 		public void showInterstitial(string args) {
 			if(logVerbose) Debug.WriteLine ("AdMob.showInterstitial: " + args);
 
-			if (interstitialAd) {
+			if (interstitialAd != null) {
 				__showInterstitial ();
 				
 			} else {
@@ -517,14 +511,17 @@ namespace Cordova.Extension.Commands
 		{
 			// Asynchronous UI threading call
 			Deployment.Current.Dispatcher.BeginInvoke(() => {
-				PhoneApplicationFrame frame = Application.Current.RootVisual as PhoneApplicationFrame;
-				if(! frame) return;
-				PhoneApplicationPage page = frame.Content as PhoneApplicationPage;
-				if(! page) return;
-				CordovaView view = page.FindName(UI_CORDOVA_VIEW) as CordovaView;
-				if(! view) return;
+				PhoneApplicationFrame frame;
+				PhoneApplicationPage page;
+				CordovaView view;
+				Grid grid;
+				if (TryCast(Application.Current.RootVisual, out frame) &&
+				    TryCast(frame.Content, out page) &&
+				    TryCast(page.FindName(UI_CORDOVA_VIEW), out view) &&
+				    TryCast(page.FindName(UI_LAYOUT_ROOT), out grid)) {
 
-				setCordovaViewHeight(frame, view);
+					setCordovaViewHeight(frame, view);
+				}
 			});
 		}
 
@@ -560,7 +557,7 @@ namespace Cordova.Extension.Commands
 			fireAdEvent (EVENT_AD_PRESENT, ADTYPE_BANNER);
 		}
 		
-		private void onLeavingApplicationAd(object sender, AdEventArgs args) {
+		private void banner_onAdLeaveApp(object sender, AdEventArgs args) {
 			fireAdEvent (EVENT_AD_LEAVEAPP, ADTYPE_BANNER);
 		}
 		
@@ -642,23 +639,29 @@ namespace Cordova.Extension.Commands
 			}
 
 			Deployment.Current.Dispatcher.BeginInvoke(() => {
-				PhoneApplicationFrame frame = Application.Current.RootVisual as PhoneApplicationFrame;
-				if(! frame) return;
-				PhoneApplicationPage page = frame.Content as PhoneApplicationPage;
-				if(! page) return;
-				CordovaView view = page.FindName(UI_CORDOVA_VIEW) as CordovaView;
-				if(! view) return;
-
-				// Asynchronous threading call
-				view.Browser.Dispatcher.BeginInvoke(() => {
-					try {
-						view.Browser.InvokeScript("eval", new string[] { js });
-					} catch {
-						if(logVerbose) Debug.WriteLine("AdMob.fireEvent: Failed to invoke script: " + js);
-					}
-				});
+				PhoneApplicationFrame frame;
+				PhoneApplicationPage page;
+				CordovaView view;
+			
+				if (TryCast(Application.Current.RootVisual, out frame) &&
+				    TryCast(frame.Content, out page) &&
+				    TryCast(page.FindName(UI_CORDOVA_VIEW), out view)) {
+				    
+					// Asynchronous threading call
+					view.Browser.Dispatcher.BeginInvoke(() =>{
+						try {
+							view.Browser.InvokeScript("eval", new string[] { js });
+						} catch {
+							if(logVerbose) Debug.WriteLine("AdMob.fireEvent: Failed to invoke script: " + js);
+						}
+					});
+				}
 			});
-
+		}
+		
+		static bool TryCast<T>(object obj, out T result) where T : class {
+			result = obj as T;
+			return result != null;
 		}
 	}
 }
