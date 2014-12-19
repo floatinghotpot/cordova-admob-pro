@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.google.cordova.admob"
-	version="2.6.1">
+	version="2.6.2">
       
     <name>AdMob PluginPro with Mediations</name>
 	<description>Powerful Ad Plugin for Cordova/PhoneGap. Show Ad with single line of JavaScript. Latest SDK.</description>

@@ -85,8 +85,8 @@ namespace Cordova.Extension.Commands
 		public const int BOTTOM_RIGHT = 9;
 		public const int POS_XY = 10;
 		
-		protected Boolean isTesting = false;
-		protected Boolean logVerbose = false;
+		protected bool isTesting = false;
+		protected bool logVerbose = false;
 		
 		protected string bannerId = "";
 		protected string interstitialId = "";
@@ -94,17 +94,17 @@ namespace Cordova.Extension.Commands
 		protected AdFormats adSize = AdFormats.SmartBanner;
 		protected int adWidth = 320;
 		protected int adHeight = 50;
-		protected Boolean overlap = false;
-		protected Boolean orientationRenew = true;
+		protected bool overlap = false;
+		protected bool orientationRenew = true;
 		
 		protected int adPosition = BOTTOM_CENTER;
 		protected int posX = 0;
 		protected int posY = 0;
 		
-		protected Boolean autoShowBanner = true;
-		protected Boolean autoShowInterstitial = false;
+		protected bool autoShowBanner = true;
+		protected bool autoShowInterstitial = false;
 		
-		protected Boolean bannerVisible = false;
+		protected bool bannerVisible = false;
 		
 		private const string UI_LAYOUT_ROOT = "LayoutRoot";
 		private const string UI_CORDOVA_VIEW = "CordovaView";
@@ -187,7 +187,7 @@ namespace Cordova.Extension.Commands
 					if(options.Count > 1) __setOptions(options);
 					
 					string adId = TEST_BANNER_ID;
-					Boolean autoShow = true;
+					bool autoShow = true;
 					
 					if(options.ContainsKey(OPT_ADID))
 						adId = options[OPT_ADID];
@@ -206,7 +206,7 @@ namespace Cordova.Extension.Commands
 			DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
 		}
 		
-		protected void __createBanner(string adId, Boolean autoShow) {
+		protected void __createBanner(string adId, bool autoShow) {
 			if (isTesting)
 				adId = TEST_BANNER_ID;
 			
@@ -427,7 +427,7 @@ namespace Cordova.Extension.Commands
 			if(logVerbose) Debug.WriteLine("AdMob.prepareInterstitial: " + args);
 			
 			string adId = "";
-			Boolean autoShow = false;
+			bool autoShow = false;
 			
 			try {
 				string[] inputs = JsonHelper.Deserialize<string[]>(args);
@@ -452,7 +452,7 @@ namespace Cordova.Extension.Commands
 			DispatchCommandResult (new PluginResult (PluginResult.Status.OK));
 		}
 		
-		protected void __prepareInterstitial(string adId, Boolean autoShow) {
+		protected void __prepareInterstitial(string adId, bool autoShow) {
 			if (isTesting)
 				adId = TEST_INTERSTITIAL_ID;
 
@@ -498,7 +498,7 @@ namespace Cordova.Extension.Commands
 				__showInterstitial ();
 				
 			} else {
-				__prepareInterstitial(interstialId, true);
+				__prepareInterstitial(interstitialId, true);
 			}
 
 			DispatchCommandResult (new PluginResult (PluginResult.Status.OK));
@@ -532,9 +532,9 @@ namespace Cordova.Extension.Commands
 			if (frame.Orientation == PageOrientation.Portrait ||
 			    frame.Orientation == PageOrientation.PortraitDown ||
 			    frame.Orientation == PageOrientation.PortraitUp) {
-				view.Height = initialViewHeight - deduct ? BANNER_HEIGHT_PORTRAIT : 0;
+				view.Height = initialViewHeight - (deduct ? BANNER_HEIGHT_PORTRAIT : 0);
 			} else {
-				view.Height = initialViewWidth - deduct ? BANNER_HEIGHT_LANDSCAPE : 0;
+				view.Height = initialViewWidth - (deduct ? BANNER_HEIGHT_LANDSCAPE : 0);
 			}
 
 			fireEvent ("window", "resize", null);
@@ -542,13 +542,13 @@ namespace Cordova.Extension.Commands
 
 		// Banner events
 		private void banner_onAdFailLoad(object sender, AdErrorEventArgs args) {
-			fireAdErrorEvent (EVENT_AD_FAILLOAD, ADTYPE_BANNER, args.ErrorCode, getErrorReason(args.ErrorCode));
+			fireAdErrorEvent (EVENT_AD_FAILLOAD, ADTYPE_BANNER, getErrCode(args.ErrorCode), getErrStr(args.ErrorCode));
 		}
 		
 		private void banner_onAdLoaded(object sender, AdEventArgs args) {
 			fireAdEvent (EVENT_AD_LOADED, ADTYPE_BANNER);
 
-			if( (! bannerVisible) && autoShowBanner) ) {
+			if( (! bannerVisible) && autoShowBanner ) {
 				__showBanner(adPosition, posX, posY);
 			}
 		}
@@ -567,7 +567,7 @@ namespace Cordova.Extension.Commands
 		
 		// Interstitial events
 		private void interstitial_onAdFailLoad(object sender, AdErrorEventArgs args) {
-			fireAdErrorEvent (EVENT_AD_FAILLOAD, ADTYPE_INTERSTITIAL, args.ErrorCode, , getErrorReason(args.ErrorCode));
+			fireAdErrorEvent (EVENT_AD_FAILLOAD, ADTYPE_INTERSTITIAL, getErrCode(args.ErrorCode), getErrStr(args.ErrorCode));
 		}
 		
 		private void interstitial_onAdLoaded(object sender, AdEventArgs args) {
@@ -586,42 +586,43 @@ namespace Cordova.Extension.Commands
 			fireAdEvent (EVENT_AD_DISMISS, ADTYPE_INTERSTITIAL);
 		}
 
-		private string getErrorReason(AdErrorCode errorCode) {
+		private int getErrCode(AdErrorCode errorCode) {
 			switch(errorCode) { 
-			case AdErrorCode.InternalError:
-				return "Internal error";
-				
-			case AdErrorCode.InvalidRequest:
-				return "Invalid request";
-				
-			case AdErrorCode.NetworkError:
-				return "Network error";
-				
-			case AdErrorCode.NoFill:
-				return "No fill";
-				
-			case AdErrorCode.Cancelled:
-				return "Cancelled";
-				
-			case AdErrorCode.StaleInterstitial:
-				return "Stale interstitial";
-				
-			case AdErrorCode.NoError:
-				return "No error";
+			case AdErrorCode.InternalError: return 0;
+			case AdErrorCode.InvalidRequest: return 1;
+			case AdErrorCode.NetworkError: return 2;
+			case AdErrorCode.NoFill: return 3;
+			case AdErrorCode.Cancelled: return 4;
+			case AdErrorCode.StaleInterstitial: return 5;
+			case AdErrorCode.NoError: return 6;
 			}
 			
-			return "'Unknown";    
+			return -1;
+		}
+
+		private string getErrStr(AdErrorCode errorCode) {
+			switch(errorCode) { 
+			case AdErrorCode.InternalError: return "Internal error";
+			case AdErrorCode.InvalidRequest: return "Invalid request";
+			case AdErrorCode.NetworkError: return "Network error";
+			case AdErrorCode.NoFill: return "No fill";
+			case AdErrorCode.Cancelled: return "Cancelled";
+			case AdErrorCode.StaleInterstitial: return "Stale interstitial";
+			case AdErrorCode.NoError: return "No error";
+			}
+			
+			return "Unknown";    
 		}
 
 		protected void fireAdEvent(string adEvent, string adType) {
 			string json = "{'adNetwork':'AdMob','adType':'" + adType + "','adEvent':'" + adEvent + "'}";
-			fireEvent(obj, adEvent, json);
+			fireEvent("document", adEvent, json);
 		}
 		
 		protected void fireAdErrorEvent(string adEvent, string adType, int errCode, string errMsg) {
 			string json = "{'adNetwork':'AdMob','adType':'" + adType 
 				+ "','adEvent':'" + adEvent + "','error':" + errCode + ",'reason':'" + errMsg + "'}";
-			fireEvent(obj, adEvent, json);
+			fireEvent("document", adEvent, json);
 
 		}
 		
