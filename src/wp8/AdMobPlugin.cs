@@ -627,6 +627,8 @@ namespace Cordova.Extension.Commands
 		}
 		
 		protected void fireEvent(string obj, string eventName, string jsonData) {
+			if(logVerbose) Debug.WriteLine( eventName );
+			
 			string js = "";
 			if("window".Equals(obj)) {
 				js = "var evt=document.createEvent('UIEvents');evt.initUIEvent('" + eventName 
