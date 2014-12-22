@@ -5,18 +5,24 @@
 Step 1: Create Ad Unit Id for your banner and interstitial, in [AdMob portal](http://www.admob.com/), then write it in your javascript code.
 
 ```javascript
-var ad_units = {
-	ios : {
-		banner: 'ca-app-pub-xxx/xxx', // or DFP format "/6253334/dfp_example_ad"
-		interstitial: 'ca-app-pub-xxx/yyy'
-	},
-	android : {
-		banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
-		interstitial: 'ca-app-pub-xxx/kkk'
-	}
-};
 // select the right Ad Id according to platform
-var admobid = ( /(android)/i.test(navigator.userAgent) ) ? ad_units.android : ad_units.ios;
+    var admobid = {};
+    if( /(android)/i.test(navigator.userAgent) ) { // for android
+		admobid = {
+			banner: 'ca-app-pub-xxx/xxx', // or DFP format "/6253334/dfp_example_ad"
+			interstitial: 'ca-app-pub-xxx/yyy'
+        };
+    } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
+		admobid = {
+			banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
+			interstitial: 'ca-app-pub-xxx/kkk'
+		};
+    } else { // for windows phone
+		admobid = {
+			banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
+			interstitial: 'ca-app-pub-xxx/kkk'
+		};
+    }
 ```
 
 Step 2: Want a banner? single line of javascript code.

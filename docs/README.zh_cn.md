@@ -83,18 +83,24 @@ Plugin ID: com.google.cordova.admob
 > 步骤 1: 通过 AdMob 网站，创建相应的广告栏位 ID
 
 ```javascript
-var ad_units = {
-	ios : {
-		banner: 'ca-app-pub-6869992474017983/4806197152',
-		interstitial: 'ca-app-pub-6869992474017983/7563979554'
-	},
-	android : {
-		banner: 'ca-app-pub-6869992474017983/9375997553',
-		interstitial: 'ca-app-pub-6869992474017983/1657046752'
-	}
-};
 // 根据平台，自动选用相应的广告 ID
-var admobid = ( /(android)/i.test(navigator.userAgent) ) ? ad_units.android : ad_units.ios;
+    var admobid = {};
+    if( /(android)/i.test(navigator.userAgent) ) { // for android
+		admobid = {
+			banner: 'ca-app-pub-xxx/xxx', // or DFP format "/6253334/dfp_example_ad"
+			interstitial: 'ca-app-pub-xxx/yyy'
+        };
+    } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
+		admobid = {
+			banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
+			interstitial: 'ca-app-pub-xxx/kkk'
+		};
+    } else { // for windows phone
+		admobid = {
+			banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
+			interstitial: 'ca-app-pub-xxx/kkk'
+		};
+    }
 ```
 
 > 步骤 2: 一行代码，显示广告条

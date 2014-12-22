@@ -3,27 +3,19 @@
 
 Present AdMob Ads in Mobile App/Games natively from JavaScript. 
 
-## How to Use ##
+## How to use? ##
 
-Add the plugin to your cordova project with [Cordova CLI](https://cordova.apache.org/docs/en/edge/guide_cli_index.md.html#The%20Command-Line%20Interface):
-```c
-cordova create <project_folder> com.<company_name>.<app_name> <AppName>
-cd <project_folder>
-cordova platform add android
-cordova platform add ios
-
+* If use with Cordova CLI:
+```bash
 cordova plugin add com.google.cordova.admob
-
-// copy the demo html file to www
-rm -r www/*; cp plugins/com.google.cordova.admob/test/index.html www/
-
-// connect device or run in emulator
-cordova prepare; cordova run android; cordova run ios;
-
-// or import into Xcode / eclipse
 ```
 
-If use with Intel XDK:
+* If use with PhoneGap Buid, just configure in config.xml:
+```javascript
+<gap:plugin name="com.google.cordova.admob" source="plugins.cordova.io"/>
+```
+
+* If use with Intel XDK:
 Project -> CORDOVA 3.X HYBRID MOBILE APP SETTINGS -> PLUGINS AND PERMISSIONS -> Third-Party Plugins ->
 Add a Third-Party Plugin -> Get Plugin from the Web, input:
 ```
@@ -32,24 +24,63 @@ Plugin ID: com.google.cordova.admob
 [x] Plugin is located in the Apache Cordova Plugins Registry
 ```
 
+## Quick start with cordova CLI ##
+```bash
+	# create a demo project
+    cordova create test1 com.rjfun.test1 Test1
+    cd test1
+    cordova platform add android
+    cordova platform add ios
+
+    # now add the plugin, cordova CLI will handle dependency automatically
+    cordova plugin add com.google.cordova.admob
+
+    # now remove the default www content, copy the demo html file to www
+    rm -r www/*;
+    cp plugins/com.google.cordova.admob/test/* www/;
+
+	# now build and run the demo in your device or emulator
+    cordova prepare; 
+    cordova run android; 
+    cordova run ios;
+    # or import into Xcode / eclipse
+```
+
+Optional mediations to increase your revenue (Read about [AdMob Mediation Networks](https://developers.google.com/mobile-ads-sdk/docs/admob/android/mediation-networks)):
+```bash
+cordova plugin add com.google.cordova.admob-facebook
+cordova plugin add com.google.cordova.admob-flurry
+cordova plugin add com.google.cordova.admob-iad
+cordova plugin add com.google.cordova.admob-inmobi
+cordova plugin add com.google.cordova.admob-mmedia
+cordova plugin add com.google.cordova.admob-mobfox
+```
+
+Notice: If you want to add multiple mediations, please balance flexibility and binary size.
 
 ## Quick Start Example Code ##
 
 >Step 1: Prepare your AdMob Ad Unit Id for your banner and interstitial
 
 ```javascript
-var ad_units = {
-	ios : {
-		banner: 'ca-app-pub-6869992474017983/4806197152',
-		interstitial: 'ca-app-pub-6869992474017983/7563979554'
-	},
-	android : {
-		banner: 'ca-app-pub-6869992474017983/9375997553',
-		interstitial: 'ca-app-pub-6869992474017983/1657046752'
-	}
-};
 // select the right Ad Id according to platform
-var admobid = ( /(android)/i.test(navigator.userAgent) ) ? ad_units.android : ad_units.ios;
+    var admobid = {};
+    if( /(android)/i.test(navigator.userAgent) ) { // for android
+		admobid = {
+			banner: 'ca-app-pub-xxx/xxx', // or DFP format "/6253334/dfp_example_ad"
+			interstitial: 'ca-app-pub-xxx/yyy'
+        };
+    } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
+		admobid = {
+			banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
+			interstitial: 'ca-app-pub-xxx/kkk'
+		};
+    } else { // for windows phone
+		admobid = {
+			banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
+			interstitial: 'ca-app-pub-xxx/kkk'
+		};
+    }
 ```
 
 > Step 2: Create a banner with single line of javascript
