@@ -172,6 +172,9 @@ Other Documentations:
 
 ## Screenshots ##
 
+VideoClip at YouTube:
+[![Video](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/youtube_video.jpg)](http://youtu.be/GsBI97WjFQo)
+
 iPhone Banner | iPhone Medium Rect
 -------|---------------
 ![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/iphone.jpg) | ![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/medium_rect.jpg)
