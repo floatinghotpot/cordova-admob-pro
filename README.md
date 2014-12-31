@@ -170,10 +170,17 @@ Other Documentations:
 * [FAQ](https://github.com/floatinghotpot/cordova-admob-pro/wiki/FAQ)
 * [Notice for Android Proguard](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Notice-for-Android-Proguard)
 
-## Screenshots ##
+## Video Tutorial ##
 
-VideoClip at YouTube:
+* Using Cordova CLI to Add AdMob Plugin:
+
+[![Video](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/youtube_video0.jpg)](http://youtu.be/dBCRW_swoYU)
+
+* Run AdMob Demo App on Android:
+
 [![Video](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/youtube_video.jpg)](http://youtu.be/GsBI97WjFQo)
+
+## Screenshots ##
 
 iPhone Banner | iPhone Medium Rect
 -------|---------------
