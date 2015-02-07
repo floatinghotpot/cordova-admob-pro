@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <Cordova/CDV.h>
 
-#import "GADRequest.h"
+#import <GoogleMobileAds/GoogleMobileAds.h>
 
 @interface AdMobMediation : NSObject
 

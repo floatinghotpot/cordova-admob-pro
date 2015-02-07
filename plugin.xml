@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.google.cordova.admob"
-	version="2.6.3">
+	version="2.7.0">
       
     <name>AdMob Plugin Pro</name>
 	<description>Powerful Ad Plugin for Google AdMob and DFP. Easy use, show mobile Ad with single line of JavaScript. Stable and up to date with latest SDK. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, IBM Worklight.</description>
@@ -59,37 +59,7 @@
          <header-file src="src/ios/AdMobMediation.h"/>
          <source-file src="src/ios/AdMobMediation.m"/>
          
-         <header-file src="src/ios/GADAdMobExtras.h" />
-         <header-file src="src/ios/GADAdNetworkExtras.h" />
-         <header-file src="src/ios/GADAdSize.h" />
-         <header-file src="src/ios/GADBannerView.h" />
-         <header-file src="src/ios/GADBannerViewDelegate.h" />
-         <header-file src="src/ios/GADInAppPurchase.h" />
-         <header-file src="src/ios/GADInAppPurchaseDelegate.h" />
-         <header-file src="src/ios/GADInterstitial.h" />
-         <header-file src="src/ios/GADInterstitialDelegate.h" />
-         <header-file src="src/ios/GADModules.h" />
-         <header-file src="src/ios/GADRequest.h" />
-         <header-file src="src/ios/GADRequestError.h" />
-         
-         <header-file src="src/ios/Add-ons/DoubleClick/DFPBannerView.h" />
-         <header-file src="src/ios/Add-ons/DoubleClick/DFPInterstitial.h" />
-         <header-file src="src/ios/Add-ons/DoubleClick/GADSwipeableBannerViewDelegate.h" />
-         <header-file src="src/ios/Add-ons/DoubleClick/DFPSwipeableBannerView.h" />
-         <header-file src="src/ios/Add-ons/DoubleClick/GADAppEventDelegate.h" />
-         <header-file src="src/ios/Add-ons/DoubleClick/GADAdSizeDelegate.h" />
-
-         <header-file src="src/ios/Add-ons/Mediation/GADCustomEventBanner.h" />
-         <header-file src="src/ios/Add-ons/Mediation/GADCustomEventBannerDelegate.h" />
-         <header-file src="src/ios/Add-ons/Mediation/GADCustomEventInterstitial.h" />
-         <header-file src="src/ios/Add-ons/Mediation/GADCustomEventInterstitialDelegate.h" />
-         <header-file src="src/ios/Add-ons/Mediation/GADCustomEventRequest.h" />
-         <header-file src="src/ios/Add-ons/Mediation/GADCustomEventExtras.h" />
-
-         <header-file src="src/ios/Add-ons/Search/GADSearchBannerView.h" />
-         <header-file src="src/ios/Add-ons/Search/GADSearchRequest.h" />
-         
-         <source-file src="src/ios/libGoogleAdMobAds.a" framework="true" />
+         <framework src="src/ios/GoogleMobileAds.framework" custom="true" />
          
          <framework src="AdSupport.framework" />
          <framework src="AudioToolbox.framework" />

@@ -8,14 +8,7 @@
 
 #import <AdSupport/ASIdentifierManager.h>
 
-#import "GADAdSize.h"
-#import "GADRequest.h"
-#import "GADBannerView.h"
-#import "GADBannerViewDelegate.h"
-#import "GADInterstitial.h"
-#import "GADInterstitialDelegate.h"
-#import "DFPBannerView.h"
-#import "GADAdMobExtras.h"
+#import <GoogleMobileAds/GoogleMobileAds.h>
 
 #import "CDVAdMobPlugin.h"
 #import "AdMobMediation.h"
@@ -107,12 +100,12 @@
     
     if (self.isTesting) {
         NSString* deviceId = [self __getAdMobDeviceId];
-        request.testDevices = [NSArray arrayWithObjects:GAD_SIMULATOR_ID, deviceId, nil];
+        request.testDevices = [NSArray arrayWithObjects:deviceId, nil];
         NSLog(@"request.testDevices: %@, <Google> tips handled", deviceId);
     }
     
     if (self.adExtras) {
-        GADAdMobExtras *extras = [[GADAdMobExtras alloc] init];
+        GADExtras *extras = [[GADExtras alloc] init];
         NSMutableDictionary *modifiedExtrasDict = [[NSMutableDictionary alloc] initWithDictionary:self.adExtras];
         [modifiedExtrasDict removeObjectForKey:@"cordova"];
         [modifiedExtrasDict setValue:@"1" forKey:@"cordova"];
