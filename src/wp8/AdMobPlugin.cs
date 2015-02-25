@@ -298,19 +298,28 @@ namespace Cordova.Extension.Commands
 			
 			if (options.position.HasValue)
 				adPosition = options.position.Value;
+				
 			if (options.x.HasValue)
 				posX = options.x.Value;
+				
 			if (options.y.HasValue)
 				posY = options.y.Value;
 
-			if (options.bannerId.HasValue)
-				bannerId = options.bannerId.Value;
+			if (options.bannerId != null)
+				bannerId = options.bannerId;
 
-			if (options.interstitialId.HasValue)
-				interstitialId = options.interstitialId.Value;
+			if (options.interstitialId != null)
+				interstitialId = options.interstitialId;
 
-			if (options.adSize.HasValue)
-				adSize = options.adSize.Value;
+			if (options.adSize != null)
+				adSize = adSizeFromString( options.adSize );
+				
+			if (options.width.HasValue)
+				adWidth = options.width.Value;
+				
+			if (options.height.HasValue)
+				adHeight = options.height.Value;
+
 		}
 
 		private void __createBanner(string adId, bool autoShow) {

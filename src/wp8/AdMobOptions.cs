@@ -5,14 +5,15 @@ namespace Cordova.Extension.Commands
     public class AdMobOptions
     {
         public string adId { get; set; }
-
         public bool? autoShow { get; set; }
+        
         public bool? isTesting { get; set; }
         public bool? logVerbose { get; set; }
 		
         public string adSize { get; set; }
-        public double? width { get; set; }
-        public double? height { get; set; }
+        public int? width { get; set; }
+        public int? height { get; set; }
+        
         public bool? overlap { get; set; }
         public bool? orientationRenew { get; set; }
 		
