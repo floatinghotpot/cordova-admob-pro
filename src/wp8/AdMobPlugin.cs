@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -21,8 +20,10 @@ namespace Cordova.Extension.Commands
 	/// 
 	/// Google AD Mob wrapper for showing banner and interstitial adverts
 	/// 
-	public class AdMobPlugin : BaseCommand
+	public sealed class AdMob : BaseCommand
 	{
+		#region Const
+
 		// ad size
 		// only banner and smart banner supported on windows phones, see:
 		// https://developers.google.com/mobile-ads-sdk/docs/admob/wp/banner
@@ -84,27 +85,31 @@ namespace Cordova.Extension.Commands
 		public const int BOTTOM_CENTER = 8;
 		public const int BOTTOM_RIGHT = 9;
 		public const int POS_XY = 10;
+
+        #endregion
+
+        #region Members
+
+		private bool isTesting = false;
+		private bool logVerbose = false;
 		
-		protected bool isTesting = false;
-		protected bool logVerbose = false;
+		private string bannerId = "";
+		private string interstitialId = "";
 		
-		protected string bannerId = "";
-		protected string interstitialId = "";
+		private AdFormats adSize = AdFormats.SmartBanner;
+		private int adWidth = 320;
+		private int adHeight = 50;
+		private bool overlap = false;
+		private bool orientationRenew = true;
 		
-		protected AdFormats adSize = AdFormats.SmartBanner;
-		protected int adWidth = 320;
-		protected int adHeight = 50;
-		protected bool overlap = false;
-		protected bool orientationRenew = true;
+		private int adPosition = BOTTOM_CENTER;
+		private int posX = 0;
+		private int posY = 0;
 		
-		protected int adPosition = BOTTOM_CENTER;
-		protected int posX = 0;
-		protected int posY = 0;
+		private bool autoShowBanner = true;
+		private bool autoShowInterstitial = false;
 		
-		protected bool autoShowBanner = true;
-		protected bool autoShowInterstitial = false;
-		
-		protected bool bannerVisible = false;
+		private bool bannerVisible = false;
 		
 		private const string UI_LAYOUT_ROOT = "LayoutRoot";
 		private const string UI_CORDOVA_VIEW = "CordovaView";
@@ -119,22 +124,26 @@ namespace Cordova.Extension.Commands
 
 		private double initialViewHeight = 0.0;
 		private double initialViewWidth = 0.0;
-		
-		private AdFormats adSizeFromString(String size) {
+
+        #endregion
+
+        static AdFormats adSizeFromString(String size) {
 			if (ADSIZE_BANNER.Equals (size)) { 
 				return AdFormats.Banner; //Banner (320x50, Phones and Tablets)
 			} else {
 				return AdFormats.SmartBanner; //Smart banner (Auto size, Phones and Tablets)
 			}
 		}
-		
-		public void setOptions(string args) {
+
+        #region Public methods
+
+        public void setOptions(string args) {
 			if(logVerbose) Debug.WriteLine("AdMob.setOptions: " + args);
 
 			try {
 				string[] inputs = JsonHelper.Deserialize<string[]>(args);
 				if (inputs != null && inputs.Length >= 1) {
-					Dictionary<string, string> options = JsonHelper.Deserialize<Dictionary<string, string>>(inputs[0]);
+                    var options = JsonHelper.Deserialize<AdMobOptions>(inputs[0]);
 					__setOptions(options);
 				}
 			} catch (Exception ex) {
@@ -144,69 +153,167 @@ namespace Cordova.Extension.Commands
 
 			DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
 		}
-		
-		protected void __setOptions(Dictionary<string, string> options) {
-			if (options.ContainsKey (OPT_IS_TESTING))
-				isTesting = Convert.ToBoolean (options [OPT_IS_TESTING]);
+
+        public void createBanner(string args)
+        {
+            if (logVerbose) Debug.WriteLine("AdMob.createBanner: " + args);
+
+            try
+            {
+                string[] inputs = JsonHelper.Deserialize<string[]>(args);
+                if (inputs != null && inputs.Length >= 1)
+                {
+                    var options = JsonHelper.Deserialize<AdMobOptions>(inputs[0]);
+                    if (options != null)
+                    {
+                        __setOptions(options);
+
+                        string adId = TEST_BANNER_ID;
+                        bool autoShow = true;
+
+                        if (!string.IsNullOrEmpty(options.adId))
+                            adId = options.adId;
+
+                        //if (options.ContainsKey(OPT_AUTO_SHOW))
+                        //    autoShow = Convert.ToBoolean(options[OPT_AUTO_SHOW]);
+
+                        __createBanner(adId, autoShow);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                DispatchCommandResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION, ex.Message));
+                return;
+            }
+
+            DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
+        }
+
+        public void removeBanner(string args)
+        {
+            if (logVerbose) Debug.WriteLine("AdMob.removeBanner: " + args);
+
+            // Asynchronous UI threading call
+            Deployment.Current.Dispatcher.BeginInvoke(() =>
+            {
+                __hideBanner();
+
+                // Remove event handlers
+                bannerAd.FailedToReceiveAd -= banner_onAdFailLoad;
+                bannerAd.LeavingApplication -= banner_onAdLeaveApp;
+                bannerAd.ReceivedAd -= banner_onAdLoaded;
+                bannerAd.ShowingOverlay -= banner_onAdPresent;
+                bannerAd.DismissingOverlay -= banner_onAdDismiss;
+
+                bannerAd = null;
+            });
+
+            DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
+        }
+
+        public void prepareInterstitial(string args)
+        {
+            if (logVerbose) Debug.WriteLine("AdMob.prepareInterstitial: " + args);
+
+            string adId = "";
+            bool autoShow = false;
+
+            try
+            {
+                string[] inputs = JsonHelper.Deserialize<string[]>(args);
+                if (inputs != null && inputs.Length >= 1)
+                {
+                    var options = JsonHelper.Deserialize<AdMobOptions>(inputs[0]);
+
+                    if (options != null)
+                    {
+                        __setOptions(options);
+
+                        if (!string.IsNullOrEmpty(options.adId))
+                        {
+                            adId = options.adId;
+
+                            //if (options.ContainsKey(OPT_AUTO_SHOW))
+                            //    autoShow = Convert.ToBoolean(options[OPT_AUTO_SHOW]);
+
+                            __prepareInterstitial(adId, autoShow);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                DispatchCommandResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION, ex.Message));
+                return;
+            }
+
+            DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
+        }
+
+        public void hideBanner(string args)
+        {
+            if (logVerbose) Debug.WriteLine("AdMob.hideBanner: " + args);
+            __hideBanner();
+            DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
+        }
+
+        public void showInterstitial(string args)
+        {
+            if (logVerbose) Debug.WriteLine("AdMob.showInterstitial: " + args);
+
+            if (interstitialAd != null)
+            {
+                __showInterstitial();
+
+            }
+            else
+            {
+                __prepareInterstitial(interstitialId, true);
+            }
+
+            DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
+        }
+
+        #endregion
+
+        #region Private methods
+
+        private void __setOptions(AdMobOptions options)
+        {
+            if (options == null)
+                return;
+                
+            if (options.isTesting.HasValue)
+                isTesting = options.isTesting.Value;
 			
-			if (options.ContainsKey (OPT_LOG_VERBOSE)) 
-				logVerbose = Convert.ToBoolean (options [OPT_LOG_VERBOSE]);
+            if (options.logVerbose.HasValue) 
+                logVerbose = options.logVerbose.Value;
 			
-			if (options.ContainsKey (OPT_OVERLAP))
-				overlap = Convert.ToBoolean (options [OPT_OVERLAP]);
+            if (options.overlap.HasValue)
+                overlap = options.overlap.Value;
 			
-			if(options.ContainsKey(OPT_ORIENTATION_RENEW))
-				orientationRenew = Convert.ToBoolean(options[OPT_ORIENTATION_RENEW]);
+			if (options.orientationRenew.HasValue)
+				orientationRenew = options.orientationRenew.Value;
 			
-			if (options.ContainsKey (OPT_POSITION))
-				adPosition = Convert.ToInt32 (options [OPT_POSITION]);
-			if (options.ContainsKey (OPT_X))
-				posX = Convert.ToInt32 (options [OPT_X]);
-			if (options.ContainsKey (OPT_Y))
-				posY = Convert.ToInt32 (options [OPT_Y]);
-			
-			if (options.ContainsKey (OPT_BANNER_ID))
-				bannerId = options [OPT_BANNER_ID];
-			
-			if (options.ContainsKey (OPT_INTERSTITIAL_ID)) 
-				interstitialId = options [OPT_INTERSTITIAL_ID];
-			
-			if (options.ContainsKey (OPT_AD_SIZE)) {
-				adSize = adSizeFromString(options[OPT_AD_SIZE]);
-			}
+			if (options.adPosition.HasValue)
+				adPosition = options.adPosition.Value;
+			if (options.posX.HasValue)
+				posX = options.posX.Value;
+			if (options.posY.HasValue)
+				posY = options.posY.Value;
+
+			if (options.bannerId.HasValue)
+				bannerId = options.bannerId.Value;
+
+			if (options.interstitialId.HasValue)
+				interstitialId = options.interstitialId.Value;
+
+			if (options.adSize.HasValue)
+				adSize = options.adSize.Value;
 		}
-		
-		public void createBanner(string args) {
-			if(logVerbose) Debug.WriteLine("AdMob.createBanner: " + args);
-			
-			try {
-				string[] inputs = JsonHelper.Deserialize<string[]>(args);
-				if (inputs != null && inputs.Length >= 1) {
-					Dictionary<string, string> options = JsonHelper.Deserialize<Dictionary<string, string>>(inputs[0]);
-					
-					if(options.Count > 1) __setOptions(options);
-					
-					string adId = TEST_BANNER_ID;
-					bool autoShow = true;
-					
-					if(options.ContainsKey(OPT_ADID))
-						adId = options[OPT_ADID];
-					
-					if(options.ContainsKey(OPT_AUTO_SHOW))
-						autoShow = Convert.ToBoolean(options[OPT_AUTO_SHOW]);
-					
-					__createBanner(adId, autoShow);
-					
-				}
-			} catch (Exception ex) {
-				DispatchCommandResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION, ex.Message));
-				return;
-			}
-			
-			DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
-		}
-		
-		protected void __createBanner(string adId, bool autoShow) {
+
+		private void __createBanner(string adId, bool autoShow) {
 			if (isTesting)
 				adId = TEST_BANNER_ID;
 			
@@ -245,7 +352,7 @@ namespace Cordova.Extension.Commands
 			});
 		}
 
-		protected void showBanner(string args) {
+		private void showBanner(string args) {
 			if(logVerbose) Debug.WriteLine("AdMob.showBanner: " + args);
 			try {
 				string[] inputs = JsonHelper.Deserialize<string[]>(args);
@@ -263,7 +370,7 @@ namespace Cordova.Extension.Commands
 			DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
 		}
 
-		protected void showBannerAtXY(string args) {
+		private void showBannerAtXY(string args) {
 			if(logVerbose) Debug.WriteLine("AdMob.showBannerAtXY: " + args);
 			try {
 				string[] inputs = JsonHelper.Deserialize<string[]>(args);
@@ -282,7 +389,7 @@ namespace Cordova.Extension.Commands
 			DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
 		}
 
-		protected void __showBanner(int argPos, int argX, int argY) {
+		private void __showBanner(int argPos, int argX, int argY) {
 			if (bannerAd == null) {
 				if(logVerbose) Debug.WriteLine("banner is null, call createBanner() first.");
 				return;
@@ -320,7 +427,7 @@ namespace Cordova.Extension.Commands
 			});
 		}
 
-		protected void __showBannerOverlap(Grid grid, int position) {
+		private void __showBannerOverlap(Grid grid, int position) {
 			switch ((position - 1) % 3) {
 			case 0: 
 				bannerAd.HorizontalAlignment = HorizontalAlignment.Left;
@@ -348,7 +455,7 @@ namespace Cordova.Extension.Commands
 			grid.Children.Add (bannerAd);
 		}
 
-		protected void __showBannerSplit(Grid grid, CordovaView view, int position) {
+		private void __showBannerSplit(Grid grid, CordovaView view, int position) {
 			if(row == null) {
 				row = new RowDefinition();
 				row.Height = GridLength.Auto;
@@ -370,13 +477,7 @@ namespace Cordova.Extension.Commands
 			}
 		}
 		
-		public void hideBanner(string args) {
-			if(logVerbose) Debug.WriteLine("AdMob.hideBanner: " + args);
-			__hideBanner ();
-			DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
-		}
-		
-		protected void __hideBanner() {
+		private void __hideBanner() {
 			// Asynchronous UI threading call
 			Deployment.Current.Dispatcher.BeginInvoke(() => {
 				PhoneApplicationFrame frame;
@@ -402,57 +503,8 @@ namespace Cordova.Extension.Commands
 				}
 			});
 		}
-		
-		public void removeBanner(string args) {
-			if(logVerbose) Debug.WriteLine("AdMob.removeBanner: " + args);
-			
-			// Asynchronous UI threading call
-			Deployment.Current.Dispatcher.BeginInvoke(() => {
-				__hideBanner ();
-				
-				// Remove event handlers
-				bannerAd.FailedToReceiveAd -= banner_onAdFailLoad;
-				bannerAd.LeavingApplication -= banner_onAdLeaveApp;
-				bannerAd.ReceivedAd -= banner_onAdLoaded;
-				bannerAd.ShowingOverlay -= banner_onAdPresent;
-				bannerAd.DismissingOverlay -= banner_onAdDismiss;
 
-				bannerAd = null;
-			});
-			
-			DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
-		}
-		
-		public void prepareInterstitial(string args) {
-			if(logVerbose) Debug.WriteLine("AdMob.prepareInterstitial: " + args);
-			
-			string adId = "";
-			bool autoShow = false;
-			
-			try {
-				string[] inputs = JsonHelper.Deserialize<string[]>(args);
-				if (inputs != null && inputs.Length >= 1) {
-					Dictionary<string, string> options = JsonHelper.Deserialize<Dictionary<string, string>>(inputs[0]);
-
-					if(options.Count > 1) __setOptions(options);
-
-					if (options.ContainsKey (OPT_ADID))
-						adId = options [OPT_ADID];
-					
-					if (options.ContainsKey (OPT_AUTO_SHOW))
-						autoShow = Convert.ToBoolean (options [OPT_AUTO_SHOW]);
-					
-					__prepareInterstitial (adId, autoShow);
-				}
-			} catch (Exception ex) {
-				DispatchCommandResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION, ex.Message));
-				return;
-			}
-
-			DispatchCommandResult (new PluginResult (PluginResult.Status.OK));
-		}
-		
-		protected void __prepareInterstitial(string adId, bool autoShow) {
+        private void __prepareInterstitial(string adId, bool autoShow) {
 			if (isTesting)
 				adId = TEST_INTERSTITIAL_ID;
 
@@ -480,7 +532,7 @@ namespace Cordova.Extension.Commands
 			});
 		}
 
-		protected void __showInterstitial() {
+		private void __showInterstitial() {
 			if (interstitialAd == null) {
 				if(logVerbose) Debug.WriteLine("interstitial is null, call prepareInterstitial() first.");
 				return;
@@ -489,19 +541,6 @@ namespace Cordova.Extension.Commands
 			Deployment.Current.Dispatcher.BeginInvoke(() => {
 				interstitialAd.ShowAd ();
 			});
-		}
-		
-		public void showInterstitial(string args) {
-			if(logVerbose) Debug.WriteLine ("AdMob.showInterstitial: " + args);
-
-			if (interstitialAd != null) {
-				__showInterstitial ();
-				
-			} else {
-				__prepareInterstitial(interstitialId, true);
-			}
-
-			DispatchCommandResult (new PluginResult (PluginResult.Status.OK));
 		}
 
 		// Events --------
@@ -614,19 +653,19 @@ namespace Cordova.Extension.Commands
 			return "Unknown";    
 		}
 
-		protected void fireAdEvent(string adEvent, string adType) {
+		private void fireAdEvent(string adEvent, string adType) {
 			string json = "{'adNetwork':'AdMob','adType':'" + adType + "','adEvent':'" + adEvent + "'}";
 			fireEvent("document", adEvent, json);
 		}
 		
-		protected void fireAdErrorEvent(string adEvent, string adType, int errCode, string errMsg) {
+		private void fireAdErrorEvent(string adEvent, string adType, int errCode, string errMsg) {
 			string json = "{'adNetwork':'AdMob','adType':'" + adType 
 				+ "','adEvent':'" + adEvent + "','error':" + errCode + ",'reason':'" + errMsg + "'}";
 			fireEvent("document", adEvent, json);
 
 		}
 		
-		protected void fireEvent(string obj, string eventName, string jsonData) {
+		private void fireEvent(string obj, string eventName, string jsonData) {
 			if(logVerbose) Debug.WriteLine( eventName );
 			
 			string js = "";
@@ -661,11 +700,12 @@ namespace Cordova.Extension.Commands
 				}
 			});
 		}
-		
-		static bool TryCast<T>(object obj, out T result) where T : class {
+
+        #endregion
+
+        static bool TryCast<T>(object obj, out T result) where T : class {
 			result = obj as T;
 			return result != null;
 		}
 	}
 }
-
