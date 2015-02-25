@@ -296,12 +296,12 @@ namespace Cordova.Extension.Commands
 			if (options.orientationRenew.HasValue)
 				orientationRenew = options.orientationRenew.Value;
 			
-			if (options.adPosition.HasValue)
-				adPosition = options.adPosition.Value;
-			if (options.posX.HasValue)
-				posX = options.posX.Value;
-			if (options.posY.HasValue)
-				posY = options.posY.Value;
+			if (options.position.HasValue)
+				adPosition = options.position.Value;
+			if (options.x.HasValue)
+				posX = options.x.Value;
+			if (options.y.HasValue)
+				posY = options.y.Value;
 
 			if (options.bannerId.HasValue)
 				bannerId = options.bannerId.Value;
