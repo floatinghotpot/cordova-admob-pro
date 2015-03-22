@@ -306,10 +306,6 @@ Extra key/value for param **options**
 
 > **Purpose**: show interstitial Ad when it's ready.
 
-## AdMob.isInterstitialReady(callback) ##
-
-> **Purpose**: check to confirm interstitial Ad is ready to show.
-
 Example Code:
 ```javascript
 // prepare and aut show
@@ -324,9 +320,7 @@ AdMob.prepareInterstitial({
 	autoShow: false
 });
 // check and show it at end of a game level
-AdMob.isInterstitialReady(function(isready){
-	if(isready) AdMob.showInterstitial();
-});
+if(isready) AdMob.showInterstitial();
 ```
 
 ## Events ##

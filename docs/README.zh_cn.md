@@ -341,10 +341,6 @@ AdMob.createBanner({
 
 > **用途**: 当全屏广告准备就绪时，显示给用户看。
 
-## AdMob.isInterstitialReady(callback) ##
-
-> **用途**: 检查全屏广告资源是否已经准备就绪。通常无需调用，最佳方式是响应相关的事件。
-
 例程:
 ```javascript
 // 准备，并且自动显示，大约需要0.5-1秒
@@ -359,9 +355,7 @@ AdMob.prepareInterstitial({
 	autoShow: false
 });
 // 在游戏关卡结束的时候，检查并且显示广告
-AdMob.isInterstitialReady(function(isready){
-	if(isready) AdMob.showInterstitial();
-});
+if(isready) AdMob.showInterstitial();
 ```
 
 ## 事件 ##
