@@ -13,6 +13,10 @@
 #import <GoogleMobileAds/GADRequest.h>
 #import <GoogleMobileAds/GADRequestError.h>
 
+#ifndef IBInspectable
+#define IBInspectable
+#endif
+
 /// The view that displays banner ads. A minimum implementation to get an ad from within a
 /// UIViewController class is:
 ///

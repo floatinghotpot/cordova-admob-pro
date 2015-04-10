@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.google.cordova.admob"
-	version="2.7.4">
+	version="2.7.5">
       
     <name>AdMob Plugin Pro</name>
 	<description>Powerful Ad Plugin for Google AdMob and DFP. Easy use, show mobile Ad with single line of JavaScript. Stable and up to date with latest SDK. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, IBM Worklight.</description>
@@ -70,6 +70,7 @@
          <framework src="EventKitUI.framework" />
          <framework src="Foundation.framework" />
          <framework src="MessageUI.framework" />
+         <framework src="QuartzCore.framework" />
          <framework src="StoreKit.framework" />
          <framework src="SystemConfiguration.framework" />
          <framework src="UIKit.framework" />
