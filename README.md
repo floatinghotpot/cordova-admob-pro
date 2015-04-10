@@ -45,6 +45,15 @@ if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false}
 if(AdMob) AdMob.showInterstitial();
 ```
 
+## Requirements ##
+*  On Android this plugin require last version of Google Play Services. 
+We prefered to not add it as an auto-installing dependency as other plugins (like Google Analytics) may require and install the sampe dependency under a different package name. In that case a double installation of the same dependency would make the compilation fail.
+To add it we suggest to use com.google.play.services that's usually bind the most recent version of PlayServices.
+
+```bash
+cordova plugin add com.google.play.services
+```
+
 ### Features ###
 
 Platforms supported:
@@ -84,11 +93,13 @@ Maximize your revenue with mediation adapters:
 
 * If use with Cordova CLI:
 ```bash
+cordova plugin add com.google.play.services
 cordova plugin add com.google.cordova.admob
 ```
 
 * If use with PhoneGap Buid, just configure in config.xml:
 ```javascript
+<gap:plugin name="com.google.play.services" source="plugins.cordova.io"/>
 <gap:plugin name="com.google.cordova.admob" source="plugins.cordova.io"/>
 ```
 
@@ -97,8 +108,9 @@ Project -> CORDOVA 3.X HYBRID MOBILE APP SETTINGS -> PLUGINS AND PERMISSIONS -> 
 Add a Third-Party Plugin -> Get Plugin from the Web, input:
 ```
 Name: AdMobPluginPro
+Plugin ID (required): com.google.play.services
 Plugin ID: com.google.cordova.admob
-[x] Plugin is located in the Apache Cordova Plugins Registry
+[x] Plugins are located in the Apache Cordova Plugins Registry
 ```
 
 ## Quick start with cordova CLI ##
@@ -110,6 +122,7 @@ Plugin ID: com.google.cordova.admob
     cordova platform add ios
 
     # now add the plugin, cordova CLI will handle dependency automatically
+    cordova plugin add com.google.play.services
     cordova plugin add com.google.cordova.admob
 
     # now remove the default www content, copy the demo html file to www
