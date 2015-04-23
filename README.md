@@ -84,7 +84,7 @@ Maximize your revenue with mediation adapters:
 
 * If use with Cordova CLI:
 ```bash
-cordova plugin add com.google.cordova.admob
+cordova plugin add cordova-plugin-admobpro
 ```
 
 * If use with PhoneGap Buid, just configure in config.xml:
@@ -110,11 +110,11 @@ Plugin ID: com.google.cordova.admob
     cordova platform add ios
 
     # now add the plugin, cordova CLI will handle dependency automatically
-    cordova plugin add com.google.cordova.admob
+    cordova plugin add cordova-plugin-admobpro
 
     # now remove the default www content, copy the demo html file to www
     rm -r www/*;
-    cp plugins/com.google.cordova.admob/test/* www/;
+    cp plugins/cordova-plugin-admobpro/test/* www/;
 
 	# now build and run the demo in your device or emulator
     cordova prepare; 
