@@ -125,12 +125,12 @@ Plugin ID: com.google.cordova.admob
 
 Optional mediations to increase your revenue (Read about [AdMob Mediation Networks](https://developers.google.com/mobile-ads-sdk/docs/admob/android/mediation-networks)):
 ```bash
-cordova plugin add com.google.cordova.admob-facebook
-cordova plugin add com.google.cordova.admob-flurry
-cordova plugin add com.google.cordova.admob-iad
-cordova plugin add com.google.cordova.admob-inmobi
-cordova plugin add com.google.cordova.admob-mmedia
-cordova plugin add com.google.cordova.admob-mobfox
+cordova plugin add cordova-plugin-admob-facebook
+cordova plugin add cordova-plugin-admob-flurry
+cordova plugin add cordova-plugin-admob-iad
+cordova plugin add cordova-plugin-admob-inmobi
+cordova plugin add cordova-plugin-admob-mmedia
+cordova plugin add cordova-plugin-admob-mobfox
 ```
 
 Notice: If you want to add multiple mediations, please balance flexibility and binary size.
