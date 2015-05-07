@@ -15,6 +15,9 @@
     "type": "git",
     "url": "https://github.com/floatinghotpot/cordova-admob-pro.git"
   },
+  "bugs": {
+    "url": "https://github.com/floatinghotpot/cordova-admob-pro/issues"
+  },
   "keywords": [
     "cordova",
     "ecosystem:cordova",
