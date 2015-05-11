@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.google.cordova.admob"
-	version="2.7.5">
+	version="2.7.7">
       
     <name>AdMob Plugin Pro</name>
 	<description>Powerful Ad Plugin for Google AdMob and DFP. Easy use, show mobile Ad with single line of JavaScript. Stable and up to date with latest SDK. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, IBM Worklight.</description>
@@ -21,7 +21,7 @@
         <clobbers target="window.AdMob" />
     </js-module>
 
-	<dependency id="com.rjfun.cordova.extension" />
+	<dependency id="com.rjfun.cordova.extension" /><!-- v1.0.7+ -->
 	
     <!-- android -->
     <platform name="android">
