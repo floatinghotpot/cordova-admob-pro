@@ -210,6 +210,8 @@ AdMob.AD_POSITION.POS_XY 		= 10, // use the given X and Y, see params 'x' and 'y
 	color_text: '808080',
 	color_url: '008000'
 }
+- **location**, *array*, set location for Ad, [latitude, longitude].
+
 ```
 
 Example Code:

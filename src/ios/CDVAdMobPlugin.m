@@ -10,6 +10,8 @@
 
 #import <GoogleMobileAds/GoogleMobileAds.h>
 
+#import <CoreLocation/CLLocation.h>
+
 #import "CDVAdMobPlugin.h"
 #import "AdMobMediation.h"
 
@@ -25,11 +27,17 @@
 #define OPT_MOBFOX          @"MobFox"
 #define OPT_IAD             @"iAd"
 
+#define OPT_LOCATION        @"location"
+
 @interface CDVAdMobPlugin()<GADBannerViewDelegate, GADInterstitialDelegate>
 
 @property (assign) GADAdSize adSize;
 @property (nonatomic, retain) NSDictionary* adExtras;
 @property (nonatomic, retain) NSMutableDictionary* mediations;
+
+@property (assign) BOOL mLocationSet;
+@property (assign) double mLatitude;
+@property (assign) double mLongitude;
 
 - (GADAdSize)__AdSizeFromString:(NSString *)str;
 - (GADRequest*) __buildAdRequest:(BOOL)forBanner;
@@ -45,6 +53,10 @@
     
     self.adSize = [self __AdSizeFromString:@"SMART_BANNER"];
     self.mediations = [[NSMutableDictionary alloc] init];
+    
+    self.mLocationSet = NO;
+    self.mLatitude = 0.0;
+    self.mLongitude = 0.0;
 }
 
 - (NSString*) __getProductShortName { return @"AdMob"; }
@@ -67,6 +79,13 @@
     
     if(self.mediations) {
         // TODO: if mediation need code in, add here
+    }
+    
+    NSArray* arr = [options objectForKey:OPT_LOCATION];
+    if(arr != nil) {
+        self.mLatitude = [[arr objectAtIndex:0] doubleValue];
+        self.mLongitude = [[arr objectAtIndex:1] doubleValue];
+        self.mLocationSet = YES;
     }
 }
 
@@ -119,6 +138,10 @@
             [adMed joinAdRequest:request];
         }
     }];
+    
+    if(self.mLocationSet) {
+        [request setLocationWithLatitude:self.mLatitude longitude:self.mLongitude accuracy:kCLLocationAccuracyBest];
+    }
     
     return request;
 }
@@ -254,34 +277,22 @@
             [self __showBanner:self.adPosition atX:self.posX atY:self.posY];
         });
     }
-
-    [self fireEvent:[self __getProductShortName] event:@"onBannerReceive" withData:NULL];
-
     [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_BANNER];
 }
 
 - (void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error {
-    NSString* errinfo = [NSString stringWithFormat:@"{'error': '%ld', 'reason': '%@'}", (long)[error code], [error localizedFailureReason]];
-    [self fireEvent:[self __getProductShortName] event:@"onBannerFailedToReceive" withData:errinfo];
-    
     [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_BANNER];
 }
 
 - (void)adViewWillLeaveApplication:(GADBannerView *)adView {
-    [self fireEvent:[self __getProductShortName] event:@"onBannerLeaveApp" withData:NULL];
-    
     [self fireAdEvent:EVENT_AD_LEAVEAPP withType:ADTYPE_BANNER];
 }
 
 - (void)adViewWillPresentScreen:(GADBannerView *)adView {
-    [self fireEvent:[self __getProductShortName] event:@"onBannerPresent" withData:NULL];
-    
     [self fireAdEvent:EVENT_AD_PRESENT withType:ADTYPE_BANNER];
 }
 
 - (void)adViewDidDismissScreen:(GADBannerView *)adView {
-    [self fireEvent:[self __getProductShortName] event:@"onBannerDismiss" withData:NULL];
-    
     [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_BANNER];
 }
 
@@ -293,9 +304,6 @@
  * document.addEventListener('onAdLeaveApp', function(data));
  */
 - (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error {
-    NSString* errinfo = [NSString stringWithFormat:@"{'error': '%@'}", [error localizedFailureReason]];
-    [self fireEvent:[self __getProductShortName] event:@"onInterstitialFailedToReceive" withData:errinfo];
-    
     [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_INTERSTITIAL];
 }
 
@@ -305,22 +313,15 @@
             [self __showInterstitial:self.interstitial];
         });
     }
-
-    [self fireEvent:[self __getProductShortName] event:@"onInterstitialReceive" withData:NULL];
-    
     [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_INTERSTITIAL];
 }
 
 - (void)interstitialWillPresentScreen:(GADInterstitial *)interstitial {
-    [self fireEvent:[self __getProductShortName] event:@"onInterstitialPresent" withData:NULL];
-    
     [self fireAdEvent:EVENT_AD_PRESENT withType:ADTYPE_INTERSTITIAL];
 
 }
 
 - (void)interstitialDidDismissScreen:(GADInterstitial *)interstitial {
-    [self fireEvent:[self __getProductShortName] event:@"onInterstitialDismiss" withData:NULL];
-    
     [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_INTERSTITIAL];
     
     if(self.interstitial) {
@@ -330,8 +331,6 @@
 }
 
 - (void)interstitialWillLeaveApplication:(GADInterstitial *)ad {
-    [self fireEvent:[self __getProductShortName] event:@"onInterstitialLeaveApp" withData:NULL];
-    
     [self fireAdEvent:EVENT_AD_LEAVEAPP withType:ADTYPE_INTERSTITIAL];
 }
 

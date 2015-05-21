@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.location.Location;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -22,7 +24,6 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.android.gms.ads.mediation.admob.AdMobExtras;
-
 import com.rjfun.cordova.ad.GenericAdPlugin;
 
 public class AdMobPlugin extends GenericAdPlugin {
@@ -43,7 +44,10 @@ public class AdMobPlugin extends GenericAdPlugin {
     
     public static final String OPT_AD_EXTRAS = "adExtras";
 	private JSONObject adExtras = null;
-	
+
+	public static final String OPT_LOCATION = "location";
+    private Location mLocation = null;
+
 	private HashMap<String, AdMobMediation> mediations = new HashMap<String, AdMobMediation>();
 	
     @Override
@@ -78,6 +82,15 @@ public class AdMobPlugin extends GenericAdPlugin {
 		}
 		
 		if(options.has(OPT_AD_EXTRAS)) adExtras = options.optJSONObject(OPT_AD_EXTRAS);
+
+		if(options.has(OPT_LOCATION)) {
+			JSONArray location = options.optJSONArray(OPT_LOCATION);
+			if(location != null) {
+				mLocation = new Location("dummyprovider");
+				mLocation.setLatitude( location.optDouble(0, 0.0) );
+				mLocation.setLongitude( location.optDouble(1, 0) );
+			}
+		}
 	}
 	
 	@Override
@@ -248,7 +261,9 @@ public class AdMobPlugin extends GenericAdPlugin {
         		builder = m.joinAdRequest(builder);
         	}
         }
-        
+
+        if(mLocation != null) builder.setLocation(mLocation);
+
         return builder.build();
     }
 
@@ -322,16 +337,11 @@ public class AdMobPlugin extends GenericAdPlugin {
         @SuppressLint("DefaultLocale")
 		@Override
         public void onAdFailedToLoad(int errorCode) {
-        	String jsonData = String.format("{ 'error': %d, 'reason':'%s' }", errorCode, getErrorReason(errorCode));
-        	fireEvent(LOGTAG, EVENT_BANNER_FAILRECEIVE, jsonData);
-        	
         	fireAdErrorEvent(EVENT_AD_FAILLOAD, errorCode, getErrorReason(errorCode), ADTYPE_BANNER);
         }
         
         @Override
         public void onAdLeftApplication() {
-        	fireEvent(LOGTAG, EVENT_BANNER_LEAVEAPP, null);
-        	
         	fireAdEvent(EVENT_AD_LEAVEAPP, ADTYPE_BANNER);
         }
         
@@ -340,22 +350,16 @@ public class AdMobPlugin extends GenericAdPlugin {
             if((! bannerVisible) && autoShowBanner) {
             	showBanner(adPosition, posX, posY);
             }
-        	fireEvent(LOGTAG, EVENT_BANNER_RECEIVE, null);
-
         	fireAdEvent(EVENT_AD_LOADED, ADTYPE_BANNER);
         }
 
         @Override
         public void onAdOpened() {
-        	fireEvent(LOGTAG, EVENT_BANNER_PRESENT, null);
-        	
         	fireAdEvent(EVENT_AD_PRESENT, ADTYPE_BANNER);
         }
         
         @Override
         public void onAdClosed() {
-        	fireEvent(LOGTAG, EVENT_BANNER_DISMISS, null);
-        	
         	fireAdEvent(EVENT_AD_DISMISS, ADTYPE_BANNER);
         }
         
@@ -372,16 +376,11 @@ public class AdMobPlugin extends GenericAdPlugin {
         @SuppressLint("DefaultLocale")
 		@Override
         public void onAdFailedToLoad(int errorCode) {
-        	String jsonData = String.format("{ 'error': %d, 'reason':'%s' }", errorCode, getErrorReason(errorCode));
-        	fireEvent(LOGTAG, EVENT_INTERSTITIAL_FAILRECEIVE, jsonData);
-        	
         	fireAdErrorEvent(EVENT_AD_FAILLOAD, errorCode, getErrorReason(errorCode), ADTYPE_INTERSTITIAL);
         }
         
         @Override
         public void onAdLeftApplication() {
-        	fireEvent(LOGTAG, EVENT_INTERSTITIAL_LEAVEAPP, null);
-        	
         	fireAdEvent(EVENT_AD_LEAVEAPP, ADTYPE_INTERSTITIAL);
         }
         
@@ -390,22 +389,17 @@ public class AdMobPlugin extends GenericAdPlugin {
             if(autoShowInterstitial) {
             	showInterstitial();
             }
-        	fireEvent(LOGTAG, EVENT_INTERSTITIAL_RECEIVE, null);
         	
         	fireAdEvent(EVENT_AD_LOADED, ADTYPE_INTERSTITIAL);
         }
 
         @Override
         public void onAdOpened() {
-        	fireEvent(LOGTAG, EVENT_INTERSTITIAL_PRESENT, null);
-        	
         	fireAdEvent(EVENT_AD_PRESENT, ADTYPE_INTERSTITIAL);
         }
         
         @Override
         public void onAdClosed() {
-        	fireEvent(LOGTAG, EVENT_INTERSTITIAL_DISMISS, null);
-        	
         	fireAdEvent(EVENT_AD_DISMISS, ADTYPE_INTERSTITIAL);
 
         	removeInterstitial();
