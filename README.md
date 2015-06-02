@@ -82,17 +82,22 @@ Maximize your revenue with mediation adapters:
 
 ## How to use? ##
 
+Notice: 
+* Cordova team announce that the plugin registry is being migrated to npm, and recommended name rule is: cordova-plugin-xxx
+* The plugin id in old cordova registry is ```com.google.cordova.admob```, and now in npm is ```cordova-plugin-admobpro```.
+
 * If use with Cordova CLI:
 ```bash
 cordova plugin add cordova-plugin-admobpro
 ```
 
 * If use with PhoneGap Buid, just configure in config.xml:
+
 ```javascript
-<gap:plugin name="com.google.cordova.admob" source="plugins.cordova.io"/>
+<gap:plugin name="cordova-plugin-admobpro" source="npm"/>
 ```
 
-* If use with Intel XDK:
+* If use with Intel XDK (not support npm yet):
 Project -> CORDOVA 3.X HYBRID MOBILE APP SETTINGS -> PLUGINS AND PERMISSIONS -> Third-Party Plugins ->
 Add a Third-Party Plugin -> Get Plugin from the Web, input:
 ```
@@ -214,7 +219,7 @@ Ad PluginPro series for the world leading Mobile Ad services:
 * [MobFox PluginPro](https://github.com/floatinghotpot/cordova-mobfox-pro), for MobFox.
 * [MoPub PluginPro](https://github.com/floatinghotpot/cordova-plugin-mopub), for MoPub.
 
-More Cordova/PhoneGap plugins by Raymond Xie, [find them in plugin registry](http://plugins.cordova.io/#/search?search=rjfun).
+More Cordova/PhoneGap plugins by Raymond Xie, [find them in plugin registry](http://plugins.cordova.io/#/search?search=rjfun), or [find them in npm](https://www.npmjs.com/~floatinghotpot).
 
 If use in commercial project and need email/skype support, please [buy a license](http://rjfun.github.io/), you will be supported with high priority.
 

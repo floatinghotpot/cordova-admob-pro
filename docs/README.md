@@ -5,17 +5,22 @@ Present AdMob Ads in Mobile App/Games natively from JavaScript.
 
 ## How to use? ##
 
+Notice: 
+* Cordova team announce that the plugin registry is being migrated to npm, and recommended name rule is: cordova-plugin-xxx
+* The plugin id in old cordova registry is ```com.google.cordova.admob```, and now in npm is ```cordova-plugin-admobpro```.
+
 * If use with Cordova CLI:
 ```bash
 cordova plugin add cordova-plugin-admobpro
 ```
 
 * If use with PhoneGap Buid, just configure in config.xml:
+
 ```javascript
-<gap:plugin name="com.google.cordova.admob" source="plugins.cordova.io"/>
+<gap:plugin name="cordova-plugin-admobpro" source="npm"/>
 ```
 
-* If use with Intel XDK:
+* If use with Intel XDK (not support npm yet):
 Project -> CORDOVA 3.X HYBRID MOBILE APP SETTINGS -> PLUGINS AND PERMISSIONS -> Third-Party Plugins ->
 Add a Third-Party Plugin -> Get Plugin from the Web, input:
 ```
@@ -210,6 +215,8 @@ AdMob.AD_POSITION.POS_XY 		= 10, // use the given X and Y, see params 'x' and 'y
 	color_text: '808080',
 	color_url: '008000'
 }
+- **location**, *array*, set location for Ad, [latitude, longitude].
+
 ```
 
 Example Code:

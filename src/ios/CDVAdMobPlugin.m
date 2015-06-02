@@ -10,6 +10,8 @@
 
 #import <GoogleMobileAds/GoogleMobileAds.h>
 
+#import <CoreLocation/CLLocation.h>
+
 #import "CDVAdMobPlugin.h"
 #import "AdMobMediation.h"
 
@@ -25,11 +27,17 @@
 #define OPT_MOBFOX          @"MobFox"
 #define OPT_IAD             @"iAd"
 
+#define OPT_LOCATION        @"location"
+
 @interface CDVAdMobPlugin()<GADBannerViewDelegate, GADInterstitialDelegate>
 
 @property (assign) GADAdSize adSize;
 @property (nonatomic, retain) NSDictionary* adExtras;
 @property (nonatomic, retain) NSMutableDictionary* mediations;
+
+@property (assign) BOOL mLocationSet;
+@property (assign) double mLatitude;
+@property (assign) double mLongitude;
 
 - (GADAdSize)__AdSizeFromString:(NSString *)str;
 - (GADRequest*) __buildAdRequest:(BOOL)forBanner;
@@ -45,6 +53,10 @@
     
     self.adSize = [self __AdSizeFromString:@"SMART_BANNER"];
     self.mediations = [[NSMutableDictionary alloc] init];
+    
+    self.mLocationSet = NO;
+    self.mLatitude = 0.0;
+    self.mLongitude = 0.0;
 }
 
 - (NSString*) __getProductShortName { return @"AdMob"; }
@@ -67,6 +79,13 @@
     
     if(self.mediations) {
         // TODO: if mediation need code in, add here
+    }
+    
+    NSArray* arr = [options objectForKey:OPT_LOCATION];
+    if(arr != nil) {
+        self.mLatitude = [[arr objectAtIndex:0] doubleValue];
+        self.mLongitude = [[arr objectAtIndex:1] doubleValue];
+        self.mLocationSet = YES;
     }
 }
 
@@ -119,6 +138,10 @@
             [adMed joinAdRequest:request];
         }
     }];
+    
+    if(self.mLocationSet) {
+        [request setLocationWithLatitude:self.mLatitude longitude:self.mLongitude accuracy:kCLLocationAccuracyBest];
+    }
     
     return request;
 }

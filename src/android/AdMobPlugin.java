@@ -4,11 +4,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Random;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.location.Location;
 import android.os.Bundle;
 import android.provider.Settings;
 import android.util.Log;
@@ -22,7 +24,6 @@ import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.android.gms.ads.mediation.admob.AdMobExtras;
-
 import com.rjfun.cordova.ad.GenericAdPlugin;
 
 public class AdMobPlugin extends GenericAdPlugin {
@@ -43,7 +44,10 @@ public class AdMobPlugin extends GenericAdPlugin {
     
     public static final String OPT_AD_EXTRAS = "adExtras";
 	private JSONObject adExtras = null;
-	
+
+	public static final String OPT_LOCATION = "location";
+    private Location mLocation = null;
+
 	private HashMap<String, AdMobMediation> mediations = new HashMap<String, AdMobMediation>();
 	
     @Override
@@ -78,6 +82,15 @@ public class AdMobPlugin extends GenericAdPlugin {
 		}
 		
 		if(options.has(OPT_AD_EXTRAS)) adExtras = options.optJSONObject(OPT_AD_EXTRAS);
+
+		if(options.has(OPT_LOCATION)) {
+			JSONArray location = options.optJSONArray(OPT_LOCATION);
+			if(location != null) {
+				mLocation = new Location("dummyprovider");
+				mLocation.setLatitude( location.optDouble(0, 0.0) );
+				mLocation.setLongitude( location.optDouble(1, 0) );
+			}
+		}
 	}
 	
 	@Override
@@ -248,7 +261,9 @@ public class AdMobPlugin extends GenericAdPlugin {
         		builder = m.joinAdRequest(builder);
         	}
         }
-        
+
+        if(mLocation != null) builder.setLocation(mLocation);
+
         return builder.build();
     }
 
