@@ -1,5 +1,16 @@
 # AdMob Plugin Pro #
 
+### Quick Demo ###
+```bash
+# install cordova CLI
+[sudo] npm install cordova -g
+
+# install a small utility to run all the commands for you
+[sudo] npm install plugin-verify -g
+
+plugin-verify cordova-plugin-admobpro
+```
+
 ### Show Mobile Ad with single line of javascript code ###
 
 Step 1: Create Ad Unit Id for your banner and interstitial, in [AdMob portal](http://www.admob.com/), then write it in your javascript code.
@@ -102,15 +113,6 @@ Plugin ID: com.google.cordova.admob
 ```
 
 ## Quick start with cordova CLI ##
-```bash
-# install a small utility to run all the commands for you
-sudo npm install plugin-verify -g
-
-plugin-verify cordova-plugin-admobpro
-```
-
-Or, type the commands step by step:
-
 ```bash
 	# create a demo project
     cordova create test1 com.rjfun.test1 Test1
