@@ -58,17 +58,8 @@ Tested with:
 * [x] IBM Worklight, v6.2+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/04.-How-to-Use-with-IBM-Worklight))
 * [x] Google Mobile Chrome App ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/05.-How-to-Use-with-Mobile-Chrome-App))
 * [x] Adobe PhoneGap Build. ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/00.-How-To-Use-with-PhoneGap-Build))
-
-Highlights:
-- [x] Easy-to-use: Display Ad with single line of javascript code.
-- [x] Powerful: Support banner, interstitial, and video Ad.
-- [x] Max revenue: Support mediation with up to 8 leading mobile Ad services.
-- [x] Multi-size: Multiple banner size, also support custom size.
-- [x] Flexible: Fixed and overlapped mode, put banner at any position with overlap mode.
-- [x] Smart: Auto fit on orientation change.
-- [x] Same API: Exactly same API with other Ad plugins, easy to switch from one Ad service to another.
-- [x] Up to date: Latest SDK and Android Google play services.
-- [x] Good support: Actively maintained, prompt response.
+* [x] Meteor ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/06.-How-To-Use-with-Meteor))
+* [x] Ionic/AngularJS ([In ng-cordova ...](https://github.com/driftyco/ng-cordova/blob/master/src/plugins/googleAds.js))
 
 Maximize your revenue with mediation adapters:
 * [x] AdMob (built-in)
@@ -94,6 +85,10 @@ cordova plugin add cordova-plugin-admobpro
 * If use with PhoneGap Buid, just configure in config.xml:
 
 ```javascript
+<gap:plugin name="com.google.cordova.admob" source="plugins.cordova.io" />
+```
+Or,
+```javascript
 <gap:plugin name="cordova-plugin-admobpro" source="npm"/>
 ```
 
@@ -107,6 +102,15 @@ Plugin ID: com.google.cordova.admob
 ```
 
 ## Quick start with cordova CLI ##
+```bash
+# install a small utility to run all the commands for you
+sudo npm install plugin-verify -g
+
+plugin-verify cordova-plugin-admobpro
+```
+
+Or, type the commands step by step:
+
 ```bash
 	# create a demo project
     cordova create test1 com.rjfun.test1 Test1

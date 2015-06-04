@@ -71,8 +71,6 @@ button {
     }
     function initAd(){
         var defaultOptions = {
-            // bannerId: admobid.banner,
-            // interstitialId: admobid.interstitial,
             // adSize: 'SMART_BANNER',
             // width: integer, // valid when set adSize 'CUSTOM'
             // height: integer, // valid when set adSize 'CUSTOM'
@@ -89,27 +87,13 @@ button {
     }
     // optional, in case respond to events or handle error
     function registerAdEvents() {
-    	/* deprecated
-        document.addEventListener('onBannerFailedToReceive', function(data){ alert('error: ' + data.error + ', reason: ' + data.reason); });
-        document.addEventListener('onBannerReceive', function(){});
-        document.addEventListener('onBannerPresent', function(){});
-        document.addEventListener('onBannerLeaveApp', function(){});
-        document.addEventListener('onBannerDismiss', function(){});
-        
-        document.addEventListener('onInterstitialFailedToReceive', function(data){ alert('error: ' + data.error + ', reason: ' + data.reason); });
-        document.addEventListener('onInterstitialReceive', function(){});
-        document.addEventListener('onInterstitialPresent', function(){});
-        document.addEventListener('onInterstitialLeaveApp', function(){});
-        document.addEventListener('onInterstitialDismiss', function(){});
-        */
-        
         // new events, with variable to differentiate: adNetwork, adType, adEvent
         document.addEventListener('onAdFailLoad', function(data){ 
         	alert('error: ' + data.error + 
         			', reason: ' + data.reason + 
         			', adNetwork:' + data.adNetwork + 
         			', adType:' + data.adType + 
-        			', adEvent:' + data.adEvent); // adType: 'banner' or 'interstitial'
+        			', adEvent:' + data.adEvent); // adType: 'banner', 'interstitial', etc.
         });
         document.addEventListener('onAdLoaded', function(data){});
         document.addEventListener('onAdPresent', function(data){});
