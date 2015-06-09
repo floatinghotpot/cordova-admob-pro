@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="com.google.cordova.admob"
-	version="2.7.8">
+	version="2.8.1">
       
     <name>AdMob Plugin Pro</name>
 	<description>Powerful Ad Plugin for Google AdMob and DFP. Easy use, show mobile Ad with single line of JavaScript. Stable and up to date with latest SDK. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, IBM Worklight.</description>
@@ -25,7 +25,9 @@
 	
     <!-- android -->
     <platform name="android">
-        <dependency id="com.google.playservices" url="https://github.com/floatinghotpot/google-play-services" commit="r19" />
+        <!--dependency id="com.google.playservices" url="https://github.com/floatinghotpot/google-play-services" commit="r19" /-->
+        <framework src="com.google.android.gms:play-services-ads:+" />
+
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
 			<activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
 			    android:name="com.google.android.gms.ads.AdActivity"
