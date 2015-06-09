@@ -8,7 +8,11 @@
 # install a small utility to run all the commands for you
 [sudo] npm install plugin-verify -g
 
+# run admob demo with sample index.html
 plugin-verify cordova-plugin-admobpro
+
+# run admob demo in a game powered by PIXI HTML5 engine
+plugin-verify admob-demo-game-pixi ios --landscape
 ```
 
 ### Show Mobile Ad with single line of javascript code ###
