@@ -3,10 +3,10 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
 	xmlns:android="http://schemas.android.com/apk/res/android"
 	id="cordova-plugin-admobpro"
-	version="2.8.0">
+	version="2.8.1">
       
     <name>AdMob Plugin Pro</name>
-	<description>Ultimate Ad Plugin for Google AdMob and DFP to monetize hybrid apps. Easy use, show mobile Ad with single line of JavaScript. Stable and up to date with latest SDK. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, IBM Worklight.</description>
+	<description>Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Show mobile Ad with single line of JavaScript. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, Ionic, Meteor, etc.</description>
 	<author>Liming Xie</author>
 	<license>MIT</license>
 	<keywords>rjfun,admob,google,ad</keywords>
@@ -25,7 +25,6 @@
 	
     <!-- android -->
     <platform name="android">
-        <dependency id="cordova-plugin-googleplayservices"/>
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
 			<activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
 			    android:name="com.google.android.gms.ads.AdActivity"
@@ -44,6 +43,8 @@
         </config-file>
         <source-file src="src/android/AdMobMediation.java" target-dir="src/com/rjfun/cordova/admob" />
         <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
+
+        <framework src="com.google.android.gms:play-services-ads:+" />
      </platform>
      
      <!-- ios -->
