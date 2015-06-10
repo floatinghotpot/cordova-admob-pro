@@ -1,6 +1,7 @@
 # AdMob Plugin Pro #
 
 ### Quick Demo ###
+
 ```bash
 # install cordova CLI
 [sudo] npm install cordova -g
@@ -11,8 +12,12 @@
 # run admob demo with sample index.html
 plugin-verify cordova-plugin-admobpro
 
-# run admob demo in a game powered by PIXI HTML5 engine
+# run admob demo in game powered by PIXI/phaser HTML5 engine
 plugin-verify admob-demo-game-pixi ios --landscape
+plugin-verify admob-demo-game-phaser ios --landscape
+
+# run admob demo in app powered by ionic/angular framework
+plugin-verify admob-demo-app-ionic ios --portrait
 ```
 
 ### Show Mobile Ad with single line of javascript code ###
@@ -184,6 +189,11 @@ Other Documentations:
 * [ChangeLog](https://github.com/floatinghotpot/cordova-admob-pro/wiki/ChangeLog)
 * [FAQ](https://github.com/floatinghotpot/cordova-admob-pro/wiki/FAQ)
 * [Notice for Android Proguard](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Notice-for-Android-Proguard)
+
+Demo projects:
+* [App demo using Ionic framework](https://github.com/floatinghotpot/admob-demo-app-ionic/tree/master/demo)
+* [Game demo using phaser game engine](https://github.com/floatinghotpot/admob-demo-game-phaser/tree/master/demo)
+* [Game demo using PIXI game engine](https://github.com/floatinghotpot/admob-demo-game-pixi/tree/master/demo)
 
 ## Video Tutorial ##
 
