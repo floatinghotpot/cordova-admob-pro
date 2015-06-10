@@ -65,6 +65,8 @@ if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false}
 if(AdMob) AdMob.showInterstitial();
 ```
 
+Or, you can just copy this [admob_simple.js](https://github.com/floatinghotpot/cordova-admob-pro/blob/master/test/admob_simple.js) to your project, and ref in your index.html.
+
 ### Features ###
 
 Platforms supported:
