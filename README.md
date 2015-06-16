@@ -9,14 +9,14 @@
 # install a small utility to run all the commands for you
 [sudo] npm install plugin-verify -g
 
-# run admob demo with sample index.html
+# Demo 1: run admob demo with sample index.html
 plugin-verify cordova-plugin-admobpro
 
-# run admob demo in game powered by PIXI/phaser HTML5 engine
+# Demo 2/3: run admob demo in game powered by PIXI/phaser HTML5 engine
 plugin-verify admob-demo-game-pixi ios --landscape
 plugin-verify admob-demo-game-phaser ios --landscape
 
-# run admob demo in app powered by ionic/angular framework
+# Demo 4: run admob demo in app powered by ionic/angular framework
 plugin-verify admob-demo-app-ionic ios --portrait
 ```
 
@@ -74,15 +74,6 @@ Platforms supported:
 - [x] iOS
 - [x] Windows Phone
 
-Tested with:
-* [x] Apache Cordova CLI, v3.0+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/01.-How-to-Use-with-Cordova-CLI))
-* [x] Intel XDK, r1095+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/02.-How-to-Use-with-Intel-XDK))
-* [x] IBM Worklight, v6.2+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/04.-How-to-Use-with-IBM-Worklight))
-* [x] Google Mobile Chrome App ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/05.-How-to-Use-with-Mobile-Chrome-App))
-* [x] Adobe PhoneGap Build. ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/00.-How-To-Use-with-PhoneGap-Build))
-* [x] Meteor ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/06.-How-To-Use-with-Meteor))
-* [x] Ionic/AngularJS ([In ng-cordova ...](https://github.com/driftyco/ng-cordova/blob/master/src/plugins/googleAds.js))
-
 Maximize your revenue with mediation adapters:
 * [x] AdMob (built-in)
 * [x] DFP (DoubleClick for Publisher, built-in)
@@ -95,33 +86,24 @@ Maximize your revenue with mediation adapters:
 
 ## How to use? ##
 
-Notice: 
-* Cordova team announce that the plugin registry is being migrated to npm, and recommended name rule is: cordova-plugin-xxx
-* The plugin id in old cordova registry is ```com.google.cordova.admob```, and now in npm is ```cordova-plugin-admobpro```.
-
 * If use with Cordova CLI:
 ```bash
 cordova plugin add cordova-plugin-admobpro
 ```
 
-* If use with PhoneGap Buid, just configure in config.xml:
+If use other tools or online build services, see:
+* [x] Apache Cordova CLI, v3.0+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/01.-How-to-Use-with-Cordova-CLI))
+* [x] Intel XDK, r1095+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/02.-How-to-Use-with-Intel-XDK))
+* [x] IBM Worklight, v6.2+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/04.-How-to-Use-with-IBM-Worklight))
+* [x] Google Mobile Chrome App ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/05.-How-to-Use-with-Mobile-Chrome-App))
+* [x] Adobe PhoneGap Build. ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/00.-How-To-Use-with-PhoneGap-Build))
+* [x] Meteor ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/06.-How-To-Use-with-Meteor))
+* [x] Ionic/AngularJS ([In ng-cordova ...](https://github.com/driftyco/ng-cordova/blob/master/src/plugins/googleAds.js))
 
-```javascript
-<gap:plugin name="com.google.cordova.admob" source="plugins.cordova.io" />
-```
-Or,
-```javascript
-<gap:plugin name="cordova-plugin-admobpro" source="npm"/>
-```
-
-* If use with Intel XDK (not support npm yet):
-Project -> CORDOVA 3.X HYBRID MOBILE APP SETTINGS -> PLUGINS AND PERMISSIONS -> Third-Party Plugins ->
-Add a Third-Party Plugin -> Get Plugin from the Web, input:
-```
-Name: AdMobPluginPro
-Plugin ID: com.google.cordova.admob
-[x] Plugin is located in the Apache Cordova Plugins Registry
-```
+Notice:
+* Cordova team announce that the plugin registry is being migrated to npm, and recommended name rule is: cordova-plugin-xxx
+* The plugin id in old cordova registry is ```com.google.cordova.admob```, and now in npm is ```cordova-plugin-admobpro```
+* Read: [Difference of com.google.cordova.admob and cordova-plugin-admobpro](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Difference-of-Plugin-IDs)
 
 ## Quick start with cordova CLI ##
 ```bash
@@ -145,6 +127,8 @@ Plugin ID: com.google.cordova.admob
     # or import into Xcode / eclipse
 ```
 
+## AdMob Mediation Adapters ##
+
 Optional mediations to increase your revenue (Read about [AdMob Mediation Networks](https://developers.google.com/mobile-ads-sdk/docs/admob/android/mediation-networks)):
 ```bash
 cordova plugin add cordova-plugin-admob-facebook
@@ -167,9 +151,11 @@ removeBanner();
 showBanner(position);
 showBannerAtXY(x, y);
 hideBanner();
+
 // use interstitial
 prepareInterstitial(adId/options, success, fail);
 showInterstitial();
+
 // set default value for other methods
 setOptions(options, success, fail);
 ```
