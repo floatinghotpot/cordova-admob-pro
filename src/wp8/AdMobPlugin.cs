@@ -323,6 +323,11 @@ namespace Cordova.Extension.Commands
 		}
 
 		private void __createBanner(string adId, bool autoShow) {
+			if (bannerAd != null) {
+				if(logVerbose) Debug.WriteLine("banner already created.");
+				return;
+			}
+
 			if (isTesting)
 				adId = TEST_BANNER_ID;
 			
@@ -487,6 +492,11 @@ namespace Cordova.Extension.Commands
 		}
 		
 		private void __hideBanner() {
+			if (bannerAd == null) {
+				if(logVerbose) Debug.WriteLine("banner is null, call createBanner() first.");
+				return;
+			}
+
 			// Asynchronous UI threading call
 			Deployment.Current.Dispatcher.BeginInvoke(() => {
 				PhoneApplicationFrame frame;
