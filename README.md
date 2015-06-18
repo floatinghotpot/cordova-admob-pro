@@ -104,6 +104,8 @@ Notice:
 * Cordova team announce that the plugin registry is being migrated to npm, and recommended name rule is: cordova-plugin-xxx
 * The plugin id in old cordova registry is ```com.google.cordova.admob```, and now in npm is ```cordova-plugin-admobpro```
 * Read: [Difference of com.google.cordova.admob and cordova-plugin-admobpro](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Difference-of-Plugin-IDs)
+* If build locally using ```cordova-plugin-admobpro```, to avoid build error, you need install some extras in Android SDK manager (type ```android sdk``` to launch it):
+![android extra](https://cloud.githubusercontent.com/assets/2339512/8176143/20533ec0-1429-11e5-8e17-a748373d5110.png)
 
 ## Quick start with cordova CLI ##
 ```bash
