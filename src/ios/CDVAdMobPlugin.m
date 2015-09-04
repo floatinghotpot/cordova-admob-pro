@@ -100,7 +100,7 @@
     
     if (self.isTesting) {
         NSString* deviceId = [self __getAdMobDeviceId];
-        request.testDevices = [NSArray arrayWithObjects:deviceId, nil];
+        request.testDevices = [NSArray arrayWithObjects:deviceId, kGADSimulatorID, nil];
         NSLog(@"request.testDevices: %@, <Google> tips handled", deviceId);
     }
     
@@ -212,9 +212,8 @@
 }
 
 - (NSObject*) __createInterstitial:(NSString*)adId {
-    GADInterstitial* ad = [[GADInterstitial alloc] init];
+    GADInterstitial* ad = [[GADInterstitial alloc] initWithAdUnitID:adId];
     ad.delegate = self;
-    ad.adUnitID = adId;
     return ad;
 }
 
@@ -255,33 +254,22 @@
         });
     }
 
-    [self fireEvent:[self __getProductShortName] event:@"onBannerReceive" withData:NULL];
-
     [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_BANNER];
 }
 
 - (void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error {
-    NSString* errinfo = [NSString stringWithFormat:@"{'error': '%ld', 'reason': '%@'}", (long)[error code], [error localizedFailureReason]];
-    [self fireEvent:[self __getProductShortName] event:@"onBannerFailedToReceive" withData:errinfo];
-    
     [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_BANNER];
 }
 
 - (void)adViewWillLeaveApplication:(GADBannerView *)adView {
-    [self fireEvent:[self __getProductShortName] event:@"onBannerLeaveApp" withData:NULL];
-    
     [self fireAdEvent:EVENT_AD_LEAVEAPP withType:ADTYPE_BANNER];
 }
 
 - (void)adViewWillPresentScreen:(GADBannerView *)adView {
-    [self fireEvent:[self __getProductShortName] event:@"onBannerPresent" withData:NULL];
-    
     [self fireAdEvent:EVENT_AD_PRESENT withType:ADTYPE_BANNER];
 }
 
 - (void)adViewDidDismissScreen:(GADBannerView *)adView {
-    [self fireEvent:[self __getProductShortName] event:@"onBannerDismiss" withData:NULL];
-    
     [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_BANNER];
 }
 
@@ -293,9 +281,6 @@
  * document.addEventListener('onAdLeaveApp', function(data));
  */
 - (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error {
-    NSString* errinfo = [NSString stringWithFormat:@"{'error': '%@'}", [error localizedFailureReason]];
-    [self fireEvent:[self __getProductShortName] event:@"onInterstitialFailedToReceive" withData:errinfo];
-    
     [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_INTERSTITIAL];
 }
 
@@ -306,21 +291,14 @@
         });
     }
 
-    [self fireEvent:[self __getProductShortName] event:@"onInterstitialReceive" withData:NULL];
-    
     [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_INTERSTITIAL];
 }
 
 - (void)interstitialWillPresentScreen:(GADInterstitial *)interstitial {
-    [self fireEvent:[self __getProductShortName] event:@"onInterstitialPresent" withData:NULL];
-    
     [self fireAdEvent:EVENT_AD_PRESENT withType:ADTYPE_INTERSTITIAL];
-
 }
 
 - (void)interstitialDidDismissScreen:(GADInterstitial *)interstitial {
-    [self fireEvent:[self __getProductShortName] event:@"onInterstitialDismiss" withData:NULL];
-    
     [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_INTERSTITIAL];
     
     if(self.interstitial) {
@@ -330,8 +308,6 @@
 }
 
 - (void)interstitialWillLeaveApplication:(GADInterstitial *)ad {
-    [self fireEvent:[self __getProductShortName] event:@"onInterstitialLeaveApp" withData:NULL];
-    
     [self fireAdEvent:EVENT_AD_LEAVEAPP withType:ADTYPE_INTERSTITIAL];
 }
 
