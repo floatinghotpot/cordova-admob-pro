@@ -119,7 +119,7 @@
     
     if (self.isTesting) {
         NSString* deviceId = [self __getAdMobDeviceId];
-        request.testDevices = [NSArray arrayWithObjects:deviceId, nil];
+        request.testDevices = [NSArray arrayWithObjects:deviceId, kGADSimulatorID, nil];
         NSLog(@"request.testDevices: %@, <Google> tips handled", deviceId);
     }
     
@@ -235,9 +235,8 @@
 }
 
 - (NSObject*) __createInterstitial:(NSString*)adId {
-    GADInterstitial* ad = [[GADInterstitial alloc] init];
+    GADInterstitial* ad = [[GADInterstitial alloc] initWithAdUnitID:adId];
     ad.delegate = self;
-    ad.adUnitID = adId;
     return ad;
 }
 
@@ -318,7 +317,6 @@
 
 - (void)interstitialWillPresentScreen:(GADInterstitial *)interstitial {
     [self fireAdEvent:EVENT_AD_PRESENT withType:ADTYPE_INTERSTITIAL];
-
 }
 
 - (void)interstitialDidDismissScreen:(GADInterstitial *)interstitial {
