@@ -212,6 +212,49 @@ namespace Cordova.Extension.Commands
             DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
         }
 
+		public void showBanner(string args) {
+			if(logVerbose) Debug.WriteLine("AdMob.showBanner: " + args);
+			try {
+				string[] inputs = JsonHelper.Deserialize<string[]>(args);
+				if (inputs != null && inputs.Length >= 1) {
+					int position = Convert.ToInt32(inputs[0]);
+
+					__showBanner(position, 0, 0);
+
+				}
+			} catch (Exception ex) {
+				DispatchCommandResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION, ex.Message));
+				return;
+			}
+
+			DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
+		}
+
+		public void showBannerAtXY(string args) {
+			if(logVerbose) Debug.WriteLine("AdMob.showBannerAtXY: " + args);
+			try {
+				string[] inputs = JsonHelper.Deserialize<string[]>(args);
+				if (inputs != null && inputs.Length >= 1) {
+                    int x = Convert.ToInt32(inputs[0]);
+                    int y = Convert.ToInt32(inputs[1]);
+
+                    __showBanner(POS_XY, x, y);
+				}
+			} catch (Exception ex) {
+				DispatchCommandResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION, ex.Message));
+				return;
+			}
+
+			DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
+		}
+
+        public void hideBanner(string args)
+        {
+            if (logVerbose) Debug.WriteLine("AdMob.hideBanner: " + args);
+            __hideBanner();
+            DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
+        }
+
         public void prepareInterstitial(string args)
         {
             if (logVerbose) Debug.WriteLine("AdMob.prepareInterstitial: " + args);
@@ -248,13 +291,6 @@ namespace Cordova.Extension.Commands
                 return;
             }
 
-            DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
-        }
-
-        public void hideBanner(string args)
-        {
-            if (logVerbose) Debug.WriteLine("AdMob.hideBanner: " + args);
-            __hideBanner();
             DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
         }
 
@@ -364,43 +400,6 @@ namespace Cordova.Extension.Commands
 					__showBanner(adPosition, posX, posY);
 				}
 			});
-		}
-
-		private void showBanner(string args) {
-			if(logVerbose) Debug.WriteLine("AdMob.showBanner: " + args);
-			try {
-				string[] inputs = JsonHelper.Deserialize<string[]>(args);
-				if (inputs != null && inputs.Length >= 1) {
-					int position = Convert.ToInt32(inputs[0]);
-
-					__showBanner(position, 0, 0);
-
-				}
-			} catch (Exception ex) {
-				DispatchCommandResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION, ex.Message));
-				return;
-			}
-			
-			DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
-		}
-
-		private void showBannerAtXY(string args) {
-			if(logVerbose) Debug.WriteLine("AdMob.showBannerAtXY: " + args);
-			try {
-				string[] inputs = JsonHelper.Deserialize<string[]>(args);
-				if (inputs != null && inputs.Length >= 1) {
-					int x = Convert.ToInt32(inputs[0]);
-					int y = Convert.ToInt32(inputs[1]);
-					
-					__showBanner(POS_XY, x, y);
-					
-				}
-			} catch (Exception ex) {
-				DispatchCommandResult(new PluginResult(PluginResult.Status.JSON_EXCEPTION, ex.Message));
-				return;
-			}
-			
-			DispatchCommandResult(new PluginResult(PluginResult.Status.OK));
 		}
 
 		private void __showBanner(int argPos, int argX, int argY) {
