@@ -1,9 +1,6 @@
 ## AdMob Plugin Pro 
-=======================
 
 Cordova / PhoneGap Plugin for Google Ads, including AdMob / DFP (doubleclick for publisher) and mediations to other Ad networks.
-
-=======================
 
 ## Contents
 
@@ -20,8 +17,6 @@ Cordova / PhoneGap Plugin for Google Ads, including AdMob / DFP (doubleclick for
 11. [Video Tutorial](#video-tutorial)
 12. [Screenshots](#screenshots)
 13. [Credits](#credits)
-
-=======================
 
 ## Description
 
@@ -237,13 +232,13 @@ Some important tips, FYI.
 
 - [x] Strongly recommend Interstitial, more than 10 times profit than banner Ad. 
 
-   | Banner | Interstitial
+Ad Format | Banner | Interstitial
 ---|-------|--------------
 Click Rate | < 1% | 3-15%
 RPM (revenue per 1000 impression) |  US$ 0.5~4 | US$ 10~100
 
 - [x] RPM top countries (recent stat data):
-* USA
+* USA, US$ 10~100, much higher than others
 * South Korea
 * Japan 
 * Sweden 
