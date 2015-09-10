@@ -20,7 +20,7 @@ Cordova / PhoneGap Plugin for Google Ads, including AdMob / DFP (doubleclick for
 
 ## Description
 
-This Cordova / PhoneGap plugin enables displaying mobile Ads with single line of javascript code. Designed for the use in HTML5-based cross-platform games and mobile/hybrid audio applications.
+This Cordova / PhoneGap plugin enables displaying mobile Ads with single line of javascript code. Designed for the use in HTML5-based cross-platform hybrid games and other applications.
 
 ## History
 
@@ -201,6 +201,18 @@ showInterstitial();
 
 // set default value for other methods
 setOptions(options, success, fail);
+```
+
+Events:
+```javascript
+// onAdLoaded
+// onAdFailLoad
+// onAdPresent
+// onAdDismiss
+// onAdLeaveApp
+document.addEventListener('onAdFailLoad', function(e){
+    // handle the event
+});
 ```
 
 ## Wiki and Docs
