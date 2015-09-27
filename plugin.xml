@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-	xmlns:android="http://schemas.android.com/apk/res/android"
-	id="cordova-plugin-admobpro"
-	version="2.9.0">
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        id="cordova-plugin-admobpro"
+        version="2.9.1">
       
     <name>AdMob Plugin Pro</name>
-	<description>Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Show mobile Ad with single line of JavaScript. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, Ionic, Meteor, etc.</description>
-	<author>Liming Xie</author>
-	<license>MIT</license>
-	<keywords>rjfun,admob,google,ad</keywords>
+    <description>Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Show mobile Ad with single line of JavaScript. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, Ionic, Meteor, etc.</description>
+    <author>Liming Xie</author>
+    <license>MIT</license>
+    <keywords>rjfun,admob,google,ad</keywords>
     <repo>https://github.com/floatinghotpot/cordova-admob-pro.git</repo>
     <issue>https://github.com/floatinghotpot/cordova-admob-pro/issues</issue>
 
-	<engines>
-	    <engine name="cordova" version=">=3.0" />
-	</engines>
+    <engines>
+        <engine name="cordova" version=">=3.0" />
+    </engines>
 
     <js-module src="www/AdMob.js" name="AdMob">
         <clobbers target="window.AdMob" />
     </js-module>
 
-	<dependency id="cordova-plugin-extension" />
-	
-    <!-- android -->
+    <dependency id="cordova-plugin-extension" />
+
+    <!-- android, now build with gradle instead of ant -->
     <platform name="android">
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-			<activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
-			    android:name="com.google.android.gms.ads.AdActivity"
-			    android:theme="@android:style/Theme.Translucent" />
+            <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
+                      android:name="com.google.android.gms.ads.AdActivity"
+                      android:theme="@android:style/Theme.Translucent" />
           </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
-			<uses-permission android:name="android.permission.INTERNET"/>
-			<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
           </config-file>
           
         <config-file target="res/xml/config.xml" parent="/*">
@@ -44,9 +44,35 @@
         <source-file src="src/android/AdMobMediation.java" target-dir="src/com/rjfun/cordova/admob" />
         <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
 
+        <!-- must use gradle, or else cannot be handled correctly -->
         <framework src="com.google.android.gms:play-services-ads:+" />
      </platform>
      
+    <!-- same as android, but use ant instead of gradle -->
+    <platform name="amazon-fireos">
+        <config-file target="AndroidManifest.xml" parent="/manifest/application">
+            <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
+                      android:name="com.google.android.gms.ads.AdActivity"
+                      android:theme="@android:style/Theme.Translucent" />
+          </config-file>
+        <config-file target="AndroidManifest.xml" parent="/*">
+            <uses-permission android:name="android.permission.INTERNET"/>
+            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+          </config-file>
+
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="AdMob">
+                <param name="android-package" value="com.rjfun.cordova.admob.AdMobPlugin"/>
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+        <source-file src="src/android/AdMobMediation.java" target-dir="src/com/rjfun/cordova/admob" />
+        <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
+
+        <!-- using ant, framework tag for android sdk cannot be supported, so we use external dependency -->
+        <dependency id="cordova-plugin-googleplayservices"/>
+     </platform>
+
      <!-- ios -->
      <platform name="ios">
          <config-file target="config.xml" parent="/*">
@@ -76,7 +102,7 @@
          <framework src="StoreKit.framework" />
          <framework src="SystemConfiguration.framework" />
          <framework src="UIKit.framework" />
-	</platform>
+    </platform>
 
      <!-- Windows Phone 8 -->
      <platform name="wp8">
@@ -96,18 +122,18 @@
 
      <!-- Windows Phone 8.1+ -->
      <platform name="windows">
-          <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
-               <Capability Name="ID_CAP_LOCATION" />
-          </config-file>
-          <config-file target="config.xml" parent="/*">
-               <feature name="AdMob">
+         <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
+             <Capability Name="ID_CAP_LOCATION" />
+         </config-file>
+         <config-file target="config.xml" parent="/*">
+            <feature name="AdMob">
                     <param name="wp-package" value="AdMobPlugin"/>
-               </feature>
-          </config-file>
-          <source-file src="src/wp8/AdMobPlugin.cs" />
-          <source-file src="src/wp8/AdMobOptions.cs" />
+            </feature>
+        </config-file>
+        <source-file src="src/wp8/AdMobPlugin.cs" />
+        <source-file src="src/wp8/AdMobOptions.cs" />
           
-          <framework src="src/wp8/GoogleAds.dll" custom="true" />
-     </platform>
+        <framework src="src/wp8/GoogleAds.dll" custom="true" />
+    </platform>
 
 </plugin>
