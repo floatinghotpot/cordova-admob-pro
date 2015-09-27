@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-admobpro"
-        version="2.9.3">
+        version="2.9.4">
       
     <name>AdMob Plugin Pro</name>
     <description>Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Show mobile Ad with single line of JavaScript. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, Ionic, Meteor, etc.</description>
@@ -44,8 +44,10 @@
         <source-file src="src/android/AdMobMediation.java" target-dir="src/com/rjfun/cordova/admob" />
         <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
 
-        <!-- must use gradle, or else cannot be handled correctly -->
-        <framework src="com.google.android.gms:play-services-ads:+" />
+        <!-- cordova CLI using gradle and it working well -->
+        <!-- but unfortunately, build.phonegap.com, Intel XDK, and some other tools still use ant -->
+        <!-- framework src="com.google.android.gms:play-services-ads:+" /-->
+        <dependency id="cordova-plugin-googleplayservices"/>
      </platform>
      
     <!-- same as android, but use ant instead of gradle -->
@@ -69,7 +71,8 @@
         <source-file src="src/android/AdMobMediation.java" target-dir="src/com/rjfun/cordova/admob" />
         <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
 
-        <!-- using ant, framework tag for android sdk cannot be supported, so we use external dependency -->
+        <!-- amazon-fireos still using ant, AND default android r19 -->
+        <!-- framework src="com.google.android.gms:play-services-ads:+" /-->
         <dependency id="cordova-plugin-googleplayservices"/>
      </platform>
 
@@ -81,6 +84,15 @@
                  <param name="onload" value="true" />
              </feature>
          </config-file>
+
+         <!-- Temporary exception as iOS9 blocking HTTP -->
+        <config-file target="*-Info.plist" parent="NSAppTransportSecurity">
+            <dict>
+                <key>NSAllowsArbitraryLoads</key>
+                <true/>
+            </dict>
+        </config-file>
+
          <header-file src="src/ios/CDVAdMobPlugin.h"/>
          <source-file src="src/ios/CDVAdMobPlugin.m"/>
          <header-file src="src/ios/AdMobMediation.h"/>
