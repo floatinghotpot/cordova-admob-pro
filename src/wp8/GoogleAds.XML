@@ -391,12 +391,6 @@
             Debug information.
             </summary>
         </member>
-        <member name="M:GoogleAds.Core.AdManager`1.OpenOverlay(System.String)">
-            <summary>
-            Begins the process of opening the ad overlay.
-            </summary>
-            <param name="overlayContent">Either a URI, HTML prefixed with "html:" or null.</param>
-        </member>
         <member name="M:GoogleAds.Core.AdManager`1.NavigateAway">
             <summary>
             Called when the user navigates away from the ad.
@@ -449,11 +443,6 @@
             </summary>
             <param name="requestUrl">The request url.</param>
         </member>
-        <member name="M:GoogleAds.Core.AdManager`1.ReleaseURLBuilderView">
-            <summary>
-            Release the web view used for url construction.
-            </summary>
-        </member>
         <member name="M:GoogleAds.Core.AdManager`1.AdRequestDidNotFill">
             <summary>
             Called if the ad request did not fill. Notifies the publisher and releases the lock.
@@ -472,6 +461,11 @@
         <member name="M:GoogleAds.Core.AdManager`1.AdRequestFailedInternalError">
             <summary>
             Called if the ad request did not fill. Notifies the publisher and releases the lock.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.AdRequestSuccessfull">
+            <summary>
+            Called if the ad request successfully filled.
             </summary>
         </member>
         <member name="M:GoogleAds.Core.AdManager`1.AdLoaded(System.Object,GoogleAds.Core.UI.LoadCompletedEventArgs)">
@@ -496,6 +490,24 @@
             <summary>
             Pings and clears the impression URLs sent in the X-Afma-Tracking-Urls header.
             </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.OpenOverlayWithUri(System.Uri)">
+            <summary>
+            Opens the html content in a new WebView.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.OpenOverlayWithHtmlContent(System.String)">
+            <summary>
+            Opens the html content in a new WebView.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.AdManager`1.OnWebViewOverlayContentLoaded(System.Object,GoogleAds.Core.UI.LoadCompletedEventArgs)">
+            <summary>
+            Triggered when the content of the webview has been loaded.
+            This will open the overlay and transition into new page.
+            </summary>
+            <param name="sender"></param>
+            <param name="e"></param>
         </member>
         <member name="T:GoogleAds.Core.ViewModelBase">
             <summary>
@@ -589,56 +601,6 @@
             <summary>
             Notifies the AdView of DismissScreen event.
             </summary>
-        </member>
-        <member name="M:GoogleAds.Core.AdViewViewModel.StartAdServing">
-            <summary>
-            Starts ad serving.
-            </summary>
-        </member>
-        <member name="M:GoogleAds.Core.AdViewViewModel.StopAdServing">
-            <summary>
-            Stops ad serving.
-            </summary>
-        </member>
-        <member name="M:GoogleAds.Core.AdViewViewModel.OpenOverlay(System.String)">
-            <summary>
-            Opens the overlay when commanded by AdCommunicator or AdManager.
-            </summary>
-            <param name="overlayContent"></param>
-        </member>
-        <member name="M:GoogleAds.Core.AdViewViewModel.OpenOverlayNoContent">
-            <summary>
-            In case of internal WebView navigation, the overlay needs to be opened with the
-            same WebView.
-            </summary>
-        </member>
-        <member name="M:GoogleAds.Core.AdViewViewModel.OpenOverlayWithHtmlContent(System.String)">
-            <summary>
-            Opens the html content in a new WebView.
-            </summary>
-        </member>
-        <member name="M:GoogleAds.Core.AdViewViewModel.OpenExternalBrowser(System.String)">
-            <summary>
-            Opens the url in external browser.
-            </summary>
-            <param name="url">The URL to open.</param>
-        </member>
-        <member name="M:GoogleAds.Core.AdViewViewModel.OpenOverlayWithUrl(System.String,System.Boolean)">
-            <summary>
-            Opens the url in a new WebView.
-            </summary>
-            <param name="url">The URL to open.</param>
-            <param name="fromInlineNavigation">
-            True if this is opening a URL that was navigated to (not opened via a GMSG).
-            </param>
-        </member>
-        <member name="M:GoogleAds.Core.AdViewViewModel.OnWebViewContentLoaded(System.Object,GoogleAds.Core.UI.LoadCompletedEventArgs)">
-            <summary>
-            Triggered when the content of the webview has been loaded.
-            This will open the overlay and transition into new page.
-            </summary>
-            <param name="sender"></param>
-            <param name="e"></param>
         </member>
         <member name="P:GoogleAds.Core.AdViewViewModel.FireShowAndHideEvents">
             <summary>
@@ -752,12 +714,6 @@
             Called when the user navigates away from the ad. Stops the timer.
             </summary>
         </member>
-        <member name="M:GoogleAds.Core.BannerAdManager.OpenOverlay(System.String)">
-            <summary>Opens the ad overlay with the given string as content.</summary>
-            <param name="overlayContent">
-            The content to put in the overlay. May be a URL or HTML prefixed with "html:"
-            </param>
-        </member>
         <member name="M:GoogleAds.Core.BannerAdManager.SendEvent(GoogleAds.AdEventType,GoogleAds.AdErrorCode)">
             <summary>Sends an event to the AdView who owns this AdManager instance.</summary>
             <param name="eventType">The type of event.</param>
@@ -809,26 +765,28 @@
             <param name="sender">The GWebView sending the GMSG.</param>
             <param name="paramMap">The query parameters of the GMSG.</param>
         </member>
-        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.NavigatingAway(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.OpenWebAppWithUri(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
             <summary>
-            This GMSG is raised when the ad is navigated away from. Ping the click tracking URLs
-            and do additional cleanup.
+            Opens up a rich-media overlay.
             </summary>
-            <param name="sender">The GWebView sending the GMSG.</param>
-            <param name="paramMap">The query parameters of the GMSG.</param>
+            <param name="sender"></param>
+            <param name="paramMap"></param>
         </member>
-        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.Open(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.OpenWebAppWithHTML(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
             <summary>
-            Uses the SDK to perform an open action. This could be:
-            - A URL in the browser.
-            - Something specified by a particular protocol.
-            - A URL in the in-app overlay.
-            - HTML in the in-app overlay.
+            Opens up a rich-media overlay with HTML.
             </summary>
-            <param name="sender">The GWebView sending the GMSG.</param>
-            <param name="paramMap">The query parameters of the GMSG.</param>
+            <param name="sender"></param>
+            <param name="paramMap"></param>
         </member>
         <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.OpenApp(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
+            <summary>
+            Performs the open function within an overlay.
+            </summary>
+            <param name="sender">The GWebView sending the GMSG.</param>
+            <param name="paramMap">The query parameters of the GMSG.</param>
+        </member>
+        <member name="M:GoogleAds.Core.Communication.AdCommunicator`1.OpenCall(GoogleAds.Core.UI.GWebView,System.Collections.Generic.IDictionary{System.String,System.String})">
             <summary>
             Performs the open function within an overlay.
             </summary>
@@ -1062,6 +1020,11 @@
             The response Uri.
             </summary>
         </member>
+        <member name="P:GoogleAds.Core.Http.HttpResponse.Exception">
+            <summary>
+            The exception, if there was any.
+            </summary>
+        </member>
         <member name="T:GoogleAds.Core.Http.StreamHttpContent">
             <summary>
             Http Content implementation for streams.
@@ -1079,6 +1042,17 @@
             </summary>
             <returns></returns>
         </member>
+        <member name="T:GoogleAds.Core.Http.StringHttpContent">
+            <summary>
+            Http Content implementation for streams.
+            </summary>
+        </member>
+        <member name="M:GoogleAds.Core.Http.StringHttpContent.#ctor(System.String)">
+            <summary>
+            Initializes the object with string.
+            </summary>
+            <param name="str">The string.</param>
+        </member>
         <member name="T:GoogleAds.Core.IAppInstance">
             <summary>
             Class to decouple information related to current app.
@@ -1094,17 +1068,6 @@
             <summary>
             Timeout for requesting the interstitial content.
             </summary>
-        </member>
-        <member name="M:GoogleAds.Core.InterstitialAdManager.NavigateAway">
-            <summary>
-            Not needed.
-            </summary>
-        </member>
-        <member name="M:GoogleAds.Core.InterstitialAdManager.OpenOverlay(System.String)">
-            <summary>
-            Not needed.
-            </summary>
-            <param name="overlayContent">Unused.</param>
         </member>
         <member name="T:GoogleAds.Core.Loaders.RequestStatus">
             <summary>
@@ -1149,13 +1112,6 @@
             <summary>
             Loads the ad by first constructing Ad URL using SDK core AFMA_buildAdURL function,
             and then fetching the content through Http request.
-            </summary>
-            <param name="adInformation">The ad information to populate.</param>
-            <returns></returns>
-        </member>
-        <member name="M:GoogleAds.Core.Loaders.AdLoader`1.RequestAd(`0)">
-            <summary>
-            Fetches the content of the ad.
             </summary>
             <param name="adInformation">The ad information to populate.</param>
             <returns></returns>
@@ -1716,11 +1672,6 @@
         <member name="M:GoogleAds.InterstitialAd.ShowAd">
             <summary>Once an ad is loaded, this will open the ad in an overlay.</summary>
         </member>
-        <member name="M:GoogleAds.InterstitialAd.ReturnFromOverlay">
-            <summary>
-            Called by the overlay when dismissed. Sends an event to the event handler.
-            </summary>
-        </member>
         <member name="M:GoogleAds.InterstitialAd.SendEvent(GoogleAds.AdEventType,GoogleAds.AdErrorCode)">
             <summary>
             Fires an event to the host app.
@@ -2082,28 +2033,28 @@
             InitializeComponent
             </summary>
         </member>
-        <member name="M:GoogleAds.OverlayViewModel.FireOnShow">
+        <member name="M:GoogleAds.OverlayViewModel.FireOnShow(System.Object,System.EventArgs)">
             <summary>
             The default action when the overlay is opened. Fires the onshow event if the bit is set.
             </summary>
         </member>
-        <member name="M:GoogleAds.OverlayViewModel.FireOnHide">
+        <member name="M:GoogleAds.OverlayViewModel.FireOnHide(System.Object,System.EventArgs)">
             <summary>
             The default action when the overlay is dismissed. Fires the onhide event if the bit is
             set.
             </summary>
         </member>
-        <member name="M:GoogleAds.OverlayViewModel.FireShowAndHide">
+        <member name="M:GoogleAds.OverlayViewModel.EnableFiringShowAndHide">
             <summary>
             When called, this will tell the overlay it should call onshow and onhide.
             </summary>
         </member>
-        <member name="P:GoogleAds.OverlayViewModel.OnShow">
+        <member name="E:GoogleAds.OverlayViewModel.Showing">
             <summary>
             Actions to occur when the overlay is shown.
             </summary>
         </member>
-        <member name="P:GoogleAds.OverlayViewModel.OnHide">
+        <member name="E:GoogleAds.OverlayViewModel.Hiding">
             <summary>
             Actions to occur when the overlay is dismissed.
             </summary>
@@ -2386,23 +2337,6 @@
             <param name="request">The request to collect data from.</param>
             <param name="output">The output dictionary.</param>
         </member>
-        <member name="T:GoogleAds.Services.RequestModifiers.AudioState">
-            <summary>
-            An enum representing the various states the phone's audio can be in.
-            </summary>
-        </member>
-        <member name="T:GoogleAds.Services.RequestModifiers.VolumeStatusModifier">
-            <summary>
-            Appends the device volume status to the output.
-            </summary>
-        </member>
-        <member name="M:GoogleAds.Services.RequestModifiers.VolumeStatusModifier.ModifyRequest(GoogleAds.AdRequest,System.Collections.Generic.IDictionary{System.String,System.Object})">
-            <summary>
-            Appends the device volume status to <paramref name="output"/>.
-            </summary>
-            <param name="request">The request to collect data from.</param>
-            <param name="output">The output dictionary.</param>
-        </member>
         <member name="T:GoogleAds.Services.RequestModifiers.ScreenInformationModifier">
             <summary>
             Appends the screen related information to the output.
@@ -2588,6 +2522,13 @@
             </summary>
             <param name="builder">The string builder to append to.</param>
             <param name="value">The int value.</param>
+        </member>
+        <member name="M:GoogleAds.Util.Json.JsonGenerator.ConstructBoolean(System.Text.StringBuilder,System.Boolean)">
+            <summary>
+            Appends the boolean <paramref name="value"/> to the JSON output.
+            </summary>
+            <param name="builder">The string builder to append to.</param>
+            <param name="value">The boolean value.</param>
         </member>
         <member name="M:GoogleAds.Util.Json.JsonGenerator.ConstructDouble(System.Text.StringBuilder,System.Double)">
             <summary>
