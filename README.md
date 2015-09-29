@@ -120,6 +120,7 @@ What's difference of the 3 plugin IDs, which one shall I use ?
 * com.google.cordova.admob
 * cordova-plugin-admobpro
 * cordova-plugin-admob
+
 Read: [Difference of Plugin ID](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Difference-of-Plugin-IDs)
 
 Notice:
