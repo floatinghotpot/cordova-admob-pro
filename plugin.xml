@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-admobpro"
-        version="2.9.6">
+        version="2.9.7">
       
     <name>AdMob Plugin Pro</name>
     <description>Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Show mobile Ad with single line of JavaScript. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, Ionic, Meteor, etc.</description>
@@ -45,9 +45,9 @@
         <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
 
         <!-- cordova CLI using gradle and it working well -->
+        <framework src="com.google.android.gms:play-services-ads:+" />
         <!-- but unfortunately, build.phonegap.com, Intel XDK, and some other tools still use ant -->
-        <!-- framework src="com.google.android.gms:play-services-ads:+" /-->
-        <dependency id="cordova-plugin-googleplayservices"/>
+        <!-- dependency id="cordova-plugin-googleplayservices"/ -->
      </platform>
      
     <!-- same as android, but use ant instead of gradle -->
