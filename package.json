@@ -22,6 +22,11 @@
   "keywords": [
     "cordova",
     "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-wp8",
+    "cordova-windows",
+    "cordova-amazon-fireos",
     "ad",
     "admob",
     "google",
