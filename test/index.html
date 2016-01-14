@@ -2,191 +2,239 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<meta name="format-detection" content="telephone=no" />
-<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"/>
 <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="msapplication-tap-highlight" content="no" />
+<meta name="format-detection" content="telephone=no" />
+
+<!-- to avoid the warning of content security policy -->
+<meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' 'unsafe-inline'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"/>
+
 <title>Hello World</title>
+<script>
+  // fix wp8 view port issue, see:
+  // https://github.com/floatinghotpot/cordova-admob-pro/issues/109
+  // https://coderwall.com/p/zk_2la/responsive-design-in-ie-10-on-windows-phone-8
+  // http://stackoverflow.com/questions/24007577/windows-phone-8-viewport-issue
+(function() {
+  if ("-ms-user-select" in document.documentElement.style && navigator.userAgent.match(/IEMobile\/10\.0/)) {
+    var msViewportStyle = document.createElement("style");
+    msViewportStyle.appendChild(
+      document.createTextNode("@-ms-viewport{width:auto!important}")
+    );
+    document.getElementsByTagName("head")[0].appendChild(msViewportStyle);
+  }
+})();
+</script>
+
+<!-- optional -->
+<script type="text/javascript" src="jquery-1.9.js"></script>
+
+<!-- must-have, which will be created by cordova prepare/build -->
 <script type="text/javascript" src="cordova.js"></script>
+
 <style type="text/css">
 body {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-	background-color: gray;
-	color: white;
+width: 100%;
+height: 100%;
+margin: 0;
+  padding: 0;
+  overflow: hidden;
+  background-color: gray;
+  color: white;
 }
 
 div#fullpage {
-	width: 100%;
-	height: 100%;
-	margin: 0;
-	padding: 0;
-	border: 0px solid red;
-	text-align: center;
-	vertical-align: middle;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0px solid red;
+  text-align: center;
+  vertical-align: middle;
+}
+
+select, textarea {
+  width: calc(100% - 20px);
+  padding: 0px;
+  margin: 5px;
 }
 
 button {
-	font-size: 18px;
+  width: calc(50% - 40px);
+  padding: 10px;
+  margin: 5px;
 }
+
 </style>
 </head>
-<body onload="onLoad()" onresize="onResize()">
+
+<body>
 <script>
-    function onLoad() {
-        if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
-            document.addEventListener('deviceready', initApp, false);
-        } else {
-            initApp();
-        }
+  // place our admob ad unit id here
+  var admobid = {};
+  if( /(android)/i.test(navigator.userAgent) ) {
+    admobid = { // for Android
+      banner: 'ca-app-pub-6869992474017983/9375997553',
+      interstitial: 'ca-app-pub-6869992474017983/1657046752'
+    };
+  } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
+    admobid = { // for iOS
+      banner: 'ca-app-pub-6869992474017983/4806197152',
+      interstitial: 'ca-app-pub-6869992474017983/7563979554'
+    };
+  } else {
+    admobid = { // for Windows Phone
+      banner: 'ca-app-pub-6869992474017983/8878394753',
+      interstitial: 'ca-app-pub-6869992474017983/1355127956'
+    };
+  }
+
+  function onDeviceReady() {
+    if (! AdMob) { alert( 'admob plugin not ready' ); return; }
+
+    initAd();
+
+    // display a banner at startup
+    createSelectedBanner();
+  }
+
+  function initAd(){
+    AdMob.setOptions({
+      // adSize: 'SMART_BANNER',
+      // width: integer, // valid when set adSize 'CUSTOM'
+      // height: integer, // valid when set adSize 'CUSTOM'
+      position: AdMob.AD_POSITION.BOTTOM_CENTER,
+      // offsetTopBar: false, // avoid overlapped by status bar, for iOS7+
+      bgColor: 'black', // color name, or '#RRGGBB'
+      // x: integer,    // valid when set position to 0 / POS_XY
+      // y: integer,    // valid when set position to 0 / POS_XY
+      isTesting: true, // set to true, to receiving test ad for testing purpose
+      // autoShow: true // auto show interstitial ad when loaded, set to false if prepare/show
+    });
+
+    // new events, with variable to differentiate: adNetwork, adType, adEvent
+    $(document).on('onAdFailLoad', function(data){ 
+      alert('error: ' + data.error +
+          ', reason: ' + data.reason +
+          ', adNetwork:' + data.adNetwork +
+          ', adType:' + data.adType +
+          ', adEvent:' + data.adEvent); // adType: 'banner', 'interstitial', etc.
+    });
+    $(document).on('onAdLoaded', function(data){});
+    $(document).on('onAdPresent', function(data){});
+    $(document).on('onAdLeaveApp', function(data){});
+    $(document).on('onAdDismiss', function(data){});
+
+    function createSelectedBanner(){
+      AdMob.createBanner({
+        adId: admobid.banner,
+        overlap: !!$('#overlap').attr('checked'),
+        offsetTopBar: !!$('#offsetTopBar').attr('checked'),
+        adSize: $('#adSize').val(),
+        position: $('#adPosition').val(),
+      });
     }
 
-	var admobid = {};
-	if( /(android)/i.test(navigator.userAgent) ) { 
-		admobid = { // for Android
-			banner: 'ca-app-pub-6869992474017983/9375997553',
-			interstitial: 'ca-app-pub-6869992474017983/1657046752'
-		};
-	} else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
-		admobid = { // for iOS
-			banner: 'ca-app-pub-6869992474017983/4806197152',
-			interstitial: 'ca-app-pub-6869992474017983/7563979554'
-		};
-	} else {
-		admobid = { // for Windows Phone
-			banner: 'ca-app-pub-6869992474017983/8878394753',
-			interstitial: 'ca-app-pub-6869992474017983/1355127956'
-		};
-	}
-        
-    function initApp() {
-		if (! AdMob ) { alert( 'admob plugin not ready' ); return; }
+    function showBannerAtPosition(){
+      AdMob.showBanner( $('#adPosition').val() );
+    }
 
-		initAd();
+    $('#btn_create').click(createSelectedBanner);
+    $('#btn_remove').click(function(){
+      AdMob.removeBanner();
+    });
 
-        // display the banner at startup
-        createSelectedBanner();
+    $('#btn_show').click(showBannerAtPosition);
+    $('#btn_hide').click(function(){
+      AdMob.hideBanner();
+    });
+
+    // create a banner on startup
+    createSelectedBanner();
+
+    // test interstitial ad
+    $('#btn_prepare').click(function(){
+      AdMob.prepareInterstitial({
+        adId:admobid.interstitial,
+        autoShow: !!$('#autoshow').attr('checked'),
+      });
+    });
+
+    $('#btn_showfull').click(function(){
+      AdMob.showInterstitial();
+    });
+
+    // test the back button works properly
+    $(document).on('backbutton', function(){
+      if(window.confirm('Are you sure to quit?')) navigator.app.exitApp();
+    });
+
+    // work around to avoid bottom banner issue
+    function delayUpdateBannerPosition(){
+      var pos = $('#adPosition').val();
+      if (pos >= AdMob.AD_POSITION.BOTTOM_LEFT) {
+        setTimeout(showBannerAtPosition, 250);
+      }
+    };
+    $("input").focus(delayUpdateBannerPosition).blur(delayUpdateBannerPosition);
+  }
+
+  // test the webview resized properly
+  $(window).resize(function(){
+    $('#textinfo').html('web view: ' + $(window).width() + " x " + $(window).height());
+  });
+
+  $(document).ready(function(){
+    // on mobile device, we must wait the 'deviceready' event fired by cordova
+    if(/(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent)) {
+      document.addEventListener('deviceready', onDeviceReady, false);
+    } else {
+      onDeviceReady();
     }
-    function initAd(){
-        var defaultOptions = {
-            // adSize: 'SMART_BANNER',
-            // width: integer, // valid when set adSize 'CUSTOM'
-            // height: integer, // valid when set adSize 'CUSTOM'
-            position: AdMob.AD_POSITION.BOTTOM_CENTER,
-            // offsetTopBar: false, // avoid overlapped by status bar, for iOS7+
-            bgColor: 'black', // color name, or '#RRGGBB'
-            // x: integer,		// valid when set position to 0 / POS_XY
-            // y: integer,		// valid when set position to 0 / POS_XY
-            isTesting: true, // set to true, to receiving test ad for testing purpose
-            // autoShow: true // auto show interstitial ad when loaded, set to false if prepare/show
-        };
-        AdMob.setOptions( defaultOptions );
-        registerAdEvents();
-    }
-    // optional, in case respond to events or handle error
-    function registerAdEvents() {
-        // new events, with variable to differentiate: adNetwork, adType, adEvent
-        document.addEventListener('onAdFailLoad', function(data){ 
-        	alert('error: ' + data.error + 
-        			', reason: ' + data.reason + 
-        			', adNetwork:' + data.adNetwork + 
-        			', adType:' + data.adType + 
-        			', adEvent:' + data.adEvent); // adType: 'banner', 'interstitial', etc.
-        });
-        document.addEventListener('onAdLoaded', function(data){});
-        document.addEventListener('onAdPresent', function(data){});
-        document.addEventListener('onAdLeaveApp', function(data){});
-        document.addEventListener('onAdDismiss', function(data){});
-    }
-    
-    // click button to call following functions
-    function getSelectedAdSize() {
-        var i = document.getElementById("adSize").selectedIndex;
-        var items = document.getElementById("adSize").options;
-        return items[i].value;
-    }
-    function getSelectedPosition() {
-        var i = document.getElementById("adPosition").selectedIndex;
-        var items = document.getElementById("adPosition").options;
-        return parseInt( items[i].value );
-    }
-    function createSelectedBanner() {
-    	var overlap = document.getElementById('overlap').checked;
-        var offsetTopBar = document.getElementById('offsetTopBar').checked;
-        AdMob.createBanner( {adId:admobid.banner, overlap:overlap, offsetTopBar:offsetTopBar, adSize: getSelectedAdSize(), position:getSelectedPosition()} );
-    }
-    function createBannerOfGivenSize() {
-        var w = document.getElementById('w').value;
-        var h = document.getElementById('h').value;
-        
-        AdMob.createBanner( {adId:admobid.banner,
-                           adSize:'CUSTOM', width:w, height:h,
-                           position:getSelectedPosition()} );
-    }
-    function showBannerAtSelectedPosition() {
-        AdMob.showBanner( getSelectedPosition() );
-    }
-    function showBannerAtGivenXY() {
-        var x = document.getElementById('x').value;
-        var y = document.getElementById('y').value;
-        AdMob.showBannerAtXY(x, y);
-    }
-    function prepareInterstitial() {
-        var autoshow = document.getElementById('autoshow').checked;
-        AdMob.prepareInterstitial({adId:admobid.interstitial, autoShow:autoshow});
-    }
-    function onResize(){
-        var s = document.getElementById('sizeinfo');
-        s.innerHTML = "web view: " + window.innerWidth + " x " + window.innerHeight;
-    }
+  });
+
 </script>
-	<div id="fullpage">
-		<p>Demo for AdMob Plugin</p>
-		Banner<br /> Standard: <select id="adSize">
-			<option value='SMART_BANNER'>SMART_BANNER</option>
-			<option value='BANNER'>BANNER</option>
-			<option value='MEDIUM_RECTANGLE'>MEDIUM_RECTANGLE</option>
-			<option value='FULL_BANNER'>FULL_BANNER</option>
-			<option value='LEADERBOARD'>LEADERBOARD</option>
-			<option value='SKYSCRAPER'>SKYSCRAPER</option>
-		</select><br /> <input type='checkbox' id='overlap' />overlap<br/>
-         <input type='checkbox' id='offsetTopBar' />offsetTopBar<br/>
-		<button onclick="createSelectedBanner();">create</button>
-		<br /> Custom Size: (<input id='w' type='text' size=3 /> x <input
-			id='h' type='text' size=3>)
-		<button onclick="createBannerOfGivenSize();">create</button>
-		<br />
+  <div id="fullpage">
+    <p>Demo for AdMob Plugin</p>
+    <h3>Banner</h3>
+    <input type='checkbox' id='overlap' />overlap
+    <input type='checkbox' id='offsetTopBar' />offsetTopBar
+    <br/>
+    <select id="adSize">
+      <option value='SMART_BANNER'>SMART_BANNER</option>
+      <option value='BANNER'>BANNER</option>
+      <option value='MEDIUM_RECTANGLE'>MEDIUM_RECTANGLE</option>
+      <option value='FULL_BANNER'>FULL_BANNER</option>
+      <option value='LEADERBOARD'>LEADERBOARD</option>
+      <option value='SKYSCRAPER'>SKYSCRAPER</option>
+    </select><br/>
+    <select id="adPosition">
+      <option value='1'>Top Left</option>
+      <option value='2'>Top Center</option>
+      <option value='3'>Top Right</option>
+      <option value='4'>Left</option>
+      <option value='5'>Center</option>
+      <option value='6'>Right</option>
+      <option value='7'>Bottom Left</option>
+      <option value='8' selected>Bottom Center</option>
+      <option value='9'>Bottom Right</option>
+    </select><br/>
+    <button id='btn_create'>createBanner</button>
+    <button id='btn_remove'>removeBanner</button>
+    <button id='btn_show'>showBanner</button>
+    <button id='btn_hide'>hideBanner</button>
+    <hr />
 
-		<button onclick="AdMob.removeBanner();">remove banner</button>
+    <h3>Interstitial</h3>
+    <input type='checkbox' id='autoshow' checked />auto show when ready<br />
+    <button id='btn_prepare'>prepareInterstitial</button>
+    <button id='btn_showfull'>showInterstitial</button>
 
-		<hr />
-		<select id="adPosition">
-			<option value='1'>Top Left</option>
-			<option value='2'>Top Center</option>
-			<option value='3'>Top Right</option>
-			<option value='4'>Left</option>
-			<option value='5'>Center</option>
-			<option value='6'>Right</option>
-			<option value='7'>Bottom Left</option>
-			<option value='8' selected>Bottom Center</option>
-			<option value='9'>Bottom Right</option>
-		</select>
-		<button onclick="showBannerAtSelectedPosition();">show</button>
-		<br /> (<input id='x' type='text' size=3 />,<input id='y'
-			type='text' size=3>)
-		<button onclick="showBannerAtGivenXY();">show At XY</button>
-		<br />
+    <p><textarea rows=4 cols=30 id='textinfo'></textarea></p>
 
-		<button onclick="AdMob.hideBanner();">hide banner</button>
-		<hr />
-
-		<p>Interstitial</p>
-		<input type='checkbox' id='autoshow' checked />auto show when ready<br />
-		<button onclick="prepareInterstitial();">Prepare</button>
-		<button onclick="AdMob.showInterstitial();">Show</button>
-		<div id='sizeinfo'></div>
-	</div>
+  </div>
 </body>
 </html>

@@ -236,6 +236,7 @@ API Reference:
 
 Other Documentations:
 * [ChangeLog](https://github.com/floatinghotpot/cordova-admob-pro/wiki/ChangeLog)
+* [Known issues & solutions/workarounds](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Known-Issues-&-Solution---Workaround)
 * [FAQ](https://github.com/floatinghotpot/cordova-admob-pro/wiki/FAQ)
 * [Notice for Android Proguard](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Notice-for-Android-Proguard)
 
