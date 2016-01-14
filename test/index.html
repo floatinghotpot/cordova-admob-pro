@@ -116,7 +116,7 @@ button {
     });
 
     // new events, with variable to differentiate: adNetwork, adType, adEvent
-    $(document).on('onAdFailLoad', function(data){ 
+    $(document).on('onAdFailLoad', function(data){
       alert('error: ' + data.error +
           ', reason: ' + data.reason +
           ', adNetwork:' + data.adNetwork +
@@ -131,8 +131,8 @@ button {
     function createSelectedBanner(){
       AdMob.createBanner({
         adId: admobid.banner,
-        overlap: !!$('#overlap').attr('checked'),
-        offsetTopBar: !!$('#offsetTopBar').attr('checked'),
+        overlap: $('#overlap').is(':checked'),
+        offsetTopBar: $('#offsetTopBar').is(':checked'),
         adSize: $('#adSize').val(),
         position: $('#adPosition').val(),
       });
@@ -159,7 +159,7 @@ button {
     $('#btn_prepare').click(function(){
       AdMob.prepareInterstitial({
         adId:admobid.interstitial,
-        autoShow: !!$('#autoshow').attr('checked'),
+        autoShow: $('#autoshow').is(':checked'),
       });
     });
 
@@ -167,19 +167,15 @@ button {
       AdMob.showInterstitial();
     });
 
-    // test the back button works properly
+    // test case for #256, https://github.com/floatinghotpot/cordova-admob-pro/issues/256
     $(document).on('backbutton', function(){
       if(window.confirm('Are you sure to quit?')) navigator.app.exitApp();
     });
 
-    // work around to avoid bottom banner issue
-    function delayUpdateBannerPosition(){
-      var pos = $('#adPosition').val();
-      if (pos >= AdMob.AD_POSITION.BOTTOM_LEFT) {
-        setTimeout(showBannerAtPosition, 250);
-      }
-    };
-    $("input").focus(delayUpdateBannerPosition).blur(delayUpdateBannerPosition);
+    // test case #283, https://github.com/floatinghotpot/cordova-admob-pro/issues/283
+    $(document).on('resume', function(){
+      AdMob.showInterstitial();
+    });
   }
 
   // test the webview resized properly
