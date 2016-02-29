@@ -35,10 +35,10 @@ From May 2015, Cordova team announced the deprecation of Cordova registry, and s
 ## Features
 
 Platforms supported:
-- [x] Android, via SDK v7.8 (part of Google Play service platform)
-- [x] iOS, via SDK v7.6.0
-- [x] Windows Phone, via SDK v6.5.13
-- [x] Amazon-FireOS, via Android SDK (part of Google Play service platform)
+- [x] Android, via SDK v8.4 (part of Google Play service, see [Release Notes](https://developers.google.com/admob/android/rel-notes))
+- [x] iOS, via SDK v7.7.0 (with bitcode support, see [Release Notes](https://developers.google.com/admob/ios/rel-notes))
+- [x] Windows Phone, via SDK v6.5.13 (see [Release Notes](https://developers.google.com/admob/wp/rel-notes))
+- [x] Amazon-FireOS, via Android SDK (part of Google Play service)
 
 Ad Types:
 - [x] Banner
