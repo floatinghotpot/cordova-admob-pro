@@ -13,7 +13,7 @@ Cordova / PhoneGap Plugin for Google Ads, including AdMob / DFP (doubleclick for
 7. [Usage](#usage)
 8. [API](#api)
 9. [Wiki and Docs](#wiki-and-docs)
-10. [Important Tips](#tips)
+10. [Important Tips & Warning](#tips)
 11. [Video Tutorial](#video-tutorial)
 12. [Screenshots](#screenshots)
 13. [Credits](#credits)
@@ -249,22 +249,38 @@ Demo projects:
 
 Some important tips, FYI.
 
+![Recomended](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/good.png)
+
+- [x] Why Google AdMob is recommended ?
+
+Advertisement is main business and income source of Google, so clients are all around the world. Google is one of the most rialable partners for its high standard service.
+
+* High fill rate, nearly 100% all around world.
+* High quality Ad, bring high RPM.
+* Stable price, auto pay on time. Pay on every 20th next month.
+
 - [x] Strongly recommend Interstitial, more than 10 times profit than banner Ad. 
 
 Ad Format | Banner | Interstitial
 ---|-------|--------------
 Click Rate | < 1% | 3-15%
-RPM (revenue per 1000 impression) |  US$ 0.5~4 | US$ 10~100
+RPM (revenue per 1000 impression) |  US$ 0.5~4 | US$ 10~50
 
 - [x] Using SMART_BANNER to auto-fit the screen width, avoid using BANNER or FULL_BANNER (unless you are using DFP)
 
-- [x] Why Chooese Google AdMob ?
+![Warning](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/warning.png)
 
-Advertisement is main business and income source of Google, so the clients are all around the world. Google is one of the most realable partners for its high quality service.
+⚠：Remember Google's slogan: "Don't be evil". Invalid usage violating Google rules, may cause your AdMob account suspended ! 
 
-* High fill rate, nearly 100% all around world.
-* High quality Ad, bring high RPM.
-* Stable price, auto pay on time. Pay on every 20th next month.
+* AdMob publisher may NOT abuse or encourage abuse any Google products, including Google Play, YouTube or Bolgger, incuding allow user downloading YouTube video, or embed YouTube video in your own apps.
+
+* Publishers may NOT click their own ads or use any means to inflate impressions and/or clicks artificially, including manual methods. Testing your own ads by clicking on them is not allowed.
+
+⚠：请记住谷歌的口号：“不作恶”。任何违反合作规范、损害广告商和用户利益的行为，会导致你的 APP 被下架，甚至你的 AdMob 帐号被禁用！
+
+* AdMob发布商不得滥用或鼓励滥用任何Google产品，如Google Play、YouTube或Blogger。这包括规避任何Google产品的政策或条款或提供规避途径，例如允许用户下载YouTube视频等。不得刻意引诱用户点击广告，也不可以在自己的APP中点击广告（测试只能使用非正式的测试广告）。
+
+More details, please read [AdMob & AdSense policies](https://support.google.com/admob/answer/6128543?hl=en&ref_topic=2745287)
 
 ## Video Tutorial
 
