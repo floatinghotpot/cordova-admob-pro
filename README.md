@@ -249,7 +249,7 @@ Demo projects:
 
 Some important tips, FYI.
 
-![Recomended](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/recomended.jpg)
+![Recomended](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/good.png)
 
 - [x] Why Google AdMob is recommended ?
 
@@ -268,7 +268,7 @@ RPM (revenue per 1000 impression) |  US$ 0.5~4 | US$ 10~50
 
 - [x] Using SMART_BANNER to auto-fit the screen width, avoid using BANNER or FULL_BANNER (unless you are using DFP)
 
-![Warning](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/warning.jpg)
+![Warning](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/warning.png)
 
 ⚠：Remember Google's slogan: "Don't be evil". Invalid usage violating Google rules, may cause your AdMob account suspended ! 
 
