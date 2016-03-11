@@ -92,6 +92,20 @@ button {
     };
   }
 
+  function createSelectedBanner(){
+    if(AdMob) AdMob.createBanner({
+      adId: admobid.banner,
+      overlap: $('#overlap').is(':checked'),
+      offsetTopBar: $('#offsetTopBar').is(':checked'),
+      adSize: $('#adSize').val(),
+      position: $('#adPosition').val(),
+    });
+  }
+
+  function showBannerAtPosition(){
+    if(AdMob) AdMob.showBanner( $('#adPosition').val() );
+  }
+
   function onDeviceReady() {
     if (! AdMob) { alert( 'admob plugin not ready' ); return; }
 
@@ -127,20 +141,6 @@ button {
     $(document).on('onAdPresent', function(data){});
     $(document).on('onAdLeaveApp', function(data){});
     $(document).on('onAdDismiss', function(data){});
-
-    function createSelectedBanner(){
-      AdMob.createBanner({
-        adId: admobid.banner,
-        overlap: $('#overlap').is(':checked'),
-        offsetTopBar: $('#offsetTopBar').is(':checked'),
-        adSize: $('#adSize').val(),
-        position: $('#adPosition').val(),
-      });
-    }
-
-    function showBannerAtPosition(){
-      AdMob.showBanner( $('#adPosition').val() );
-    }
 
     $('#btn_create').click(createSelectedBanner);
     $('#btn_remove').click(function(){
