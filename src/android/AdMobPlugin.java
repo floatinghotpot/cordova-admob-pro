@@ -23,7 +23,12 @@ import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
+import com.google.android.gms.ads.doubleclick.PublisherInterstitialAd;
 import com.google.android.gms.ads.mediation.admob.AdMobExtras;
+import com.google.ads.mediation.admob.AdMobAdapter;
+import java.lang.reflect.Method;
+import java.lang.NoSuchMethodException;
+
 import com.rjfun.cordova.ad.GenericAdPlugin;
 
 public class AdMobPlugin extends GenericAdPlugin {
@@ -47,6 +52,18 @@ public class AdMobPlugin extends GenericAdPlugin {
 
   public static final String OPT_LOCATION = "location";
   private Location mLocation = null;
+
+  public static final String OPT_GENDER = "gender";
+  public static final String OPT_FORCHILD = "forChild";
+  public static final String OPT_FORFAMILY = "forFamily";
+  public static final String OPT_CONTENTURL = "contentUrl";
+  public static final String OPT_EXCLUDE = "exclude";
+
+  protected String mGender = null;
+  protected String mForChild = null;
+  protected String mForFamily = null;
+  protected String mContentURL = null;
+  protected JSONArray mExclude = null;
 
   private HashMap<String, AdMobMediation> mediations = new HashMap<String, AdMobMediation>();
 
@@ -91,6 +108,22 @@ public class AdMobPlugin extends GenericAdPlugin {
         mLocation.setLongitude( location.optDouble(1, 0) );
       }
     }
+
+    if(options.has(OPT_GENDER)) {
+      mGender = options.optString(OPT_GENDER);
+    }
+    if(options.has(OPT_FORCHILD)) {
+      mForChild = options.optString(OPT_FORCHILD);
+    }
+    if(options.has(OPT_FORFAMILY)) {
+      mForFamily = options.optString(OPT_FORFAMILY);
+    }
+    if(options.has(OPT_CONTENTURL)) {
+      mContentURL = options.optString(OPT_CONTENTURL);
+    }
+    if(options.has(OPT_EXCLUDE)) {
+      mExclude = options.optJSONArray(OPT_EXCLUDE);
+    }
   }
 
   @Override
@@ -116,10 +149,10 @@ public class AdMobPlugin extends GenericAdPlugin {
   protected void __loadAdView(View view) {
     if(view instanceof PublisherAdView) {
       PublisherAdView ad = (PublisherAdView) view;
-      ad.loadAd(new PublisherAdRequest.Builder().build());
+      ad.loadAd(buildPublisherAdRequest());
     } else {
       AdView ad = (AdView) view;
-      ad.loadAd( buildAdRequest() );
+      ad.loadAd(buildAdRequest());
     }
   }
 
@@ -188,17 +221,27 @@ public class AdMobPlugin extends GenericAdPlugin {
 
   @Override
   protected Object __createInterstitial(String adId) {
-    InterstitialAd ad = new InterstitialAd(getActivity());
-    ad.setAdUnitId(adId);
-    ad.setAdListener(new InterstitialListener());
-    return ad;
+    if(adId.charAt(0) == '/') {
+      PublisherInterstitialAd ad = new PublisherInterstitialAd(getActivity());
+      ad.setAdUnitId(adId);
+      ad.setAdListener(new InterstitialListener());
+      return ad;
+    } else {
+      InterstitialAd ad = new InterstitialAd(getActivity());
+      ad.setAdUnitId(adId);
+      ad.setAdListener(new InterstitialListener());
+      return ad;
+    }
   }
 
   @Override
   protected void __loadInterstitial(Object interstitial) {
     if(interstitial == null) return;
 
-    if(interstitial instanceof InterstitialAd) {
+    if(interstitial instanceof PublisherInterstitialAd) {
+     PublisherInterstitialAd ad = (PublisherInterstitialAd) interstitial;
+      ad.loadAd(buildPublisherAdRequest());
+    } else if(interstitial instanceof InterstitialAd) {
       InterstitialAd ad = (InterstitialAd) interstitial;
       ad.loadAd( buildAdRequest() );
     }
@@ -262,7 +305,93 @@ public class AdMobPlugin extends GenericAdPlugin {
       }
     }
 
+    if(mGender != null) {
+      if("male".compareToIgnoreCase(mGender) != 0) builder.setGender(AdRequest.GENDER_MALE);
+      else if("female".compareToIgnoreCase(mGender) != 0) builder.setGender(AdRequest.GENDER_FEMALE);
+      else builder.setGender(AdRequest.GENDER_UNKNOWN);
+    }
     if(mLocation != null) builder.setLocation(mLocation);
+    if(mForFamily != null) {
+      Bundle extras = new Bundle();
+      extras.putBoolean("is_designed_for_families", true);
+      builder.addNetworkExtrasBundle(AdMobAdapter.class, extras);
+    }
+    if(mForChild != null) {
+      builder.tagForChildDirectedTreatment(true);
+    }
+    if(mContentURL != null) {
+      builder.setContentUrl(mContentURL);
+    }
+
+    return builder.build();
+  }
+
+  @SuppressLint("DefaultLocale")
+  private PublisherAdRequest buildPublisherAdRequest() {
+    final Activity activity = getActivity();
+    PublisherAdRequest.Builder builder = new PublisherAdRequest.Builder();
+
+    if (isTesting) {
+      // This will request test ads on the emulator and deviceby passing this hashed device ID.
+      String ANDROID_ID = Settings.Secure.getString(activity.getContentResolver(), android.provider.Settings.Secure.ANDROID_ID);
+      String deviceId = md5(ANDROID_ID).toUpperCase();
+      builder = builder.addTestDevice(deviceId).addTestDevice(AdRequest.DEVICE_ID_EMULATOR);
+    }
+
+    if(adExtras != null) {
+      Bundle bundle = new Bundle();
+      bundle.putInt("cordova", 1);
+      Iterator<String> it = adExtras.keys();
+      while (it.hasNext()) {
+        String key = it.next();
+        try {
+          bundle.putString(key, adExtras.get(key).toString());
+        } catch (JSONException exception) {
+          Log.w(LOGTAG, String.format("Caught JSON Exception: %s", exception.getMessage()));
+        }
+      }
+      builder = builder.addNetworkExtras( new AdMobExtras(bundle) );
+    }
+
+    if(mLocation != null) builder.setLocation(mLocation);
+    if(mForFamily != null) {
+      Bundle extras = new Bundle();
+      extras.putBoolean("is_designed_for_families", true);
+      builder.addNetworkExtrasBundle(AdMobAdapter.class, extras);
+    }
+    if(mForChild != null) {
+      builder.tagForChildDirectedTreatment(true);
+    }
+    if(mContentURL != null) {
+      builder.setContentUrl(mContentURL);
+    }
+    if(mExclude != null) {
+      int n = mExclude.length();
+      if(n > 0) {
+        try { // new method after SDK v7.0
+          Method method = null;
+          method = builder.getClass().getMethod("addCategoryExclusion", String.class);
+          if (method != null) {
+            try {
+              for (int i = 0; i < n; i++) {
+                method.invoke(builder, mExclude.optString(i, ""));
+              }
+            } catch (Exception e) {
+            }
+          }
+        } catch (NoSuchMethodException e) {
+          // old method before SDK v7.0
+          Bundle bundle = new Bundle();
+          String str = "";
+          for(int i=0; i<n; i++) {
+            if(i > 0) str += ",";
+            str += mExclude.optString(i, "");
+          }
+          bundle.putString("excl_cat", str);
+          builder.addNetworkExtras(new AdMobExtras(bundle));
+        }
+      }
+    }
 
     return builder.build();
   }
