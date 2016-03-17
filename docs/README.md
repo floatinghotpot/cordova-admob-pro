@@ -204,17 +204,9 @@ AdMob.AD_POSITION.POS_XY 		= 10, // use the given X and Y, see params 'x' and 'y
 - **autoShow**, *boolean*, auto show interstitial ad when loaded, set to false if hope to control the show timing with prepareInterstitial/showInterstitial
 - **orientationRenew**, *boolean*, re-create the banner on web view orientation change (not screen orientation), or else just move the banner. Default:true.
 - **offsetTopBar**, *boolean*, offset position of banner and webview to avoid overlap by status bar (iOS7+)
-- **bgColor**, *string*, background color of parent view, value may be color name like 'black', 'white', etc, or '#RRGGBB'
-- **adExtras**, *json object*, set extra color style for Ad.
-```javascript
-{
-	color_bg: 'AAAAFF',
-	color_bg_top: 'FFFFFF',
-	color_border: 'FFFFFF',
-	color_link: '000080',
-	color_text: '808080',
-	color_url: '008000'
-}
+
+- Notice: the bgcolor and other styles can be customized in your admob portal. See: [issue #322](https://github.com/floatinghotpot/cordova-admob-pro/issues/322)
+
 
 ### Targetting Options
 
