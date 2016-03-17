@@ -200,7 +200,7 @@ AdMob.AD_POSITION.POS_XY 		= 10, // use the given X and Y, see params 'x' and 'y
 ```
 - **x**, *integer*, x in pixels. Valid when *overlap*:true and *position*:AdMob.AD_POSITION.POS_XY. Default: 0
 - **y**, *integer*, y in pixels. Valid when *overlap*:true and *position*:AdMob.AD_POSITION.POS_XY. Default: 0
-- **isTesting**, *boolean*, set to true, to receiving test ad for testing purpose
+- **isTesting**, *boolean*, set to true, to receiving test ad for testing purpose, see [Google docs](https://developers.google.com/admob/ios/targeting#test_ads), No need to handle it in your javascript code, as the plugin has handled it for you.
 - **autoShow**, *boolean*, auto show interstitial ad when loaded, set to false if hope to control the show timing with prepareInterstitial/showInterstitial
 - **orientationRenew**, *boolean*, re-create the banner on web view orientation change (not screen orientation), or else just move the banner. Default:true.
 - **offsetTopBar**, *boolean*, offset position of banner and webview to avoid overlap by status bar (iOS7+)
@@ -215,9 +215,28 @@ AdMob.AD_POSITION.POS_XY 		= 10, // use the given X and Y, see params 'x' and 'y
 	color_text: '808080',
 	color_url: '008000'
 }
-- **location**, *array*, set location for Ad, [latitude, longitude].
 
+### Targetting Options
+
+The following options can be used to show Ad to target end-user more accurately.
+
+- **location**, *array*, set location for Ad, [latitude, longitude], see [Google docs](https://developers.google.com/admob/ios/targeting#location), you can get the location with navigator API, then pass to ad plugin.
+- **gender**, *string*, valid options: "male", "female", "unknown", see [Google docs](https://developers.google.com/admob/ios/targeting#gender)
+- **forChild**, *string*, Child-directed setting, value options: "yes", "no", see [Google docs](https://developers.google.com/admob/ios/targeting#child-directed_setting)
+- **forFamily**, *string*, Designed for Families setting, valid options: "yes", "no", see [Google docs](https://developers.google.com/mobile-ads-sdk/docs/dfp/android/targeting#designed_for_families_setting)
+- **contentUrl**, *string*, set content url, see [Google docs](https://developers.google.com/admob/ios/targeting#content_url)
+
+- **customTargeting**, *json*, DFP only, set custom targeting, see [Google docs](https://developers.google.com/mobile-ads-sdk/docs/dfp/ios/targeting#custom_targeting), example:
+```javascript
+AdMob.setOptions({
+  customTargeting: {
+    job: "sailor",
+    age: "23",
+    interest: ["boats","ports"],
+  },
+});
 ```
+- **exclude**, *array*, DFP only, set exclude category, example: ["cars", "pets"]
 
 Example Code:
 ```javascript
@@ -232,7 +251,8 @@ var defaultOptions = {
 	x: 0,		// valid when set position to POS_XY
 	y: 0,		// valid when set position to POS_XY
 	isTesting: true,
-	autoShow: true
+	autoShow: true,
+    forChild: "yes"
 };
 AdMob.setOptions( defaultOptions );
 ```

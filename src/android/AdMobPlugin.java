@@ -2,7 +2,6 @@ package com.rjfun.cordova.admob;
 
 import java.util.HashMap;
 import java.util.Iterator;
-import java.util.Random;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,8 +25,10 @@ import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.android.gms.ads.doubleclick.PublisherInterstitialAd;
 import com.google.android.gms.ads.mediation.admob.AdMobExtras;
 import com.google.ads.mediation.admob.AdMobAdapter;
+
 import java.lang.reflect.Method;
 import java.lang.NoSuchMethodException;
+import java.util.ArrayList;
 
 import com.rjfun.cordova.ad.GenericAdPlugin;
 
@@ -57,12 +58,14 @@ public class AdMobPlugin extends GenericAdPlugin {
   public static final String OPT_FORCHILD = "forChild";
   public static final String OPT_FORFAMILY = "forFamily";
   public static final String OPT_CONTENTURL = "contentUrl";
+  public static final String OPT_CUSTOMTARGETING = "customTargeting";
   public static final String OPT_EXCLUDE = "exclude";
 
   protected String mGender = null;
   protected String mForChild = null;
   protected String mForFamily = null;
   protected String mContentURL = null;
+  protected JSONObject mCustomTargeting = null;
   protected JSONArray mExclude = null;
 
   private HashMap<String, AdMobMediation> mediations = new HashMap<String, AdMobMediation>();
@@ -120,6 +123,9 @@ public class AdMobPlugin extends GenericAdPlugin {
     }
     if(options.has(OPT_CONTENTURL)) {
       mContentURL = options.optString(OPT_CONTENTURL);
+    }
+    if(options.has(OPT_CUSTOMTARGETING)) {
+      mCustomTargeting = options.optJSONObject(OPT_CUSTOMTARGETING);
     }
     if(options.has(OPT_EXCLUDE)) {
       mExclude = options.optJSONArray(OPT_EXCLUDE);
@@ -350,20 +356,45 @@ public class AdMobPlugin extends GenericAdPlugin {
           Log.w(LOGTAG, String.format("Caught JSON Exception: %s", exception.getMessage()));
         }
       }
-      builder = builder.addNetworkExtras( new AdMobExtras(bundle) );
+      builder = builder.addNetworkExtras(new AdMobExtras(bundle));
     }
 
+    if(mGender != null) {
+      if("male".compareToIgnoreCase(mGender) != 0) builder.setGender(AdRequest.GENDER_MALE);
+      else if("female".compareToIgnoreCase(mGender) != 0) builder.setGender(AdRequest.GENDER_FEMALE);
+      else builder.setGender(AdRequest.GENDER_UNKNOWN);
+    }
     if(mLocation != null) builder.setLocation(mLocation);
     if(mForFamily != null) {
       Bundle extras = new Bundle();
-      extras.putBoolean("is_designed_for_families", true);
+      extras.putBoolean("is_designed_for_families", ("yes".compareToIgnoreCase(mForChild) == 0));
       builder.addNetworkExtrasBundle(AdMobAdapter.class, extras);
     }
     if(mForChild != null) {
-      builder.tagForChildDirectedTreatment(true);
+      builder.tagForChildDirectedTreatment("yes".compareToIgnoreCase(mForChild) == 0);
     }
     if(mContentURL != null) {
       builder.setContentUrl(mContentURL);
+    }
+
+    // DFP extra targeting options
+    if(mCustomTargeting != null) {
+      Iterator<String> iter = mCustomTargeting.keys();
+      while(iter.hasNext()){
+        String key = iter.next();
+        String str = mCustomTargeting.optString(key);
+        if(str!=null && str.length()>0) {
+          builder.addCustomTargeting(key, str);
+        } else {
+          JSONArray strs = mCustomTargeting.optJSONArray(key);
+          if(strs!=null && strs.length()>0) {
+            ArrayList<String> strlist = new ArrayList<String>();
+            for(int i=0; i<strs.length(); i++)
+              strlist.add(strs.optString(i));
+            builder.addCustomTargeting(key, strlist);
+          }
+        }
+      }
     }
     if(mExclude != null) {
       int n = mExclude.length();

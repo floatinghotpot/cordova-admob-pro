@@ -30,8 +30,9 @@
 #define OPT_GENDER          @"gender"
 #define OPT_LOCATION        @"location"
 #define OPT_FORCHILD        @"forChild"
-#define OPT_CUSTOMTARGETING @"customTargeting"
 #define OPT_CONTENTURL      @"contentURL"
+#define OPT_CUSTOMTARGETING @"customTargeting"
+#define OPT_EXCLUDE         @"exclude"
 
 @interface CDVAdMobPlugin()<GADBannerViewDelegate, GADInterstitialDelegate>
 
@@ -42,8 +43,10 @@
 @property (nonatomic, retain) NSString* mGender;
 @property (nonatomic, retain) NSArray* mLocation;
 @property (nonatomic, retain) NSString* mForChild;
-@property (nonatomic, retain) NSDictionary* mCustomTargeting;
 @property (nonatomic, retain) NSString* mContentURL;
+
+@property (nonatomic, retain) NSDictionary* mCustomTargeting;
+@property (nonatomic, retain) NSArray* mExclude;
 
 - (GADAdSize)__AdSizeFromString:(NSString *)str;
 - (GADRequest*) __buildAdRequest:(BOOL)forBanner forDFP:(BOOL)fordfp;
@@ -63,8 +66,10 @@
     self.mGender = nil;
     self.mLocation = nil;
     self.mForChild = nil;
-    self.mCustomTargeting = nil;
     self.mContentURL = nil;
+
+    self.mCustomTargeting = nil;
+    self.mExclude = nil;
 }
 
 - (NSString*) __getProductShortName { return @"AdMob"; }
@@ -82,9 +87,7 @@
     
     NSString* str = [options objectForKey:OPT_AD_SIZE];
     if(str) self.adSize = [self __AdSizeFromString:str];
-    
     self.adExtras = [options objectForKey:OPT_AD_EXTRAS];
-    
     if(self.mediations) {
         // TODO: if mediation need code in, add here
     }
@@ -96,10 +99,6 @@
     if(n != nil) {
         self.mForChild = n;
     }
-    NSDictionary* dict = [options objectForKey:OPT_CUSTOMTARGETING];
-    if(dict != nil) {
-        self.mCustomTargeting = dict;
-    }
     str = [options objectForKey:OPT_CONTENTURL];
     if(str != nil){
         self.mContentURL = str;
@@ -107,6 +106,14 @@
     str = [options objectForKey:OPT_GENDER];
     if(str != nil){
         self.mGender = str;
+    }
+    NSDictionary* dict = [options objectForKey:OPT_CUSTOMTARGETING];
+    if(dict != nil) {
+        self.mCustomTargeting = dict;
+    }
+    arr = [options objectForKey:OPT_EXCLUDE];
+    if(arr != nil) {
+        self.mExclude = arr;
     }
 }
 
@@ -143,7 +150,11 @@
         if(self.mCustomTargeting) {
             req.customTargeting = self.mCustomTargeting;
         }
+        if(self.mExclude) {
+            req.categoryExclusions = self.mExclude;
+        }
         request = req;
+
     } else {
         request = [GADRequest request];
     }
@@ -151,6 +162,25 @@
         NSString* deviceId = [self __getAdMobDeviceId];
         request.testDevices = [NSArray arrayWithObjects:deviceId, kGADSimulatorID, nil];
         NSLog(@"request.testDevices: %@, <Google> tips handled", deviceId);
+    }
+    if(self.mGender) {
+        if( [self.mForChild caseInsensitiveCompare:@"male"] == NSOrderedSame ) request.gender = kGADGenderMale;
+        else if( [self.mForChild caseInsensitiveCompare:@"female"] == NSOrderedSame ) request.gender = kGADGenderFemale;
+        else  request.gender = kGADGenderMale;
+    }
+    if(self.mLocation) {
+        double lat = [[self.mLocation objectAtIndex:0] doubleValue];
+        double lng = [[self.mLocation objectAtIndex:1] doubleValue];
+        [request setLocationWithLatitude:lat longitude:lng accuracy:kCLLocationAccuracyBest];
+    }
+    if(self.mForChild) {
+        BOOL forChild = NO;
+        if( [self.mForChild caseInsensitiveCompare:@"yes"] == NSOrderedSame ) forChild = YES;
+        else if( [self.mForChild intValue] != 0 ) forChild = YES;
+        [request tagForChildDirectedTreatment:forChild];
+    }
+    if(self.mContentURL) {
+        request.contentURL = self.mContentURL;
     }
     if (self.adExtras) {
         GADExtras *extras = [[GADExtras alloc] init];
@@ -166,27 +196,6 @@
             [adMed joinAdRequest:request];
         }
     }];
-    if(self.mLocation) {
-        double lat = [[self.mLocation objectAtIndex:0] doubleValue];
-        double lng = [[self.mLocation objectAtIndex:1] doubleValue];
-        [request setLocationWithLatitude:lat longitude:lng accuracy:kCLLocationAccuracyBest];
-    }
-    if(self.mForChild) {
-        BOOL forChild = NO;
-        if( [self.mForChild caseInsensitiveCompare:@"true"] == NSOrderedSame ) forChild = YES;
-        else if( [self.mForChild caseInsensitiveCompare:@"yes"] == NSOrderedSame ) forChild = YES;
-        else if( [self.mForChild intValue] != 0 ) forChild = YES;
-        [request tagForChildDirectedTreatment:forChild];
-    }
-    if(self.mContentURL) {
-        request.contentURL = self.mContentURL;
-    }
-    if(self.mGender) {
-        if( [self.mForChild caseInsensitiveCompare:@"male"] == NSOrderedSame ) request.gender = kGADGenderMale;
-        else if( [self.mForChild caseInsensitiveCompare:@"female"] == NSOrderedSame ) request.gender = kGADGenderFemale;
-        else  request.gender = kGADGenderMale;
-    }
-    
     return request;
 }
 
