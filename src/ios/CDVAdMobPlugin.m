@@ -125,9 +125,11 @@
     if(GADAdSizeEqualToSize(self.adSize, kGADAdSizeInvalid)) {
         self.adSize = [self __isLandscape] ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait;
     }
-    
-    GADBannerView* ad;
-    
+
+    // safety check to avoid crash if adId is empty
+    if(adId==nil || [adId length]==0) adId = TEST_BANNER_ID;
+
+    GADBannerView* ad = nil;
     if(* [adId UTF8String] == '/') {
         ad = [[DFPBannerView alloc] initWithAdSize:self.adSize];
     } else {
@@ -289,6 +291,9 @@
 }
 
 - (NSObject*) __createInterstitial:(NSString*)adId {
+    // safety check to avoid crash if adId is empty
+    if(adId==nil || [adId length]==0) adId = TEST_INTERSTITIALID;
+
     GADInterstitial* ad = nil;
     if(* [adId UTF8String] == '/') {
         ad = [[DFPInterstitial alloc] initWithAdUnitID:adId];
