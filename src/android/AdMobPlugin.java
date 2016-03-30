@@ -134,6 +134,9 @@ public class AdMobPlugin extends GenericAdPlugin {
 
   @Override
   protected View __createAdView(String adId) {
+    // safety check to avoid exception when adId is null or empty
+    if(adId==null || adId.length()==0) adId = TEST_BANNER_ID;
+
     // Tip: The format for the DFP ad unit ID is: /networkCode/adUnitName
     // example: "/6253334/dfp_example_ad"
     if(adId.charAt(0) == '/') {
@@ -227,6 +230,9 @@ public class AdMobPlugin extends GenericAdPlugin {
 
   @Override
   protected Object __createInterstitial(String adId) {
+    // safety check to avoid exceptoin in case adId is null or empty
+    if(adId==null || adId.length()==0) adId = TEST_INTERSTITIAL_ID;
+
     if(adId.charAt(0) == '/') {
       PublisherInterstitialAd ad = new PublisherInterstitialAd(getActivity());
       ad.setAdUnitId(adId);

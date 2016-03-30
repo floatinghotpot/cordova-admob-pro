@@ -130,17 +130,25 @@ button {
     });
 
     // new events, with variable to differentiate: adNetwork, adType, adEvent
-    $(document).on('onAdFailLoad', function(data){
+    $(document).on('onAdFailLoad', function(e){
+      // when jquery used, it will hijack the event, so we have to get data from original event
+      if(typeof e.originalEvent !== 'undefined') e = e.originalEvent;
+      var data = e.detail || e.data || e;
+
       alert('error: ' + data.error +
           ', reason: ' + data.reason +
           ', adNetwork:' + data.adNetwork +
           ', adType:' + data.adType +
           ', adEvent:' + data.adEvent); // adType: 'banner', 'interstitial', etc.
     });
-    $(document).on('onAdLoaded', function(data){});
-    $(document).on('onAdPresent', function(data){});
-    $(document).on('onAdLeaveApp', function(data){});
-    $(document).on('onAdDismiss', function(data){});
+    $(document).on('onAdLoaded', function(e){
+    });
+    $(document).on('onAdPresent', function(e){
+    });
+    $(document).on('onAdLeaveApp', function(e){
+    });
+    $(document).on('onAdDismiss', function(e){
+    });
 
     $('#btn_create').click(createSelectedBanner);
     $('#btn_remove').click(function(){
