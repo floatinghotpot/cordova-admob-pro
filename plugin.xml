@@ -47,7 +47,7 @@
         <!-- cordova CLI using gradle and it working well -->
         <!-- framework src="com.google.android.gms:play-services-ads:+" / -->
         <!-- but unfortunately, build.phonegap.com, Intel XDK, and some other tools still use ant -->
-        <dependency id="cordova-plugin-googleplayservices"/ >
+        <dependency id="cordova-plugin-googleplayservices"/>
      </platform>
      
     <!-- same as android, but use ant instead of gradle -->
