@@ -157,6 +157,7 @@ AdMob.showInterstitial();
 'onAdPresent'
 'onAdLeaveapp'
 'onAdDismiss'
+```
 
 ## Methods ##
 
