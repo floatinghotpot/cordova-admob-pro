@@ -204,9 +204,13 @@ hideBanner();
 // use interstitial
 prepareInterstitial(adId/options, success, fail);
 showInterstitial();
+isInterstitialReady(function(ready){ if(ready){ } });
 
 // set default value for other methods
 setOptions(options, success, fail);
+
+// get user ad settings
+getAdSettings(function(inf){ inf.adId; inf.adTrackingEnabled; }, fail);
 ```
 
 Events:

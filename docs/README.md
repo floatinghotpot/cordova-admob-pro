@@ -134,17 +134,24 @@ Check the [test/index.html] (https://github.com/floatinghotpot/cordova-admob-pro
 ## API Overview ##
 
 ### Methods ###
-```javascript```
-AdMob.setOptions(options);
+```javascript
+// use banner
+createBanner(adId/options, success, fail);
+removeBanner();
+showBanner(position);
+showBannerAtXY(x, y);
+hideBanner();
 
-AdMob.createBanner(adId/options, success, fail);
-AdMob.removeBanner();
-AdMob.showBanner(position);
-AdMob.showBannerAtXY(x, y);
-AdMob.hideBanner();
+// use interstitial
+prepareInterstitial(adId/options, success, fail);
+showInterstitial();
+isInterstitialReady(function(ready){ if(ready){ } });
 
-AdMob.prepareInterstitial(adId/options, success, fail);
-AdMob.showInterstitial();
+// set default value for other methods
+setOptions(options, success, fail);
+
+// get user ad settings
+getAdSettings(function(inf){ inf.adId; inf.adTrackingEnabled; }, fail);
 ```
 
 ### Events ###
@@ -157,6 +164,7 @@ AdMob.showInterstitial();
 'onAdPresent'
 'onAdLeaveapp'
 'onAdDismiss'
+```
 
 ## Methods ##
 
@@ -321,6 +329,8 @@ Extra key/value for param **options**
 
 > Note: it will take some time to get Ad resource before it can be showed. You may buffer the Ad by calling **requestInterstitial**, and show it later.
 
+## AdMob.isInterstitialReady() ##
+
 ## AdMob.showInterstitial() ##
 
 > **Purpose**: show interstitial Ad when it's ready.
@@ -338,9 +348,20 @@ AdMob.prepareInterstitial({
 	adId: admobid.interstitial,
 	autoShow: false
 });
+
 // check and show it at end of a game level
-if(isready) AdMob.showInterstitial();
+AdMob.isInterstitialReady(function(ready){
+  if(ready) AdMob.showInterstitial();
+});
 ```
+
+## AdMob.getAdSettings() ##
+
+Get advertising Id and isTrackingEnabled.
+
+See:
+[Google Docs](http://developer.android.com/google/play-services/id.html)
+[Apple Docs](https://developer.apple.com/library/ios/documentation/AdSupport/Reference/ASIdentifierManager_Ref/)
 
 ## Events ##
 

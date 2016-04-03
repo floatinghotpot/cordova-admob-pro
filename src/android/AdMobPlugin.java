@@ -230,6 +230,7 @@ public class AdMobPlugin extends GenericAdPlugin {
 
   @Override
   protected Object __createInterstitial(String adId) {
+    interstitialReady = false;
     // safety check to avoid exceptoin in case adId is null or empty
     if(adId==null || adId.length()==0) adId = TEST_INTERSTITIAL_ID;
 
@@ -551,6 +552,7 @@ public class AdMobPlugin extends GenericAdPlugin {
 
     @Override
     public void onAdLoaded() {
+      interstitialReady = true;
       if(autoShowInterstitial) {
         showInterstitial();
       }

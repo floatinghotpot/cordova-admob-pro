@@ -116,17 +116,19 @@ button {
   }
 
   function initAd(){
+    AdMob.getAdSettings(function(info){
+      console.log('adId: ' + info.adId + '\n' + 'adTrackingEnabled: ' + info.adTrackingEnabled);
+    }, function(){
+      console.log('failed to get user ad settings');
+    });
+
     AdMob.setOptions({
       // adSize: 'SMART_BANNER',
-      // width: integer, // valid when set adSize 'CUSTOM'
-      // height: integer, // valid when set adSize 'CUSTOM'
       position: AdMob.AD_POSITION.BOTTOM_CENTER,
-      // offsetTopBar: false, // avoid overlapped by status bar, for iOS7+
-      bgColor: 'black', // color name, or '#RRGGBB'
-      // x: integer,    // valid when set position to 0 / POS_XY
-      // y: integer,    // valid when set position to 0 / POS_XY
       isTesting: true, // set to true, to receiving test ad for testing purpose
+      bgColor: 'black', // color name, or '#RRGGBB'
       // autoShow: true // auto show interstitial ad when loaded, set to false if prepare/show
+      // offsetTopBar: false, // avoid overlapped by status bar, for iOS7+
     });
 
     // new events, with variable to differentiate: adNetwork, adType, adEvent
@@ -159,9 +161,6 @@ button {
     $('#btn_hide').click(function(){
       AdMob.hideBanner();
     });
-
-    // create a banner on startup
-    createSelectedBanner();
 
     // test interstitial ad
     $('#btn_prepare').click(function(){
