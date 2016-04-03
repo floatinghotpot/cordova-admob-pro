@@ -291,6 +291,7 @@
 }
 
 - (NSObject*) __createInterstitial:(NSString*)adId {
+    self.interstitialReady = false;
     // safety check to avoid crash if adId is empty
     if(adId==nil || [adId length]==0) adId = TEST_INTERSTITIALID;
 
@@ -377,6 +378,7 @@
 }
 
 - (void)interstitialDidReceiveAd:(GADInterstitial *)interstitial {
+    self.interstitialReady = true;
     if (self.interstitial && self.autoShowInterstitial) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self __showInterstitial:self.interstitial];
