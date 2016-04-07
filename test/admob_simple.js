@@ -36,6 +36,7 @@ function initApp() {
     
     AdMob.prepareInterstitial({
         adId: admobid.interstitial,
+        isTesting: true,
         autoShow: true
     });
 }

@@ -135,33 +135,33 @@ Step 1: Create Ad Unit Id for your banner and interstitial, in [AdMob portal](ht
 
 ```javascript
 // select the right Ad Id according to platform
-    var admobid = {};
-    if( /(android)/i.test(navigator.userAgent) ) { // for android & amazon-fireos
-		admobid = {
-			banner: 'ca-app-pub-xxx/xxx', // or DFP format "/6253334/dfp_example_ad"
-			interstitial: 'ca-app-pub-xxx/yyy'
-        };
-    } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
-		admobid = {
-			banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
-			interstitial: 'ca-app-pub-xxx/kkk'
-		};
-    } else { // for windows phone
-		admobid = {
-			banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
-			interstitial: 'ca-app-pub-xxx/kkk'
-		};
-    }
+  var admobid = {};
+  if( /(android)/i.test(navigator.userAgent) ) { // for android & amazon-fireos
+    admobid = {
+      banner: 'ca-app-pub-xxx/xxx', // or DFP format "/6253334/dfp_example_ad"
+      interstitial: 'ca-app-pub-xxx/yyy'
+    };
+  } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
+    admobid = {
+      banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
+      interstitial: 'ca-app-pub-xxx/kkk'
+    };
+  } else { // for windows phone
+    admobid = {
+      banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
+      interstitial: 'ca-app-pub-xxx/kkk'
+    };
+  }
 ```
 
 Step 2: Want cheap and basic banner? single line of javascript code.
 
 ```javascript
 // it will display smart banner at top center, using the default options
-if(AdMob) AdMob.createBanner( {
-	adId: admobid.banner, 
-	position: AdMob.AD_POSITION.TOP_CENTER, 
-	autoShow: true } );
+if(AdMob) AdMob.createBanner({
+  adId: admobid.banner,
+  position: AdMob.AD_POSITION.TOP_CENTER,
+  autoShow: true });
 ```
 
 Step 3: Want interstitial Ad to earn more money ? Easy, 2 lines of code. 
@@ -174,7 +174,12 @@ if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false}
 if(AdMob) AdMob.showInterstitial();
 ```
 
-Or, you can just copy this [admob_simple.js](https://github.com/floatinghotpot/cordova-admob-pro/blob/master/test/admob_simple.js) to your project, and ref in your index.html.
+Or, you can just copy this [admob_simple.js](https://github.com/floatinghotpot/cordova-admob-pro/blob/master/test/admob_simple.js) to your project, change the ad unit id to your own, and simply reference it in your index.html, like this:
+```html
+<script type="text/javascript" src="admob_simple.js"></script>
+```
+
+Remember to remove `isTesting:true` if release for production.
 
 ## AdMob Mediation Adapters ##
 
