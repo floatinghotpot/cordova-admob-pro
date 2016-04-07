@@ -20,10 +20,14 @@ import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
 import com.google.android.gms.ads.InterstitialAd;
+import com.google.android.gms.ads.MobileAds;
 import com.google.android.gms.ads.doubleclick.PublisherAdRequest;
 import com.google.android.gms.ads.doubleclick.PublisherAdView;
 import com.google.android.gms.ads.doubleclick.PublisherInterstitialAd;
 import com.google.android.gms.ads.mediation.admob.AdMobExtras;
+import com.google.android.gms.ads.reward.RewardedVideoAd;
+import com.google.android.gms.ads.reward.RewardedVideoAdListener;
+import com.google.android.gms.ads.reward.RewardItem;
 import com.google.ads.mediation.admob.AdMobAdapter;
 
 import java.lang.reflect.Method;
@@ -45,6 +49,7 @@ public class AdMobPlugin extends GenericAdPlugin {
 
   private static final String TEST_BANNER_ID = "ca-app-pub-8094096715994524/6097141095";
   private static final String TEST_INTERSTITIAL_ID = "ca-app-pub-8094096715994524/4760008695";
+  private static final String TEST_REWARDVIDEO_ID = "ca-app-pub-8094096715994524/1042454297";
 
   private AdSize adSize = AdSize.SMART_BANNER;
 
@@ -67,6 +72,9 @@ public class AdMobPlugin extends GenericAdPlugin {
   protected String mContentURL = null;
   protected JSONObject mCustomTargeting = null;
   protected JSONArray mExclude = null;
+
+  private boolean mIsRewardedVideoLoading = false;
+  private final Object mLock = new Object();
 
   private HashMap<String, AdMobMediation> mediations = new HashMap<String, AdMobMediation>();
 
@@ -91,6 +99,9 @@ public class AdMobPlugin extends GenericAdPlugin {
   protected String __getTestInterstitialId() {
     return TEST_INTERSTITIAL_ID;
   }
+
+  @Override
+  protected String __getTestRewardVideoId() { return TEST_REWARDVIDEO_ID; }
 
   @Override
   public void setOptions(JSONObject options) {
@@ -279,6 +290,41 @@ public class AdMobPlugin extends GenericAdPlugin {
     if(interstitial instanceof InterstitialAd) {
       InterstitialAd ad = (InterstitialAd) interstitial;
       ad.setAdListener(null);
+    }
+  }
+
+  @Override
+  protected Object __prepareRewardVideoAd(String adId) {
+    // safety check to avoid exceptoin in case adId is null or empty
+    if(adId==null || adId.length()==0) adId = TEST_REWARDVIDEO_ID;
+
+    RewardedVideoAd ad = MobileAds.getRewardedVideoAdInstance(getActivity());
+    ad.setRewardedVideoAdListener(new RewardVideoListener());
+
+    synchronized (mLock) {
+      if (!mIsRewardedVideoLoading) {
+        mIsRewardedVideoLoading = true;
+        Bundle extras = new Bundle();
+        extras.putBoolean("_noRefresh", true);
+        AdRequest adRequest = new AdRequest.Builder()
+                .addNetworkExtrasBundle(AdMobAdapter.class, extras)
+                .build();
+        ad.loadAd(adId, adRequest);
+      }
+    }
+
+    return ad;
+  }
+
+  @Override
+  protected void __showRewardVideoAd(Object rewardvideo) {
+    if(rewardvideo == null) return;
+
+    if(rewardvideo instanceof RewardedVideoAd) {
+      RewardedVideoAd ad = (RewardedVideoAd) rewardvideo;
+      if(ad.isLoaded()){
+        ad.show();
+      }
     }
   }
 
@@ -569,6 +615,65 @@ public class AdMobPlugin extends GenericAdPlugin {
     public void onAdClosed() {
       fireAdEvent(EVENT_AD_DISMISS, ADTYPE_INTERSTITIAL);
       removeInterstitial();
+    }
+  }
+
+  /**
+   * document.addEventListener('onAdLoaded', function(data));
+   * document.addEventListener('onAdFailLoad', function(data));
+   * document.addEventListener('onAdPresent', function(data));
+   * document.addEventListener('onAdDismiss', function(data));
+   * document.addEventListener('onAdLeaveApp', function(data));
+   */
+  private class RewardVideoListener implements RewardedVideoAdListener {
+    @SuppressLint("DefaultLocale")
+    @Override
+    public void onRewardedVideoAdFailedToLoad(int errorCode) {
+      synchronized (mLock) {
+        mIsRewardedVideoLoading = false;
+      }
+      fireAdErrorEvent(EVENT_AD_FAILLOAD, errorCode, getErrorReason(errorCode), ADTYPE_REWARDVIDEO);
+    }
+
+    @Override
+    public void onRewardedVideoAdLeftApplication() {
+      fireAdEvent(EVENT_AD_LEAVEAPP, ADTYPE_REWARDVIDEO);
+    }
+
+    @Override
+    public void onRewardedVideoAdLoaded() {
+      synchronized (mLock) {
+        mIsRewardedVideoLoading = false;
+      }
+      fireAdEvent(EVENT_AD_LOADED, ADTYPE_REWARDVIDEO);
+
+      if(autoShowRewardVideo) {
+        showRewardVideoAd();
+      }
+    }
+
+    @Override
+    public void onRewardedVideoAdOpened() {
+      fireAdEvent(EVENT_AD_WILLPRESENT, ADTYPE_REWARDVIDEO);
+    }
+
+    @Override
+    public void onRewardedVideoStarted() {
+      fireAdEvent(EVENT_AD_WILLPRESENT, ADTYPE_REWARDVIDEO);
+    }
+
+    @Override
+    public void onRewardedVideoAdClosed() {
+      fireAdEvent(EVENT_AD_DISMISS, ADTYPE_REWARDVIDEO);
+      removeInterstitial();
+    }
+
+    @Override
+    public void onRewarded(RewardItem reward) {
+      String obj = __getProductShortName();
+      String json = String.format("{'adNetwork':'%s','adType':'%s','adEvent':'%s','rewardType':'%s','rewardAmount':%i}",
+              obj, ADTYPE_REWARDVIDEO, EVENT_AD_PRESENT, reward.getType(), reward.getAmount());
+      fireEvent(obj, EVENT_AD_PRESENT, json);
     }
   }
 
