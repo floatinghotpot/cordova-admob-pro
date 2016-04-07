@@ -17,6 +17,7 @@
 
 #define TEST_BANNER_ID           @"ca-app-pub-8094096715994524/4480807092"
 #define TEST_INTERSTITIALID      @"ca-app-pub-8094096715994524/5957540296"
+#define TEST_REWARDVIDEOID       @"ca-app-pub-8094096715994524/3995920692"
 
 #define OPT_ADCOLONY        @"AdColony"
 #define OPT_ADCOLONY        @"AdColony"
@@ -34,7 +35,7 @@
 #define OPT_CUSTOMTARGETING @"customTargeting"
 #define OPT_EXCLUDE         @"exclude"
 
-@interface CDVAdMobPlugin()<GADBannerViewDelegate, GADInterstitialDelegate>
+@interface CDVAdMobPlugin()<GADBannerViewDelegate, GADInterstitialDelegate, GADRewardBasedVideoAdDelegate>
 
 @property (assign) GADAdSize adSize;
 @property (nonatomic, retain) NSDictionary* adExtras;
@@ -47,6 +48,8 @@
 
 @property (nonatomic, retain) NSDictionary* mCustomTargeting;
 @property (nonatomic, retain) NSArray* mExclude;
+
+@property (nonatomic, retain) NSString* rewardVideoAdId;
 
 - (GADAdSize)__AdSizeFromString:(NSString *)str;
 - (GADRequest*) __buildAdRequest:(BOOL)forBanner forDFP:(BOOL)fordfp;
@@ -70,6 +73,8 @@
 
     self.mCustomTargeting = nil;
     self.mExclude = nil;
+
+    self.rewardVideoAdId = nil;
 }
 
 - (NSString*) __getProductShortName { return @"AdMob"; }
@@ -332,6 +337,21 @@
     }
 }
 
+- (NSObject*) __prepareRewardVideoAd:(NSString*)adId {
+    [GADRewardBasedVideoAd sharedInstance].delegate = self;
+    [[GADRewardBasedVideoAd sharedInstance] loadRequest:[GADRequest request]
+                                           withAdUnitID:adId];
+    return nil;
+}
+
+- (BOOL) __showRewardVideoAd:(NSObject*)rewardvideo {
+    if ([[GADRewardBasedVideoAd sharedInstance] isReady]) {
+        [[GADRewardBasedVideoAd sharedInstance] presentFromRootViewController:[self getViewController]];
+        return true;
+    }
+    return false;
+}
+
 #pragma mark GADBannerViewDelegate implementation
 
 /**
@@ -402,6 +422,49 @@
 
 - (void)interstitialWillLeaveApplication:(GADInterstitial *)ad {
     [self fireAdEvent:EVENT_AD_LEAVEAPP withType:ADTYPE_INTERSTITIAL];
+}
+
+#pragma mark GADRewardBasedVideoAdDelegate
+
+/**
+ * document.addEventListener('onAdLoaded', function(data));
+ * document.addEventListener('onAdFailLoad', function(data));
+ * document.addEventListener('onAdPresent', function(data)); // data.rewardType, data.rewardAmount
+ * document.addEventListener('onAdDismiss', function(data));
+ * document.addEventListener('onAdLeaveApp', function(data));
+ */
+
+- (void)rewardBasedVideoAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd
+   didRewardUserWithReward:(GADAdReward *)reward {
+    NSString* obj = [self __getProductShortName];
+    NSString* json = [NSString stringWithFormat:@"{'adNetwork':'%@','adType':'%@','adEvent':'%@','rewardType':'%@','rewardAmount':%lf}",
+                      obj, ADTYPE_REWARDVIDEO, EVENT_AD_PRESENT, reward.type, [reward.amount doubleValue]];
+    [self fireEvent:obj event:EVENT_AD_PRESENT withData:json];
+}
+
+- (void)rewardBasedVideoAdDidReceiveAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_REWARDVIDEO];
+}
+
+- (void)rewardBasedVideoAdDidOpen:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    [self fireAdEvent:EVENT_AD_WILLPRESENT withType:ADTYPE_REWARDVIDEO];
+}
+
+- (void)rewardBasedVideoAdDidStartPlaying:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    [self fireAdEvent:EVENT_AD_WILLPRESENT withType:ADTYPE_REWARDVIDEO];
+}
+
+- (void)rewardBasedVideoAdDidClose:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_REWARDVIDEO];
+}
+
+- (void)rewardBasedVideoAdWillLeaveApplication:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    [self fireAdEvent:EVENT_AD_LEAVEAPP withType:ADTYPE_REWARDVIDEO];
+}
+
+- (void)rewardBasedVideoAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd
+    didFailToLoadWithError:(NSError *)error {
+    [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_REWARDVIDEO];
 }
 
 @end
