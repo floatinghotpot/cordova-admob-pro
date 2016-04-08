@@ -359,7 +359,7 @@ AdMob.isInterstitialReady(function(ready){
 });
 ```
 
-## AdMob.prepareRewardVideoAd() ##
+## AdMob.prepareRewardVideoAd(adId/options, success, fail) ##
 
 > **Purpose**: prepare an revard video Ad for showing.
 
