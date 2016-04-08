@@ -43,6 +43,7 @@ Platforms supported:
 Ad Types:
 - [x] Banner
 - [x] Interstitial (text, picture, video)
+- [x] Reward Video
 - [x] IAP Ad
 - [x] Native Ad (Google new product, on roadmap)
 
@@ -211,7 +212,11 @@ prepareInterstitial(adId/options, success, fail);
 showInterstitial();
 isInterstitialReady(function(ready){ if(ready){ } });
 
-// set default value for other methods
+// use reward video
+prepareRewardVideoAd(adId/options, success, fail);
+showRewardVideoAd();
+
+// set values for configuration and targeting
 setOptions(options, success, fail);
 
 // get user ad settings

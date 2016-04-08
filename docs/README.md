@@ -147,6 +147,10 @@ prepareInterstitial(adId/options, success, fail);
 showInterstitial();
 isInterstitialReady(function(ready){ if(ready){ } });
 
+// use reward video
+prepareRewardVideoAd(adId/options, success, fail);
+showRewardVideoAd();
+
 // set default value for other methods
 setOptions(options, success, fail);
 
@@ -327,7 +331,7 @@ Extra key/value for param **options**
 - **success**, *function*, callback when success.
 - **error**, *function*, call back when fail.
 
-> Note: it will take some time to get Ad resource before it can be showed. You may buffer the Ad by calling **requestInterstitial**, and show it later.
+> Note: it will take some time to get Ad resource before it can be showed. You may buffer the Ad by calling **prepareInterstitial**, and show it later.
 
 ## AdMob.isInterstitialReady() ##
 
@@ -354,6 +358,36 @@ AdMob.isInterstitialReady(function(ready){
   if(ready) AdMob.showInterstitial();
 });
 ```
+
+## AdMob.prepareRewardVideoAd() ##
+
+> **Purpose**: prepare an revard video Ad for showing.
+
+Params:
+- **adId**, *string*, Ad unit Id for the reward video Ad. You need configure mediation in AdMob portal.
+- **options**, *string*, see **AdMob.setOptions()*
+- **success**, *function*, callback when success, can be null or missing.
+- **fail**, *function*, callback when fail, can be null or missing.
+
+Extra key/value for param **options**
+- **adId**, *string*, Ad unit Id for this interstitial.
+- **success**, *function*, callback when success.
+- **error**, *function*, call back when fail.
+
+> Note: it will take some time to get Ad resource before it can be showed. You may buffer the Ad by calling **prepareRewardVideoAd**, and show it later.
+
+## AdMob.showRewardVideoAd() ##
+
+> **Purpose**: show reward video Ad when it's ready.
+
+To give user reward when he/she watched the video, you need listen to event 'onAdPresent', check the adType 'rewardvideo'.
+
+document.addEventListener('onAdPresent', function(data){
+  if(data.adType == 'rewardvideo') {
+    console.log( data.rewardType );
+    console.log( data.rewardAmount );
+  }
+});
 
 ## AdMob.getAdSettings() ##
 
