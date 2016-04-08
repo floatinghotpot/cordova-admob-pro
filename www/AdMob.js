@@ -126,4 +126,24 @@ admobExport.isInterstitialReady = function(successCallback, failureCallback) {
   cordova.exec( successCallback, failureCallback, 'AdMob', 'isInterstitialReady', [] );
 };
 
+admobExport.prepareRewardVideoAd = function(args, successCallback, failureCallback) {
+  var options = {};
+  if(typeof args === 'object') {
+    for(var k in args) {
+      if(k === 'success') { if(typeof args[k] === 'function') successCallback = args[k]; }
+      else if(k === 'error') { if(typeof args[k] === 'function') failureCallback = args[k]; }
+      else {
+        options[k] = args[k];
+      }
+    }
+  } else if(typeof args === 'string') {
+    options = { adId: args };
+  }
+  cordova.exec( successCallback, failureCallback, 'AdMob', 'prepareRewardVideoAd', [ args ] );
+};
+
+admobExport.showRewardVideoAd = function(successCallback, failureCallback) {
+  cordova.exec( successCallback, failureCallback, 'AdMob', 'showRewardVideoAd', [] );
+};
+
 module.exports = admobExport;
