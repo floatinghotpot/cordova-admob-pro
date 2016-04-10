@@ -259,6 +259,33 @@ Demo projects:
 * [Game demo using phaser game engine](https://github.com/floatinghotpot/admob-demo-game-phaser/tree/master/demo)
 * [Game demo using PIXI game engine](https://github.com/floatinghotpot/admob-demo-game-pixi/tree/master/demo)
 
+## Video Tutorial
+
+* Using Cordova CLI to Add AdMob Plugin:
+
+[![Video](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/youtube_video0.jpg)](http://youtu.be/dBCRW_swoYU)
+
+* Run AdMob Demo App on Android:
+
+[![Video](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/youtube_video.jpg)](http://youtu.be/GsBI97WjFQo)
+
+More video by developers:
+* [How to add banner ads to phonegap apps using AdMob Pro for android](https://youtu.be/VzoukTxnbhc), by pointDeveloper
+* [How to add Banner ads To Ionic apps with Admob Pro For android](https://youtu.be/qNg8c4J03dE), by pointDeveloper
+* [How To Add Banner Ads To Ionic 2 with AdMob Cordova Plugin](https://youtu.be/dfHPlVvIUR0), by pointDeveloper
+* [How to add Interstitial Add on navigation for phonegap using JavaScript and AdMob Pro plugin](https://youtu.be/5YvikM3ySXc), by pointDeveloper
+* [How to add banner ads to jQuery Mobile Apps using Phonegap AdMob Pro Plugin](https://youtu.be/ceCHJl0c908), by pointDeveloper
+* [Intel XDK - Monetizando seu aplicativo com Admob e intel xdk.](https://youtu.be/Bo_deb1vKYk), in Portuguese, by XDK PLUS
+* Interesting [Evolution of cordova-admob-pro (Gource Visualization)](https://youtu.be/yH66cHnY06M), by Landon Wilkins
+
+## Screenshots
+
+iPhone Banner | iPhone Interstitial
+-------|---------------
+![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/iphone.jpg) | ![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/iphone_interstitial.jpg)
+Android Banner | Android Interstitial
+![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/android.jpg) | ![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/android_interstitial.jpg)
+
 ## Tips
 
 Some important tips, FYI.
@@ -295,24 +322,6 @@ RPM (revenue per 1000 impression) |  US$ 0.5~4 | US$ 10~50
 * AdMob发布商不得滥用或鼓励滥用任何Google产品，如Google Play、YouTube或Blogger。这包括规避任何Google产品的政策或条款或提供规避途径，例如允许用户下载YouTube视频等。不得刻意引诱用户点击广告，也不可以在自己的APP中点击广告（测试只能使用非正式的测试广告）。
 
 More details, please read [AdMob & AdSense policies](https://support.google.com/admob/answer/6128543?hl=en&ref_topic=2745287)
-
-## Video Tutorial
-
-* Using Cordova CLI to Add AdMob Plugin:
-
-[![Video](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/youtube_video0.jpg)](http://youtu.be/dBCRW_swoYU)
-
-* Run AdMob Demo App on Android:
-
-[![Video](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/youtube_video.jpg)](http://youtu.be/GsBI97WjFQo)
-
-## Screenshots
-
-iPhone Banner | iPhone Interstitial
--------|---------------
-![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/iphone.jpg) | ![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/iphone_interstitial.jpg)
-Android Banner | Android Interstitial
-![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/android.jpg) | ![ScreenShot](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/android_interstitial.jpg)
 
 ## Credits
 
