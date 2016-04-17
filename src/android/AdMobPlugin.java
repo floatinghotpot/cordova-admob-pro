@@ -615,6 +615,13 @@ public class AdMobPlugin extends GenericAdPlugin {
     public void onAdClosed() {
       fireAdEvent(EVENT_AD_DISMISS, ADTYPE_INTERSTITIAL);
       removeInterstitial();
+
+      // if focus on webview of banner, press back button will quit
+      // force focus on main view, so that 'backbutton' override will work
+      View mainView = getView();
+      if (mainView != null) {
+        mainView.requestFocus();
+      }
     }
   }
 
@@ -665,7 +672,13 @@ public class AdMobPlugin extends GenericAdPlugin {
     @Override
     public void onRewardedVideoAdClosed() {
       fireAdEvent(EVENT_AD_DISMISS, ADTYPE_REWARDVIDEO);
-      removeInterstitial();
+
+      // if focus on webview of banner, press back button will quit
+      // force focus on main view, so that 'backbutton' override will work
+      View mainView = getView();
+      if (mainView != null) {
+        mainView.requestFocus();
+      }
     }
 
     @Override
