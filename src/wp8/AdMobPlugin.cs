@@ -174,8 +174,8 @@ namespace Cordova.Extension.Commands
                         if (!string.IsNullOrEmpty(options.adId))
                             adId = options.adId;
 
-                        //if (options.ContainsKey(OPT_AUTO_SHOW))
-                        //    autoShow = Convert.ToBoolean(options[OPT_AUTO_SHOW]);
+                        if (options.autoShow.HasValue)
+                            autoShow = options.autoShow.Value;
 
                         __createBanner(adId, autoShow);
                     }
@@ -277,8 +277,8 @@ namespace Cordova.Extension.Commands
                         {
                             adId = options.adId;
 
-                            //if (options.ContainsKey(OPT_AUTO_SHOW))
-                            //    autoShow = Convert.ToBoolean(options[OPT_AUTO_SHOW]);
+                            if (options.autoShow.HasValue)
+                                autoShow = options.autoShow.Value;
 
                             __prepareInterstitial(adId, autoShow);
                         }
