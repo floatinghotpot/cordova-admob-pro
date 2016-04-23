@@ -684,7 +684,7 @@ public class AdMobPlugin extends GenericAdPlugin {
     @Override
     public void onRewarded(RewardItem reward) {
       String obj = __getProductShortName();
-      String json = String.format("{'adNetwork':'%s','adType':'%s','adEvent':'%s','rewardType':'%s','rewardAmount':%i}",
+      String json = String.format("{'adNetwork':'%s','adType':'%s','adEvent':'%s','rewardType':'%s','rewardAmount':%d}",
               obj, ADTYPE_REWARDVIDEO, EVENT_AD_PRESENT, reward.getType(), reward.getAmount());
       fireEvent(obj, EVENT_AD_PRESENT, json);
     }
