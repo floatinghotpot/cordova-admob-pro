@@ -126,6 +126,7 @@
      </platform>
 
      <!-- Windows Phone 8.1+ -->
+     <!-- 
      <platform name="windows">
          <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
              <Capability Name="ID_CAP_LOCATION" />
@@ -140,5 +141,5 @@
           
         <framework src="src/wp8/GoogleAds.dll" custom="true" />
     </platform>
-
+    -->
 </plugin>

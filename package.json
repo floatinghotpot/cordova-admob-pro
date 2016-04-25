@@ -8,8 +8,7 @@
       "android",
       "ios",
       "amazon-fireos",
-      "wp8",
-      "windows"
+      "wp8"
     ]
   },
   "repository": {
