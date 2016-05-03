@@ -8,16 +8,22 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
-#import "GADAdLoaderDelegate.h"
-#import "GADRequest.h"
-#import "GADRequestError.h"
+#import <GoogleMobileAds/GADAdLoaderDelegate.h>
+#import <GoogleMobileAds/GADRequest.h>
+#import <GoogleMobileAds/GADRequestError.h>
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
 
 /// Loads ads. See GADAdLoaderAdTypes.h for available ad types.
 @interface GADAdLoader : NSObject
 
 /// Object notified when an ad request succeeds or fails. Must conform to requested ad types'
 /// delegate protocols.
-@property(nonatomic, weak) id<GADAdLoaderDelegate> delegate;
+@property(nonatomic, weak, GAD_NULLABLE) id<GADAdLoaderDelegate> delegate;
+
+/// The ad loader's ad unit ID.
+@property(nonatomic, readonly) NSString *adUnitID;
 
 /// Returns an initialized ad loader configured to load the specified ad types.
 ///
@@ -29,10 +35,10 @@
 - (instancetype)initWithAdUnitID:(NSString *)adUnitID
               rootViewController:(UIViewController *)rootViewController
                          adTypes:(NSArray *)adTypes
-                         options:(NSArray *)options;
+                         options:(NSArray *GAD_NULLABLE_TYPE)options;
 
 /// Loads the ad and informs the delegate of the outcome.
-- (void)loadRequest:(GADRequest *)request;
+- (void)loadRequest:(GADRequest *GAD_NULLABLE_TYPE)request;
 
 @end
 
@@ -40,3 +46,5 @@
 /// subclasses.
 @interface GADAdLoaderOptions : NSObject
 @end
+
+GAD_ASSUME_NONNULL_END
