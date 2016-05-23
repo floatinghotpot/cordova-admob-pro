@@ -272,16 +272,23 @@ public class AdMobPlugin extends GenericAdPlugin {
   }
 
   @Override
-  protected void __showInterstitial(Object interstitial) {
+protected void __showInterstitial(Object interstitial) {
     if(interstitial == null) return;
 
-    if(interstitial instanceof InterstitialAd) {
-      InterstitialAd ad = (InterstitialAd) interstitial;
-      if(ad.isLoaded()) {
-        ad.show();
-      }
+    if(interstitial instanceof PublisherInterstitialAd) {
+      PublisherInterstitialAd ad = (PublisherInterstitialAd) interstitial;
+       if(ad.isLoaded()) {
+           ad.show();
+        }
+  
+    }else if(interstitial instanceof InterstitialAd){
+        InterstitialAd ad = (InterstitialAd) interstitial;
+         if(ad.isLoaded()) {
+           ad.show();
+        }
     }
-  }
+   
+  } 
 
   @Override
   protected void __destroyInterstitial(Object interstitial) {
