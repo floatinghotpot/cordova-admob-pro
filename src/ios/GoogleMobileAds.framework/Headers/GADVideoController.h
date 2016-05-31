@@ -10,6 +10,8 @@
 
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
+GAD_ASSUME_NONNULL_BEGIN
+
 @protocol GADVideoControllerDelegate;
 
 /// The video controller class provides a way to get the video metadata and also manages video
@@ -26,3 +28,5 @@
 - (BOOL)hasVideoContent;
 
 @end
+
+GAD_ASSUME_NONNULL_END

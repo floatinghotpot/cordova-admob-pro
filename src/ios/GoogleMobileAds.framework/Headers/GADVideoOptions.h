@@ -6,6 +6,9 @@
 //
 
 #import <GoogleMobileAds/GADAdLoader.h>
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
 
 /// Video ad options.
 @interface GADVideoOptions : GADAdLoaderOptions
@@ -14,3 +17,5 @@
 @property(nonatomic, assign) BOOL startMuted;
 
 @end
+
+GAD_ASSUME_NONNULL_END

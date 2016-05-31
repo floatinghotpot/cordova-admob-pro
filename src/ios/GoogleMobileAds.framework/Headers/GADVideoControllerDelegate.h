@@ -6,6 +6,9 @@
 //
 
 #import <GoogleMobileAds/GADVideoController.h>
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
 
 /// The GADVideoControllerDelegate protocol defines methods that are called by the video controller
 /// object in response to the video events that occured throught the lifetime of the video rendered
@@ -18,3 +21,5 @@
 - (void)videoControllerDidEndVideoPlayback:(GADVideoController *)videoController;
 
 @end
+
+GAD_ASSUME_NONNULL_END

@@ -19,10 +19,14 @@ GAD_ASSUME_NONNULL_BEGIN
 /// Do not create a GADAdSize manually. Use one of the kGADAdSize constants. Treat GADAdSize as an
 /// opaque type. Do not access any fields directly. To obtain a concrete CGSize, use the function
 /// CGSizeFromGADAdSize().
-typedef struct GADAdSize {
-  CGSize size;
-  NSUInteger flags;
-} GADAdSize;
+typedef struct GADAdSize GADAdSize;
+
+/// Ad size.
+/// \see typedef GADAdSize
+struct GADAdSize {
+  CGSize size;       ///< The ad size. Don't modify this value directly.
+  NSUInteger flags;  ///< Reserved.
+};
 
 #pragma mark Standard Sizes
 
@@ -89,7 +93,7 @@ GAD_EXTERN CGSize CGSizeFromGADAdSize(GADAdSize size);
 GAD_EXTERN BOOL IsGADAdSizeValid(GADAdSize size);
 
 /// Returns YES if |size| is a fluid ad size.
-BOOL GADAdSizeIsFluid(GADAdSize size);
+GAD_EXTERN BOOL GADAdSizeIsFluid(GADAdSize size);
 
 /// Returns a NSString describing the provided GADAdSize.
 GAD_EXTERN NSString *NSStringFromGADAdSize(GADAdSize size);

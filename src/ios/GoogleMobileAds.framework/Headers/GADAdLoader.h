@@ -27,13 +27,12 @@ GAD_ASSUME_NONNULL_BEGIN
 
 /// Returns an initialized ad loader configured to load the specified ad types.
 ///
-/// @param rootViewController The root view controller is used to present ad click actions. Cannot
-/// be nil.
-/// @param adTypes An array of ad types. See GADAdLoaderAdTypes.h for available ad types.
-/// @param options An array of GADAdLoaderOptions objects to configure how ads are loaded, or nil to
+/// \param rootViewController The root view controller is used to present ad click actions.
+/// \param adTypes An array of ad types. See GADAdLoaderAdTypes.h for available ad types.
+/// \param options An array of GADAdLoaderOptions objects to configure how ads are loaded, or nil to
 /// use default options. See each ad type's header for available GADAdLoaderOptions subclasses.
 - (instancetype)initWithAdUnitID:(NSString *)adUnitID
-              rootViewController:(UIViewController *)rootViewController
+              rootViewController:(UIViewController *GAD_NULLABLE_TYPE)rootViewController
                          adTypes:(NSArray *)adTypes
                          options:(NSArray *GAD_NULLABLE_TYPE)options;
 
