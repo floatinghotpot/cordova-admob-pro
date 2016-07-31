@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 
 #import <GoogleMobileAds/GADAdLoaderDelegate.h>
+#import <GoogleMobileAds/GADMediaView.h>
 #import <GoogleMobileAds/GADNativeAd.h>
 #import <GoogleMobileAds/GADNativeAdImage.h>
+#import <GoogleMobileAds/GADVideoController.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
 /// Native app install ad. To request this ad type, you need to pass
@@ -40,6 +42,9 @@
 @property(nonatomic, readonly, strong) NSArray *images;
 /// App store rating (0 to 5).
 @property(nonatomic, readonly, copy) NSDecimalNumber *starRating;
+/// Video controller for controlling video playback in GADNativeAppInstallAdView's mediaView.
+/// Returns nil if the ad doesn't contain a video asset.
+@property(nonatomic, strong, readonly) GADVideoController *videoController;
 @end
 
 #pragma mark - Protocol and constants
@@ -70,5 +75,6 @@
 @property(nonatomic, weak) IBOutlet UIView *priceView;
 @property(nonatomic, weak) IBOutlet UIView *imageView;
 @property(nonatomic, weak) IBOutlet UIView *starRatingView;
+@property(nonatomic, weak) IBOutlet GADMediaView *mediaView;
 
 @end

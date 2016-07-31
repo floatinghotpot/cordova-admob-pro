@@ -22,6 +22,7 @@ GAD_ASSUME_NONNULL_BEGIN
 typedef struct GADAdSize GADAdSize;
 
 /// Ad size.
+///
 /// \see typedef GADAdSize
 struct GADAdSize {
   CGSize size;       ///< The ad size. Don't modify this value directly.

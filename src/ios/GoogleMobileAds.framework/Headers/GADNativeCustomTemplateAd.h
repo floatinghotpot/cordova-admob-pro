@@ -51,7 +51,7 @@
 /// GADNativeCustomTemplateAd ads.
 @protocol GADNativeCustomTemplateAdLoaderDelegate<GADAdLoaderDelegate>
 
-/// Called when requesting an ad. Asks the delgate for an array of custom template ID strings.
+/// Called when requesting an ad. Asks the delegate for an array of custom template ID strings.
 - (NSArray *)nativeCustomTemplateIDsForAdLoader:(GADAdLoader *)adLoader;
 
 /// Tells the delegate that a native custom template ad was received.

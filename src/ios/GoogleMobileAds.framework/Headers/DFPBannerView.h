@@ -38,6 +38,7 @@ GAD_ASSUME_NONNULL_BEGIN
 /// \see setValidAdSizesWithSizes:
 ///
 /// Example:
+///
 ///   \code
 ///   NSArray *validSizes = @[
 ///     NSValueFromGADAdSize(kGADAdSizeBanner),
@@ -71,6 +72,7 @@ GAD_ASSUME_NONNULL_BEGIN
 /// of GADAdSize pointers.
 ///
 /// Example:
+///
 ///   \code
 ///   GADAdSize size1 = kGADAdSizeBanner;
 ///   GADAdSize size2 = kGADAdSizeLargeBanner;

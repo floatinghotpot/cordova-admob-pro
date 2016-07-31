@@ -29,7 +29,6 @@
 ///   // Request an ad without any additional targeting information.
 ///   [adView loadRequest:[GADRequest request]];
 ///   \endcode
-///
 @interface GADNativeExpressAdView : UIView
 
 #pragma mark - Initialization
@@ -74,7 +73,8 @@
 @property(nonatomic, assign, getter=isAutoloadEnabled) IBInspectable BOOL autoloadEnabled;
 
 /// Sets options that configure ad loading.
-/// \param adOptions an array of GADAdLoaderOptions objects. The array is deep copied and option
+///
+/// \param adOptions An array of GADAdLoaderOptions objects. The array is deep copied and option
 /// objects cannot be modified after calling this method.
 - (void)setAdOptions:(NSArray *)adOptions;
 

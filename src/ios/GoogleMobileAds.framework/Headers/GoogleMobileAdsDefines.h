@@ -39,14 +39,12 @@
 #define GAD_NULLABLE_TYPE __nullable
 #define GAD_NONNULL_TYPE __nonnull
 #define GAD_NULLABLE nullable
-
 #define GAD_ASSUME_NONNULL_BEGIN NS_ASSUME_NONNULL_BEGIN
 #define GAD_ASSUME_NONNULL_END NS_ASSUME_NONNULL_END
 #else
 #define GAD_NULLABLE_TYPE
 #define GAD_NONNULL_TYPE
 #define GAD_NULLABLE
-
 #define GAD_ASSUME_NONNULL_BEGIN
 #define GAD_ASSUME_NONNULL_END
 #endif  // __has_feature(nullability)

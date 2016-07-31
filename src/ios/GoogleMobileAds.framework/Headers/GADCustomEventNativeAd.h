@@ -16,13 +16,14 @@
 @protocol GADCustomEventNativeAd<NSObject>
 
 /// Called when the custom event is scheduled to be executed.
-/// \param serverParameter value configured in the mediation UI for the custom event.
-/// \param request ad targeting information.
-/// \param adTypes list of requested native ad types. See GADAdLoaderAdTypes.h for available ad
+///
+/// \param serverParameter A value configured in the mediation UI for the custom event.
+/// \param request Ad targeting information.
+/// \param adTypes List of requested native ad types. See GADAdLoaderAdTypes.h for available ad
 /// types.
-/// \param options additional options configured by the publisher for requesting a native ad. See
+/// \param options Additional options configured by the publisher for requesting a native ad. See
 /// GADNativeAdImageAdLoaderOptions.h for available image options.
-/// \param rootViewController publisher-provided view controller provided.
+/// \param rootViewController Publisher-provided view controller.
 - (void)requestNativeAdWithParameter:(NSString *)serverParameter
                              request:(GADCustomEventRequest *)request
                              adTypes:(NSArray *)adTypes

@@ -27,6 +27,9 @@ GAD_ASSUME_NONNULL_BEGIN
 /// Returns a Boolean indicating if the receiver has video content.
 - (BOOL)hasVideoContent;
 
+/// Returns the video's aspect ratio (width/height) or 0 if no video is present.
+- (double)aspectRatio;
+
 @end
 
 GAD_ASSUME_NONNULL_END

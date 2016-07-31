@@ -29,6 +29,7 @@ FOUNDATION_EXPORT const unsigned char GoogleMobileAdsVersionString[];
 #import <GoogleMobileAds/GADInAppPurchaseDelegate.h>
 #import <GoogleMobileAds/GADInterstitial.h>
 #import <GoogleMobileAds/GADInterstitialDelegate.h>
+#import <GoogleMobileAds/GADMediaView.h>
 #import <GoogleMobileAds/GADMobileAds.h>
 #import <GoogleMobileAds/GADNativeExpressAdView.h>
 #import <GoogleMobileAds/GADNativeExpressAdViewDelegate.h>
