@@ -329,7 +329,9 @@ This project is created and maintained by Raymond Xie.
 
 More Cordova/PhoneGap plugins by Raymond Xie, [find them in plugin registry](http://plugins.cordova.io/#/search?search=rjfun), or [find them in npm](https://www.npmjs.com/~floatinghotpot).
 
-You can use this plugin for free during trial purpose. If use in commercial project and need email/skype support, please [get a license](http://rjfun.github.io/), if you have monetized more than $1000 using this plugin, you are also required to get a commercial license ($20). As a commercial customer, you will be supported with high priority, read the [License Agreement] for details. If it earns less than $1000, you don't have to pay at all.
+You can use this plugin for free during trial purpose. If it earns less than $1000 for you, you can continue to use for free. 
+
+If use in commercial project, please [get a license](http://rjfun.github.io/), if you have monetized more than $1000 using this plugin, you are also required to: either get a commercial license ($20), or share 2% Ad traffic, read the [License Agreement](https://github.com/floatinghotpot/cordova-admob-pro/wiki/License-Agreement) for details. As a commercial customer, you will be supported with high priority, via private email or even Skype chat.
 
 If you hope to get a fully open source plugin and need DIY, use this one instead:
 https://github.com/floatinghotpot/cordova-plugin-admob
