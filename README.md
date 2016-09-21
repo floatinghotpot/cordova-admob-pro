@@ -16,7 +16,8 @@ Cordova / PhoneGap Plugin for Google Ads, including AdMob / DFP (doubleclick for
 10. [Important Tips & Warning](#tips)
 11. [Video Tutorial](#video-tutorial)
 12. [Screenshots](#screenshots)
-13. [Credits](#credits)
+13. [License](#license)
+14. [Credits](#credits)
 
 ## Description
 
@@ -323,18 +324,21 @@ RPM (revenue per 1000 impression) |  US$ 0.5~4 | US$ 10~50
 
 More details, please read [AdMob & AdSense policies](https://support.google.com/admob/answer/6128543?hl=en&ref_topic=2745287)
 
+## License
+
+You can use this plugin for free during trial purpose. If it earns less than $1000 for you, you can continue to use for free. 
+
+If use in commercial project, please [get a license](http://rjfun.github.io/), or, you have monetized more than $1000 using this plugin, you are also required to: either get a commercial license ($20), or, no need pay but share 2% Ad traffic, read the [License Agreement](https://github.com/floatinghotpot/cordova-admob-pro/wiki/License-Agreement) for details. As a commercial customer, you will be supported with high priority, via private email or even Skype chat.
+
+If you hope to get a fully open source plugin (either need DIY, or hope to get full control on the code), use this open source one instead. Fork and pull request is welcome, but please mention it's derived source. Simply renaming then publishing to npm is forbidden. Open source project URL:
+https://github.com/floatinghotpot/cordova-plugin-admob
+
 ## Credits
 
 This project is created and maintained by Raymond Xie.
 
 More Cordova/PhoneGap plugins by Raymond Xie, [find them in plugin registry](http://plugins.cordova.io/#/search?search=rjfun), or [find them in npm](https://www.npmjs.com/~floatinghotpot).
 
-You can use this plugin for free during trial purpose. If it earns less than $1000 for you, you can continue to use for free. 
-
-If use in commercial project, please [get a license](http://rjfun.github.io/), if you have monetized more than $1000 using this plugin, you are also required to: either get a commercial license ($20), or share 2% Ad traffic, read the [License Agreement](https://github.com/floatinghotpot/cordova-admob-pro/wiki/License-Agreement) for details. As a commercial customer, you will be supported with high priority, via private email or even Skype chat.
-
-If you hope to get a fully open source plugin and need DIY, use this one instead:
-https://github.com/floatinghotpot/cordova-plugin-admob
-
 Project outsourcing and consulting service is also available. Please [contact us](mailto:rjfun.mobile@gmail.com) if you have the business needs.
+
 
