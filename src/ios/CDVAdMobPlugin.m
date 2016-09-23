@@ -15,9 +15,9 @@
 #import "CDVAdMobPlugin.h"
 #import "AdMobMediation.h"
 
-#define TEST_BANNER_ID           @"ca-app-pub-8094096715994524/4480807092"
-#define TEST_INTERSTITIALID      @"ca-app-pub-8094096715994524/5957540296"
-#define TEST_REWARDVIDEOID       @"ca-app-pub-8094096715994524/3995920692"
+#define TEST_BANNER_ID           @"ca-app-pub-3940256099942544/4480807092"
+#define TEST_INTERSTITIALID      @"ca-app-pub-3940256099942544/4411468910"
+#define TEST_REWARDVIDEOID       @"ca-app-pub-3940256099942544/3995920692"
 
 #define OPT_ADCOLONY        @"AdColony"
 #define OPT_ADCOLONY        @"AdColony"

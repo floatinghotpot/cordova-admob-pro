@@ -70,8 +70,8 @@ namespace Cordova.Extension.Commands
 		public const string OPT_BANNER_ID = "bannerId";
 		public const string OPT_INTERSTITIAL_ID = "interstitialId";
 		
-		private const string TEST_BANNER_ID = "ca-app-pub-8094096715994524/8743215490";
-		private const string TEST_INTERSTITIAL_ID = "ca-app-pub-8094096715994524/1219948697";
+		private const string TEST_BANNER_ID = "ca-app-pub-3940256099942544/8743215490";
+		private const string TEST_INTERSTITIAL_ID = "ca-app-pub-3940256099942544/1219948697";
 		
 		// banner positions 
 		public const int NO_CHANGE = 0;
