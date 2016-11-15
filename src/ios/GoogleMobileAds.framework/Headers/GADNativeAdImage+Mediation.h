@@ -5,8 +5,12 @@
 //  Copyright 2015 Google. All rights reserved.
 //
 
-#import "GADNativeAdImage.h"
+#import <GoogleMobileAds/GADNativeAdImage.h>
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
+GAD_ASSUME_NONNULL_BEGIN
+
+/// Provides additional GADNativeAdImage initializers.
 @interface GADNativeAdImage (MediationAdditions)
 
 /// Initializes and returns a native ad image object with the provided image.
@@ -16,3 +20,5 @@
 - (instancetype)initWithURL:(NSURL *)URL scale:(CGFloat)scale;
 
 @end
+
+GAD_ASSUME_NONNULL_END

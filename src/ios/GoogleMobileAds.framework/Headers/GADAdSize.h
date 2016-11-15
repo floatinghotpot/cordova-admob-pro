@@ -23,7 +23,7 @@ typedef struct GADAdSize GADAdSize;
 
 /// Ad size.
 ///
-/// \see typedef GADAdSize
+/// @see typedef GADAdSize
 struct GADAdSize {
   CGSize size;       ///< The ad size. Don't modify this value directly.
   NSUInteger flags;  ///< Reserved.

@@ -7,6 +7,9 @@
 
 #import <GoogleMobileAds/GADAdSizeDelegate.h>
 #import <GoogleMobileAds/GADBannerView.h>
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
 
 /// A view that displays search ads.
 /// To show search ads:
@@ -17,6 +20,8 @@
 
 /// If the banner view is initialized with kGADAdSizeFluid and the corresponding request is created
 /// with dynamic height parameters, this delegate will be called when the ad size changes.
-@property(nonatomic, weak) IBOutlet id<GADAdSizeDelegate> adSizeDelegate;
+@property(nonatomic, weak, GAD_NULLABLE) IBOutlet id<GADAdSizeDelegate> adSizeDelegate;
 
 @end
+
+GAD_ASSUME_NONNULL_END

@@ -6,28 +6,34 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import <GoogleMobileAds/GADMediatedNativeAd.h>
 #import <GoogleMobileAds/GADNativeAdImage.h>
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
 
 /// Provides methods used for constructing native content ads.
 @protocol GADMediatedNativeContentAd<GADMediatedNativeAd>
 
 /// Primary text headline.
-- (NSString *)headline;
+- (NSString *GAD_NULLABLE_TYPE)headline;
 
 /// Secondary text.
-- (NSString *)body;
+- (NSString *GAD_NULLABLE_TYPE)body;
 
 /// List of large images. Each object is an instance of GADNativeAdImage.
-- (NSArray *)images;
+- (NSArray *GAD_NULLABLE_TYPE)images;
 
 /// Small logo image.
-- (GADNativeAdImage *)logo;
+- (GADNativeAdImage *GAD_NULLABLE_TYPE)logo;
 
 /// Text that encourages user to take some action with the ad.
-- (NSString *)callToAction;
+- (NSString *GAD_NULLABLE_TYPE)callToAction;
 
 /// Identifies the advertiser. For example, the advertiser’s name or visible URL.
-- (NSString *)advertiser;
+- (NSString *GAD_NULLABLE_TYPE)advertiser;
 
 @end
+
+GAD_ASSUME_NONNULL_END

@@ -9,6 +9,9 @@
 
 #import <GoogleMobileAds/GADCustomEventNativeAd.h>
 #import <GoogleMobileAds/GADMediatedNativeAd.h>
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
 
 /// The delegate of the GADCustomEventNativeAd object must adopt the GADCustomEventNativeAdDelegate
 /// protocol. Methods in this protocol are used for native ad's custom event communication with the
@@ -24,3 +27,5 @@
      didFailToLoadWithError:(NSError *)error;
 
 @end
+
+GAD_ASSUME_NONNULL_END

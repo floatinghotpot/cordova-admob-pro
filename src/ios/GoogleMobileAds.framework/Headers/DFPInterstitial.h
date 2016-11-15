@@ -13,6 +13,8 @@
 
 GAD_ASSUME_NONNULL_BEGIN
 
+/// DoubleClick For Publishers interstitial ad, a full-screen advertisement shown at natural
+/// transition points in your application such as between game levels or news stories.
 @interface DFPInterstitial : GADInterstitial
 
 /// Required value created on the DFP website. Create a new ad unit for every unique placement of an

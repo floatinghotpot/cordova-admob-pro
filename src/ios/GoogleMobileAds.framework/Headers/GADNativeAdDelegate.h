@@ -7,7 +7,11 @@
 
 #import <Foundation/Foundation.h>
 
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
 @class GADNativeAd;
+
+GAD_ASSUME_NONNULL_BEGIN
 
 /// Identifies native ad assets.
 @protocol GADNativeAdDelegate<NSObject>
@@ -39,3 +43,5 @@
 - (void)nativeAdWillLeaveApplication:(GADNativeAd *)nativeAd;
 
 @end
+
+GAD_ASSUME_NONNULL_END

@@ -8,6 +8,10 @@
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
 
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
+
 @protocol GADDefaultInAppPurchaseDelegate;
 
 #pragma mark - Default Purchase Flow
@@ -78,3 +82,5 @@ typedef NS_ENUM(NSInteger, GADInAppPurchaseStatus) {
 - (void)reportPurchaseStatus:(GADInAppPurchaseStatus)purchaseStatus;
 
 @end
+
+GAD_ASSUME_NONNULL_END

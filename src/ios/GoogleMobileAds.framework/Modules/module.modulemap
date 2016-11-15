@@ -14,6 +14,7 @@ framework module GoogleMobileAds {
   link framework "CoreVideo"
   link framework "Foundation"
   link framework "GLKit"
+  link framework "JavaScriptCore"
   link framework "MediaPlayer"
   link framework "MessageUI"
   link framework "MobileCoreServices"
@@ -22,6 +23,7 @@ framework module GoogleMobileAds {
   link framework "StoreKit"
   link framework "SystemConfiguration"
   link framework "UIKit"
+  link framework "WebKit"
 
   header "GoogleMobileAdsDefines.h"
 
@@ -32,6 +34,7 @@ framework module GoogleMobileAds {
   header "GADBannerViewDelegate.h"
   header "GADCorrelator.h"
   header "GADCorrelatorAdLoaderOptions.h"
+  header "GADDebugOptionsViewController.h"
   header "GADExtras.h"
   header "GADInAppPurchase.h"
   header "GADInAppPurchaseDelegate.h"
@@ -69,6 +72,7 @@ framework module GoogleMobileAds {
   header "GADNativeCustomTemplateAd.h"
 
   header "GADNativeAdImageAdLoaderOptions.h"
+  header "GADNativeAdViewAdOptions.h"
 
   header "GADCustomEventBanner.h"
   header "GADCustomEventBannerDelegate.h"
@@ -92,4 +96,11 @@ framework module GoogleMobileAds {
   header "GADAdReward.h"
   header "GADRewardBasedVideoAd.h"
   header "GADRewardBasedVideoAdDelegate.h"
+
+  header "Mediation/GADMAdNetworkAdapterProtocol.h"
+  header "Mediation/GADMAdNetworkConnectorProtocol.h"
+  header "Mediation/GADMediationAdRequest.h"
+  header "Mediation/GADMEnums.h"
+  header "Mediation/GADMRewardBasedVideoAdNetworkAdapterProtocol.h"
+  header "Mediation/GADMRewardBasedVideoAdNetworkConnectorProtocol.h"
 }

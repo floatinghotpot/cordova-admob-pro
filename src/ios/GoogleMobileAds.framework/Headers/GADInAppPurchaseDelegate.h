@@ -7,8 +7,12 @@
 
 #import <Foundation/Foundation.h>
 
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
 @class GADDefaultInAppPurchase;
 @class GADInAppPurchase;
+
+GAD_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Default Purchase Flow
 
@@ -40,3 +44,5 @@
 - (void)didReceiveInAppPurchase:(GADInAppPurchase *)purchase;
 
 @end
+
+GAD_ASSUME_NONNULL_END

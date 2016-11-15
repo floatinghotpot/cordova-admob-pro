@@ -9,37 +9,55 @@
 #import <UIKit/UIKit.h>
 
 #import <GoogleMobileAds/GADRequest.h>
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
 
 /// Search ad border types.
 typedef NS_ENUM(NSUInteger, GADSearchBorderType) {
-  kGADSearchBorderTypeNone,
-  kGADSearchBorderTypeDashed,
-  kGADSearchBorderTypeDotted,
-  kGADSearchBorderTypeSolid
+  kGADSearchBorderTypeNone,    ///< No border.
+  kGADSearchBorderTypeDashed,  ///< Dashed line border.
+  kGADSearchBorderTypeDotted,  ///< Dotted line border.
+  kGADSearchBorderTypeSolid    ///< Solid line border.
 };
 
+/// Search ad call button color types.
 typedef NS_ENUM(NSUInteger, GADSearchCallButtonColor) {
-  kGADSearchCallButtonLight,
-  kGADSearchCallButtonMedium,
-  kGADSearchCallButtonDark
+  kGADSearchCallButtonLight,   ///< Light button color.
+  kGADSearchCallButtonMedium,  ///< Medium button color.
+  kGADSearchCallButtonDark     ///< Dark button color.
 };
 
-// Specifies parameters for search ads.
+/// Specifies parameters for search ads.
 @interface GADSearchRequest : GADRequest
 
-@property(nonatomic, copy) NSString *query;
-@property(nonatomic, copy, readonly) UIColor *backgroundColor;
-@property(nonatomic, copy, readonly) UIColor *gradientFrom;
-@property(nonatomic, copy, readonly) UIColor *gradientTo;
-@property(nonatomic, copy) UIColor *headerColor;
-@property(nonatomic, copy) UIColor *descriptionTextColor;
-@property(nonatomic, copy) UIColor *anchorTextColor;
-@property(nonatomic, copy) NSString *fontFamily;
+/// The search ad query.
+@property(nonatomic, copy, GAD_NULLABLE) NSString *query;
+/// The search ad background color.
+@property(nonatomic, readonly, copy, GAD_NULLABLE) UIColor *backgroundColor;
+/// The search ad gradient "from" color.
+@property(nonatomic, readonly, copy, GAD_NULLABLE) UIColor *gradientFrom;
+/// The search ad gradient "to" color.
+@property(nonatomic, readonly, copy, GAD_NULLABLE) UIColor *gradientTo;
+/// The search ad header color.
+@property(nonatomic, copy, GAD_NULLABLE) UIColor *headerColor;
+/// The search ad description text color.
+@property(nonatomic, copy, GAD_NULLABLE) UIColor *descriptionTextColor;
+/// The search ad anchor text color.
+@property(nonatomic, copy, GAD_NULLABLE) UIColor *anchorTextColor;
+/// The search ad text font family.
+@property(nonatomic, copy, GAD_NULLABLE) NSString *fontFamily;
+/// The search ad header text size.
 @property(nonatomic, assign) NSUInteger headerTextSize;
-@property(nonatomic, copy) UIColor *borderColor;
+/// The search ad border color.
+@property(nonatomic, copy, GAD_NULLABLE) UIColor *borderColor;
+/// The search ad border type.
 @property(nonatomic, assign) GADSearchBorderType borderType;
+/// The search ad border thickness.
 @property(nonatomic, assign) NSUInteger borderThickness;
-@property(nonatomic, copy) NSString *customChannels;
+/// The search ad custom channels.
+@property(nonatomic, copy, GAD_NULLABLE) NSString *customChannels;
+/// The search ad call button color.
 @property(nonatomic, assign) GADSearchCallButtonColor callButtonColor;
 
 /// A solid background color for rendering the ad. The background of the ad
@@ -55,3 +73,5 @@ typedef NS_ENUM(NSUInteger, GADSearchCallButtonColor) {
 - (void)setBackgroundGradientFrom:(UIColor *)from toColor:(UIColor *)toColor;
 
 @end
+
+GAD_ASSUME_NONNULL_END

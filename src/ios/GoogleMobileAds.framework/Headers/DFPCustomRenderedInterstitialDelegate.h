@@ -14,6 +14,8 @@
 
 GAD_ASSUME_NONNULL_BEGIN
 
+/// The DFPCustomRenderedAd interstitial delegate protocol for notifying the delegate of changes to
+/// custom rendered interstitials.
 @protocol DFPCustomRenderedInterstitialDelegate<NSObject>
 
 /// Called after ad data has been received. You must construct an interstitial from

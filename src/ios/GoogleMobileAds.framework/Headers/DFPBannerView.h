@@ -6,7 +6,6 @@
 //
 
 #import <GoogleMobileAds/DFPCustomRenderedBannerViewDelegate.h>
-#import <GoogleMobileAds/GADAdSizeDelegate.h>
 #import <GoogleMobileAds/GADAppEventDelegate.h>
 #import <GoogleMobileAds/GADBannerView.h>
 #import <GoogleMobileAds/GADCorrelator.h>
@@ -35,18 +34,16 @@ GAD_ASSUME_NONNULL_BEGIN
 /// standard ad sizes (such as kGADAdSizeBanner), or create one using the GADAdSizeFromCGSize
 /// method.
 ///
-/// \see setValidAdSizesWithSizes:
-///
 /// Example:
 ///
-///   \code
+///   <pre>
 ///   NSArray *validSizes = @[
 ///     NSValueFromGADAdSize(kGADAdSizeBanner),
 ///     NSValueFromGADAdSize(kGADAdSizeLargeBanner)
 ///   ];
 ///
 ///   bannerView.validAdSizes = validSizes;
-///   \endcode
+///   </pre>
 @property(nonatomic, copy, GAD_NULLABLE) NSArray *validAdSizes;
 
 /// Correlator object for correlating this object to other ad objects.
@@ -68,16 +65,17 @@ GAD_ASSUME_NONNULL_BEGIN
 
 #pragma mark Deprecated
 
+/// Deprecated. Use the validAdSizes property.
 /// Sets the receiver's valid ad sizes to the values pointed to by the provided NULL terminated list
 /// of GADAdSize pointers.
 ///
 /// Example:
 ///
-///   \code
+///   <pre>
 ///   GADAdSize size1 = kGADAdSizeBanner;
 ///   GADAdSize size2 = kGADAdSizeLargeBanner;
 ///   [bannerView setValidAdSizesWithSizes:&size1, &size2, NULL];
-///   \endcode
+///   </pre>
 - (void)setValidAdSizesWithSizes:(GADAdSize *)firstSize, ... NS_REQUIRES_NIL_TERMINATION
                                  GAD_DEPRECATED_MSG_ATTRIBUTE("Use validAdSizes property.");
 

@@ -6,7 +6,11 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import <GoogleMobileAds/GADMediatedNativeAd.h>
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
 
 /// Notifies the Google Mobile Ads SDK about the events performed by adapters. Adapters may perform
 /// some action (e.g. opening an in app browser or open the iTunes store) when handling callbacks
@@ -37,3 +41,5 @@
 + (void)mediatedNativeAdWillLeaveApplication:(id<GADMediatedNativeAd>)mediatedNativeAd;
 
 @end
+
+GAD_ASSUME_NONNULL_END

@@ -60,8 +60,8 @@ GAD_ASSUME_NONNULL_BEGIN
 
 /// Returns the ad network class name that fetched the current ad. Returns nil while the latest ad
 /// request is in progress or if the latest ad request failed. For both standard and mediated Google
-/// AdMob ads, this method returns @"GADMAdapterGoogleAdMobAds". For ads fetched via mediation
-/// custom events, this method returns @"GADMAdapterCustomEvents".
+/// AdMob ads, this property returns @"GADMAdapterGoogleAdMobAds". For ads fetched via mediation
+/// custom events, this property returns @"GADMAdapterCustomEvents".
 @property(nonatomic, readonly, copy, GAD_NULLABLE) NSString *adNetworkClassName;
 
 /// Presents the interstitial ad which takes over the entire screen until the user dismisses it.

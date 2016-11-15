@@ -8,6 +8,10 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
+
 @protocol GADMediatedNativeAd;
 
 /// GADMediatedNativeAdDelegate objects handle mediated native ad events.
@@ -39,3 +43,5 @@
 - (void)mediatedNativeAd:(id<GADMediatedNativeAd>)mediatedNativeAd didUntrackView:(UIView *)view;
 
 @end
+
+GAD_ASSUME_NONNULL_END

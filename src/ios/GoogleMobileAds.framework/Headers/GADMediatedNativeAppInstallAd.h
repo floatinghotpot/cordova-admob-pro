@@ -6,35 +6,41 @@
 //
 
 #import <Foundation/Foundation.h>
+
 #import <GoogleMobileAds/GADMediatedNativeAd.h>
 #import <GoogleMobileAds/GADNativeAdImage.h>
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
 
 /// Provides methods used for constructing native app install ads. The adapter must return an object
 /// conforming to this protocol for native app install ad requests.
 @protocol GADMediatedNativeAppInstallAd<GADMediatedNativeAd>
 
 /// App title.
-- (NSString *)headline;
+- (NSString *GAD_NULLABLE_TYPE)headline;
 
 /// Array of GADNativeAdImage objects related to the advertised application.
-- (NSArray *)images;
+- (NSArray *GAD_NULLABLE_TYPE)images;
 
 /// App description.
-- (NSString *)body;
+- (NSString *GAD_NULLABLE_TYPE)body;
 
 /// Application icon.
-- (GADNativeAdImage *)icon;
+- (GADNativeAdImage *GAD_NULLABLE_TYPE)icon;
 
 /// Text that encourages user to take some action with the ad. For example "Install".
-- (NSString *)callToAction;
+- (NSString *GAD_NULLABLE_TYPE)callToAction;
 
 /// App store rating (0 to 5).
-- (NSDecimalNumber *)starRating;
+- (NSDecimalNumber *GAD_NULLABLE_TYPE)starRating;
 
 /// The app store name. For example, "App Store".
-- (NSString *)store;
+- (NSString *GAD_NULLABLE_TYPE)store;
 
 /// String representation of the app's price.
-- (NSString *)price;
+- (NSString *GAD_NULLABLE_TYPE)price;
 
 @end
+
+GAD_ASSUME_NONNULL_END

@@ -13,6 +13,8 @@
 #import <GoogleMobileAds/GADNativeAdImage.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
+GAD_ASSUME_NONNULL_BEGIN
+
 /// Native custom template ad. To request this ad type, you need to pass
 /// kGADAdLoaderAdTypeNativeCustomTemplate (see GADAdLoaderAdTypes.h) to the |adTypes| parameter in
 /// GADAdLoader's initializer method. If you request this ad type, your delegate must conform to the
@@ -27,17 +29,17 @@
 
 /// Returns the native ad image corresponding to the specified key or nil if the image is not
 /// available.
-- (GADNativeAdImage *)imageForKey:(NSString *)key;
+- (GADNativeAdImage *GAD_NULLABLE_TYPE)imageForKey:(NSString *)key;
 
 /// Returns the string corresponding to the specified key or nil if the string is not available.
-- (NSString *)stringForKey:(NSString *)key;
+- (NSString *GAD_NULLABLE_TYPE)stringForKey:(NSString *)key;
 
 /// Call when the user clicks on the ad. Provide the asset key that best matches the asset the user
 /// interacted with. Provide |customClickHandler| only if this template is configured with a custom
 /// click action, otherwise pass in nil. If a block is provided, the ad's built-in click actions are
 /// ignored and |customClickHandler| is executed after recording the click.
 - (void)performClickOnAssetWithKey:(NSString *)assetKey
-                customClickHandler:(dispatch_block_t)customClickHandler;
+                customClickHandler:(dispatch_block_t GAD_NULLABLE_TYPE)customClickHandler;
 
 /// Call when the ad is displayed on screen to the user. Can be called multiple times. Only the
 /// first impression is recorded.
@@ -59,3 +61,5 @@
     didReceiveNativeCustomTemplateAd:(GADNativeCustomTemplateAd *)nativeCustomTemplateAd;
 
 @end
+
+GAD_ASSUME_NONNULL_END

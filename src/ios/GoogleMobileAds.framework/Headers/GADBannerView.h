@@ -20,19 +20,16 @@ GAD_ASSUME_NONNULL_BEGIN
 /// The view that displays banner ads. A minimum implementation to get an ad from within a
 /// UIViewController class is:
 ///
-///   \code
+///   <pre>
 ///   // Create and setup the ad view, specifying the size and origin at {0, 0}.
 ///   GADBannerView *adView = [[GADBannerView alloc] initWithAdSize:kGADAdSizeBanner];
 ///   adView.rootViewController = self;
 ///   adView.adUnitID = @"ID created when registering your app";
-///
 ///   // Place the ad view onto the screen.
 ///   [self.view addSubview:adView];
-///
 ///   // Request an ad without any additional targeting information.
 ///   [adView loadRequest:[GADRequest request]];
-///   \endcode
-///
+///   </pre>
 @interface GADBannerView : UIView
 
 #pragma mark Initialization
@@ -90,8 +87,8 @@ GAD_ASSUME_NONNULL_BEGIN
 
 /// The ad network class name that fetched the current ad. Returns nil while the latest ad request
 /// is in progress or if the latest ad request failed. For both standard and mediated Google AdMob
-/// ads, this method returns @"GADMAdapterGoogleAdMobAds". For ads fetched via mediation custom
-/// events, this method returns @"GADMAdapterCustomEvents".
+/// ads, this property returns @"GADMAdapterGoogleAdMobAds". For ads fetched via mediation custom
+/// events, this property returns @"GADMAdapterCustomEvents".
 @property(nonatomic, readonly, copy, GAD_NULLABLE) NSString *adNetworkClassName;
 
 #pragma mark Deprecated

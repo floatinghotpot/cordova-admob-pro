@@ -7,7 +7,10 @@
 
 #import <Foundation/Foundation.h>
 
-#import "GADCustomEventRequest.h"
+#import <GoogleMobileAds/GADCustomEventRequest.h>
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
 
 @protocol GADCustomEventNativeAdDelegate;
 
@@ -17,13 +20,13 @@
 
 /// Called when the custom event is scheduled to be executed.
 ///
-/// \param serverParameter A value configured in the mediation UI for the custom event.
-/// \param request Ad targeting information.
-/// \param adTypes List of requested native ad types. See GADAdLoaderAdTypes.h for available ad
+/// @param serverParameter A value configured in the mediation UI for the custom event.
+/// @param request Ad targeting information.
+/// @param adTypes List of requested native ad types. See GADAdLoaderAdTypes.h for available ad
 /// types.
-/// \param options Additional options configured by the publisher for requesting a native ad. See
+/// @param options Additional options configured by the publisher for requesting a native ad. See
 /// GADNativeAdImageAdLoaderOptions.h for available image options.
-/// \param rootViewController Publisher-provided view controller.
+/// @param rootViewController Publisher-provided view controller.
 - (void)requestNativeAdWithParameter:(NSString *)serverParameter
                              request:(GADCustomEventRequest *)request
                              adTypes:(NSArray *)adTypes
@@ -48,6 +51,8 @@
 - (BOOL)handlesUserImpressions;
 
 /// Delegate object used for receiving custom native ad load request progress.
-@property(nonatomic, weak) id<GADCustomEventNativeAdDelegate> delegate;
+@property(nonatomic, weak, GAD_NULLABLE) id<GADCustomEventNativeAdDelegate> delegate;
 
 @end
+
+GAD_ASSUME_NONNULL_END

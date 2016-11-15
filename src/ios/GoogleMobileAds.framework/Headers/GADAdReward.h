@@ -11,6 +11,7 @@
 
 GAD_ASSUME_NONNULL_BEGIN
 
+/// Reward information for GADRewardBasedVideoAd ads.
 @interface GADAdReward : NSObject
 
 /// Type of the reward.
