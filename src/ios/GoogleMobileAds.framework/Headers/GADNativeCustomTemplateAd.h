@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 
 #import <GoogleMobileAds/GADAdLoaderDelegate.h>
+#import <GoogleMobileAds/GADMediaView.h>
 #import <GoogleMobileAds/GADNativeAd.h>
 #import <GoogleMobileAds/GADNativeAdImage.h>
+#import <GoogleMobileAds/GADVideoController.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
 GAD_ASSUME_NONNULL_BEGIN
@@ -26,6 +28,14 @@ GAD_ASSUME_NONNULL_BEGIN
 
 /// Array of available asset keys.
 @property(nonatomic, readonly) NSArray *availableAssetKeys;
+
+/// Returns video controller for controlling receiver's video. Returns nil if receiver doesn't
+/// has a video.
+@property(nonatomic, readonly, strong, GAD_NULLABLE) GADVideoController *videoController;
+
+/// Returns media view for rendering video loaded by the receiver. Returns nil if receiver doesn't
+/// has a video.
+@property(nonatomic, readonly, strong, GAD_NULLABLE) GADMediaView *mediaView;
 
 /// Returns the native ad image corresponding to the specified key or nil if the image is not
 /// available.

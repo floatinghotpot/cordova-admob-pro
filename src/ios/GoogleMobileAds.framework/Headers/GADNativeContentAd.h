@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 
 #import <GoogleMobileAds/GADAdLoaderDelegate.h>
+#import <GoogleMobileAds/GADMediaView.h>
 #import <GoogleMobileAds/GADNativeAd.h>
 #import <GoogleMobileAds/GADNativeAdImage.h>
+#import <GoogleMobileAds/GADVideoController.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
 GAD_ASSUME_NONNULL_BEGIN
@@ -40,6 +42,9 @@ GAD_ASSUME_NONNULL_BEGIN
 @property(nonatomic, readonly, copy, GAD_NULLABLE) NSString *callToAction;
 /// Identifies the advertiser. For example, the advertiser’s name or visible URL.
 @property(nonatomic, readonly, copy, GAD_NULLABLE) NSString *advertiser;
+/// Video controller for controlling video playback in GADNativeContentAdView's mediaView. Returns
+/// nil if the ad doesn't contain a video asset.
+@property(nonatomic, strong, readonly, GAD_NULLABLE) GADVideoController *videoController;
 @end
 
 #pragma mark - Protocol and constants
@@ -72,6 +77,8 @@ GAD_ASSUME_NONNULL_BEGIN
 @property(nonatomic, weak, GAD_NULLABLE) IBOutlet UIView *callToActionView;
 /// Weak reference to your ad view's advertiser asset view.
 @property(nonatomic, weak, GAD_NULLABLE) IBOutlet UIView *advertiserView;
+/// Weak reference to your ad view's media asset view.
+@property(nonatomic, weak, GAD_NULLABLE) IBOutlet GADMediaView *mediaView;
 
 @end
 
