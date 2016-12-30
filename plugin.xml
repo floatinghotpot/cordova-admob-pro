@@ -21,7 +21,7 @@
         <clobbers target="window.AdMob" />
     </js-module>
 
-    <dependency id="cordova-plugin-extension" url="https://github.com/floatinghotpot/cordova-extension"/>
+    <dependency id="cordova-plugin-extension" url="https://github.com/Fafois/cordova-extension"/>
 	
     <!-- android -->
     <platform name="android">
