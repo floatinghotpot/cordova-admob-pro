@@ -62,6 +62,7 @@ declare module AdMob {
 		static BANNER:String;
 		static MEDIUM_RECTANGLE:String;
 		static FULL_BANNER:String;
+		static LARGE_BANNER:String;
 		static LEADERBOARD:String;
 		static SKYSCRAPER:String;
 	}
