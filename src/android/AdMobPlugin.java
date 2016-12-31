@@ -541,6 +541,8 @@ protected void __showInterstitial(Object interstitial) {
       return AdSize.LEADERBOARD;
     } else if ("SKYSCRAPER".equals(size)) {
       return AdSize.WIDE_SKYSCRAPER;
+    } else if ("LARGE_BANNER".equals(size)) {
+      return AdSize.LARGE_BANNER;
     } else {
       return null;
     }

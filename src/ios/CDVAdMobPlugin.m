@@ -85,6 +85,9 @@
 - (NSString*) __getTestInterstitialId {
     return TEST_INTERSTITIALID;
 }
+- (NSString*) __getTestRewardVideoId {
+  return TEST_REWARDVIDEOID;
+}
 
 - (void) parseOptions:(NSDictionary *)options
 {
@@ -226,6 +229,8 @@
         return kGADAdSizeLeaderboard;
     } else if ([str isEqualToString:@"SKYSCRAPER"]) {
         return kGADAdSizeSkyscraper;
+    } else if ([str isEqualToString:@"LARGE_BANNER"]) {
+        return kGADAdSizeLargeBanner;
     } else {
         return kGADAdSizeInvalid;
     }
