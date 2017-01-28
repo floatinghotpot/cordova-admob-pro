@@ -15,6 +15,7 @@
 
 @protocol GADMAdNetworkConnector;
 
+/// Ad network adapter protocol.
 @protocol GADMAdNetworkAdapter<NSObject>
 
 /// Returns a version string for the adapter. It can be any string that uniquely identifies the

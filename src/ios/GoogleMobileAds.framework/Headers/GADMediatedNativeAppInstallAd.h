@@ -41,6 +41,11 @@ GAD_ASSUME_NONNULL_BEGIN
 /// String representation of the app's price.
 - (NSString *GAD_NULLABLE_TYPE)price;
 
+@optional
+
+/// AdChoices view.
+- (UIView *GAD_NULLABLE_TYPE)adChoicesView;
+
 @end
 
 GAD_ASSUME_NONNULL_END

@@ -63,6 +63,7 @@ framework module GoogleMobileAds {
   header "GADAdLoaderAdTypes.h"
   header "GADAdLoaderDelegate.h"
 
+  header "GADAdChoicesView.h"
   header "GADNativeAd.h"
   header "GADNativeAdDelegate.h"
   header "GADNativeAdImage.h"

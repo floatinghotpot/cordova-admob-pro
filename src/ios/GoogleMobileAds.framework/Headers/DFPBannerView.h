@@ -9,6 +9,7 @@
 #import <GoogleMobileAds/GADAppEventDelegate.h>
 #import <GoogleMobileAds/GADBannerView.h>
 #import <GoogleMobileAds/GADCorrelator.h>
+#import <GoogleMobileAds/GADVideoController.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
 GAD_ASSUME_NONNULL_BEGIN
@@ -57,11 +58,20 @@ GAD_ASSUME_NONNULL_BEGIN
 @property(nonatomic, weak, GAD_NULLABLE)
     IBOutlet id<DFPCustomRenderedBannerViewDelegate> customRenderedBannerViewDelegate;
 
+/// Video controller for controlling video rendered by this ad view.
+@property(nonatomic, strong, readonly) GADVideoController *videoController;
+
 /// If you've set enableManualImpressions to YES, call this method when the ad is visible.
 - (void)recordImpression;
 
 /// Use this function to resize the banner view without launching a new ad request.
 - (void)resize:(GADAdSize)size;
+
+/// Sets options that configure ad loading.
+///
+/// @param adOptions An array of GADAdLoaderOptions objects. The array is deep copied and option
+/// objects cannot be modified after calling this method.
+- (void)setAdOptions:(NSArray *)adOptions;
 
 #pragma mark Deprecated
 

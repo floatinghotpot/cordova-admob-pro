@@ -29,9 +29,8 @@ GAD_ASSUME_NONNULL_BEGIN
 /// Array of available asset keys.
 @property(nonatomic, readonly) NSArray *availableAssetKeys;
 
-/// Returns video controller for controlling receiver's video. Returns nil if receiver doesn't
-/// has a video.
-@property(nonatomic, readonly, strong, GAD_NULLABLE) GADVideoController *videoController;
+/// Returns video controller for controlling receiver's video.
+@property(nonatomic, readonly, strong) GADVideoController *videoController;
 
 /// Returns media view for rendering video loaded by the receiver. Returns nil if receiver doesn't
 /// has a video.

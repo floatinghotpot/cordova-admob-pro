@@ -34,6 +34,11 @@ GAD_ASSUME_NONNULL_BEGIN
 /// Identifies the advertiser. For example, the advertiser’s name or visible URL.
 - (NSString *GAD_NULLABLE_TYPE)advertiser;
 
+@optional
+
+/// AdChoices view.
+- (UIView *GAD_NULLABLE_TYPE)adChoicesView;
+
 @end
 
 GAD_ASSUME_NONNULL_END

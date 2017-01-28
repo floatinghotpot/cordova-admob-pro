@@ -70,14 +70,18 @@
 
 #pragma mark Deprecated
 
+/// Deprecated. Use -adapterDidReceiveInterstitial:.
 - (void)adapter:(id<GADMAdNetworkAdapter>)adapter
     didReceiveInterstitial:(NSObject *)interstitial
-    GAD_DEPRECATED_MSG_ATTRIBUTE("Use adapterDidReceiveInterstitial:.");
+    GAD_DEPRECATED_MSG_ATTRIBUTE("Use -adapterDidReceiveInterstitial:.");
 
+/// Deprecated. Use -adapterDidGetAdClick:.
 - (void)adapter:(id<GADMAdNetworkAdapter>)adapter
-    clickDidOccurInBanner:(UIView *)view GAD_DEPRECATED_MSG_ATTRIBUTE("Use adapterDidGetAdClick:.");
+    clickDidOccurInBanner:(UIView *)view
+    GAD_DEPRECATED_MSG_ATTRIBUTE("Use -adapterDidGetAdClick:.");
 
+/// Deprecated. Use -adapter:didFailAd:.
 - (void)adapter:(id<GADMAdNetworkAdapter>)adapter
-    didFailInterstitial:(NSError *)error GAD_DEPRECATED_MSG_ATTRIBUTE("Use adapter:didFailAd:");
+    didFailInterstitial:(NSError *)error GAD_DEPRECATED_MSG_ATTRIBUTE("Use -adapter:didFailAd:");
 
 @end
