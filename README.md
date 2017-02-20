@@ -116,7 +116,8 @@ If use other tools or online build services, see:
 * [x] Google Mobile Chrome App ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/05.-How-to-Use-with-Mobile-Chrome-App))
 * [x] Adobe PhoneGap Build. ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/00.-How-To-Use-with-PhoneGap-Build))
 * [x] Meteor ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/06.-How-To-Use-with-Meteor))
-* [x] Ionic/AngularJS ([In ng-cordova ...](https://github.com/driftyco/ng-cordova/blob/master/src/plugins/googleAds.js), [Inoic Demo](https://github.com/floatinghotpot/admob-ionic-demo/tree/master/demo))
+* [x] Ionic, [Inoic Demo](https://github.com/jaivehall/admob-ionic-demo)
+* [x] Ionic2, [Inoic2 Demo](https://github.com/jaivehall/admob-ionic2-demo)
 
 What's difference of the 3 plugin IDs, which one shall I use ?
 * com.google.cordova.admob
@@ -256,7 +257,8 @@ Other Documentations:
 * [Notice for Android Proguard](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Notice-for-Android-Proguard)
 
 Demo projects:
-* [App demo using Ionic framework](https://github.com/floatinghotpot/admob-demo-app-ionic/tree/master/demo)
+* [App demo for Ionic](https://github.com/jaivehall/admob-ionic-demo), by Jaive
+* [App demo for Ionic2](https://github.com/jaivehall/admob-ionic2-demo), by Jaive
 * [Game demo using phaser game engine](https://github.com/floatinghotpot/admob-demo-game-phaser/tree/master/demo)
 * [Game demo using PIXI game engine](https://github.com/floatinghotpot/admob-demo-game-pixi/tree/master/demo)
 
