@@ -18,6 +18,16 @@ GAD_ASSUME_NONNULL_BEGIN
 
 @optional
 
+#pragma mark Ad Lifecycle Events
+
+/// Called when an impression is recorded for an ad. Only called for Google ads and is not supported
+/// for mediation ads.
+- (void)nativeAdDidRecordImpression:(GADNativeAd *)nativeAd;
+
+/// Called when a click is recorded for an ad. Only called for Google ads and is not supported for
+/// mediation ads.
+- (void)nativeAdDidRecordClick:(GADNativeAd *)nativeAd;
+
 #pragma mark Click-Time Lifecycle Notifications
 
 /// Called just before presenting the user a full screen view, such as a browser, in response to

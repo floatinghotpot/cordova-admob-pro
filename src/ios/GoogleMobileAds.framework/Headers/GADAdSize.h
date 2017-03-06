@@ -19,12 +19,12 @@ GAD_ASSUME_NONNULL_BEGIN
 /// Do not create a GADAdSize manually. Use one of the kGADAdSize constants. Treat GADAdSize as an
 /// opaque type. Do not access any fields directly. To obtain a concrete CGSize, use the function
 /// CGSizeFromGADAdSize().
-typedef struct GADAdSize GADAdSize;
+typedef struct GAD_BOXABLE GADAdSize GADAdSize;
 
 /// Ad size.
 ///
 /// @see typedef GADAdSize
-struct GADAdSize {
+struct GAD_BOXABLE GADAdSize {
   CGSize size;       ///< The ad size. Don't modify this value directly.
   NSUInteger flags;  ///< Reserved.
 };

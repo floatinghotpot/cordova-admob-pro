@@ -24,11 +24,23 @@ GAD_ASSUME_NONNULL_BEGIN
 /// Delegate for receiving video notifications.
 @property(nonatomic, weak, GAD_NULLABLE) id<GADVideoControllerDelegate> delegate;
 
+/// Mute or unmute video. Set to YES to mute the video. Set to NO to allow the video to play sound.
+- (void)setMute:(BOOL)mute;
+
+/// Play the video. Doesn't do anything if the video is already playing.
+- (void)play;
+
+/// Pause the video. Doesn't do anything if the video is already paused.
+- (void)pause;
+
 /// Returns a Boolean indicating if the receiver has video content.
 - (BOOL)hasVideoContent;
 
 /// Returns the video's aspect ratio (width/height) or 0 if no video is present.
 - (double)aspectRatio;
+
+/// Indicates if video custom controls (i.e. play/pause/mute/unmute) are enabled.
+- (BOOL)customControlsEnabled;
 
 @end
 

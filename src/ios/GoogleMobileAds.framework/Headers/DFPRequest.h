@@ -30,7 +30,7 @@ GAD_EXTERN const id kDFPSimulatorID;
 /// This API is deprecated and a no-op, use an instance of GADCorrelator set on DFPInterstitial or
 /// DFPBannerView objects to correlate requests.
 + (void)updateCorrelator GAD_DEPRECATED_MSG_ATTRIBUTE(
-    "Set GADCorrelator objects on your ads instead. This method longer affects ad correlation.");
+    "Set GADCorrelator objects on your ads instead. This method no longer affects ad correlation.");
 
 @end
 

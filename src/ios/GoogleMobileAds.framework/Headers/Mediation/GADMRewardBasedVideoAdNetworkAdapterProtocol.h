@@ -20,8 +20,8 @@
 /// Returns Nil if the network does not have extra settings for publishers to send.
 + (Class<GADAdNetworkExtras>)networkExtrasClass;
 
-/// Returns an initialized instance of the adapter. The adapter must only maintain a weak reference
-/// to the provided connector.
+/// Returns an initialized instance of the adapter when mediation ad requests come in. The adapter
+/// must only maintain a weak reference to the provided connector.
 - (instancetype)initWithRewardBasedVideoAdNetworkConnector:
         (id<GADMRewardBasedVideoAdNetworkConnector>)connector;
 
@@ -44,6 +44,14 @@
 - (void)stopBeingDelegate;
 
 @optional
+
+/// Adapters that want to be initialized as early as possible should implement this method to
+/// opt-into initialization when the publisher initializes the Google Mobile Ads SDK. If not
+/// implemented, initWithRewardBasedVideoAdNetworkConnector: gets called the first time the
+/// publisher loads a rewarded video ad.
+- (instancetype)initWithRewardBasedVideoAdNetworkConnector:
+                    (id<GADMRewardBasedVideoAdNetworkConnector>)connector
+                                               credentials:(NSArray<NSDictionary *> *)credentials;
 
 /// Returns an initialized instance of the adapter. The adapter must only maintain a weak reference
 /// to the provided connector.
