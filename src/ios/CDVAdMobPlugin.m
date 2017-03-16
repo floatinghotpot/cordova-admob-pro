@@ -17,7 +17,7 @@
 
 #define TEST_BANNER_ID           @"ca-app-pub-3940256099942544/4480807092"
 #define TEST_INTERSTITIALID      @"ca-app-pub-3940256099942544/4411468910"
-#define TEST_REWARDVIDEOID       @"ca-app-pub-3940256099942544/3995920692"
+#define TEST_REWARDVIDEOID       @"ca-app-pub-3940256099942544/1712485313"
 
 #define OPT_ADCOLONY        @"AdColony"
 #define OPT_ADCOLONY        @"AdColony"
