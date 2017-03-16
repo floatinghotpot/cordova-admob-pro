@@ -77,18 +77,21 @@ button {
   var admobid = {};
   if( /(android)/i.test(navigator.userAgent) ) {
     admobid = { // for Android
-      banner: 'ca-app-pub-6869992474017983/9375997553',
-      interstitial: 'ca-app-pub-6869992474017983/1657046752'
+      banner: 'ca-app-pub-3940256099942544/6300978111',
+      interstitial: 'ca-app-pub-3940256099942544/1033173712',
+      rewardvideo: 'ca-app-pub-3940256099942544/1042454297',
     };
   } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) {
     admobid = { // for iOS
-      banner: 'ca-app-pub-6869992474017983/4806197152',
-      interstitial: 'ca-app-pub-6869992474017983/7563979554'
+      banner: 'ca-app-pub-3940256099942544/4480807092',
+      interstitial: 'ca-app-pub-3940256099942544/4411468910',
+      rewardvideo: 'ca-app-pub-3940256099942544/3995920692',
     };
   } else {
     admobid = { // for Windows Phone
       banner: 'ca-app-pub-6869992474017983/8878394753',
-      interstitial: 'ca-app-pub-6869992474017983/1355127956'
+      interstitial: 'ca-app-pub-6869992474017983/1355127956',
+      rewardvideo: '',
     };
   }
 
@@ -174,6 +177,18 @@ button {
       AdMob.showInterstitial();
     });
 
+    // test rewarded video ad
+    $('#btn_preparevideo').click(function(){
+      AdMob.prepareRewardVideoAd({
+        adId:admobid.rewardvideo,
+        autoShow: $('#autoshowvideo').is(':checked'),
+      });
+    });
+
+    $('#btn_showvideo').click(function(){
+      AdMob.showRewardVideoAd();
+    });
+
     // test case for #256, https://github.com/floatinghotpot/cordova-admob-pro/issues/256
     $(document).on('backbutton', function(){
       if(window.confirm('Are you sure to quit?')) navigator.app.exitApp();
@@ -235,6 +250,11 @@ button {
     <input type='checkbox' id='autoshow' checked />auto show when ready<br />
     <button id='btn_prepare'>prepareInterstitial</button>
     <button id='btn_showfull'>showInterstitial</button>
+
+    <h3>Rewarded Video</h3>
+    <input type='checkbox' id='autoshowvideo' checked />auto show when ready<br />
+    <button id='btn_preparevideo'>prepareRewardVideoAd</button>
+    <button id='btn_showvideo'>showRewardVideoAd</button>
 
     <p><textarea rows=4 cols=30 id='textinfo'></textarea></p>
 

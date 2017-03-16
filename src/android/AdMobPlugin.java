@@ -680,6 +680,7 @@ protected void __showInterstitial(Object interstitial) {
 
     @Override
     public void onRewardedVideoAdClosed() {
+      rewardVideoAd = null; //<-- Added line before the fireAdEvent to reload onAdDismiss
       fireAdEvent(EVENT_AD_DISMISS, ADTYPE_REWARDVIDEO);
 
       // if focus on webview of banner, press back button will quit
