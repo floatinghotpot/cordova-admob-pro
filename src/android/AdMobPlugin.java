@@ -648,6 +648,7 @@ protected void __showInterstitial(Object interstitial) {
       synchronized (mLock) {
         mIsRewardedVideoLoading = false;
       }
+      rewardVideoAd = null; //<-- Added line before the fireAdEvent
       fireAdErrorEvent(EVENT_AD_FAILLOAD, errorCode, getErrorReason(errorCode), ADTYPE_REWARDVIDEO);
     }
 
@@ -680,7 +681,7 @@ protected void __showInterstitial(Object interstitial) {
 
     @Override
     public void onRewardedVideoAdClosed() {
-      rewardVideoAd = null; //<-- Added line before the fireAdEvent to reload onAdDismiss
+      rewardVideoAd = null; //<-- Added line before the fireAdEvent
       fireAdEvent(EVENT_AD_DISMISS, ADTYPE_REWARDVIDEO);
 
       // if focus on webview of banner, press back button will quit
