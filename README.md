@@ -116,8 +116,8 @@ If use other tools or online build services, see:
 * [x] Google Mobile Chrome App ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/05.-How-to-Use-with-Mobile-Chrome-App))
 * [x] Adobe PhoneGap Build. ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/00.-How-To-Use-with-PhoneGap-Build))
 * [x] Meteor ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/06.-How-To-Use-with-Meteor))
-* [x] Ionic, [Inoic Demo](https://github.com/jaivehall/admob-ionic-demo)
-* [x] Ionic2, [Inoic2 Demo](https://github.com/jaivehall/admob-ionic2-demo)
+* [x] Ionic, [Ionic Demo](https://github.com/jaivehall/admob-ionic-demo)
+* [x] Ionic2, [Ionic2 Demo](https://github.com/jaivehall/admob-ionic2-demo)
 
 What's difference of the 3 plugin IDs, which one shall I use ?
 * com.google.cordova.admob
