@@ -23,6 +23,10 @@ Cordova / PhoneGap Plugin for Google Ads, including AdMob / DFP (doubleclick for
 
 This Cordova / PhoneGap plugin enables displaying mobile Ads with single line of javascript code. Designed for the use in HTML5-based cross-platform hybrid games and other applications.
 
+This version is used with Firebase, and compatible with other plugins using Firebase, such as FCM.
+
+If you don't plan to include Firebase in your app, use the standalone version cordova-plugin-admobpro.
+
 ## History
 
 Community-driven project. Designed and maintained by [Raymond Xie](http://github.com/floatinghotpot/) since August 2014. It also features integration in AngularJS projects via [ngCordova] (http://www.ngcordova.com).

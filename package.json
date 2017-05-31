@@ -1,9 +1,9 @@
 {
-  "name": "cordova-plugin-admobpro",
+  "name": "cordova-plugin-admobpro-firebase",
   "version": "2.29.0",
-  "description": "Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Show mobile Ad with single line of JavaScript. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, Ionic, Meteor, etc.",
+  "description": "Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Used with Firebase. If you don't plan to include Firebase in your app, use the standalone version cordova-plugin-admobpro.",
   "cordova": {
-    "id": "cordova-plugin-admobpro",
+    "id": "cordova-plugin-admobpro-firebase",
     "platforms": [
       "android",
       "ios",
