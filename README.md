@@ -76,7 +76,7 @@ Wanna quickly see the mobile ad on your simulator or device? Try the following c
     plugin-verify admob-demo-game-pixi ios --landscape
     plugin-verify admob-demo-game-phaser ios --landscape
 
-    # Demo 4: run admob demo in app powered by ionic/angular framework
+    # Demo 4: run admob demo in app powered by Ionic/Angular framework
     plugin-verify admob-demo-app-ionic ios --portrait
 ```
 
@@ -116,8 +116,8 @@ If use other tools or online build services, see:
 * [x] Google Mobile Chrome App ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/05.-How-to-Use-with-Mobile-Chrome-App))
 * [x] Adobe PhoneGap Build. ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/00.-How-To-Use-with-PhoneGap-Build))
 * [x] Meteor ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/06.-How-To-Use-with-Meteor))
-* [x] Ionic, [Ionic Demo](https://github.com/jaivehall/admob-ionic-demo)
-* [x] Ionic2, [Ionic2 Demo](https://github.com/jaivehall/admob-ionic2-demo)
+* [x] Ionic V1, [Ionic V1 Demo](https://github.com/jaivehall/admob-ionic-demo)
+* [x] Ionic, [Ionic Demo](https://github.com/jaivehall/admob-ionic2-demo)
 
 What's difference of the 3 plugin IDs, which one shall I use ?
 * com.google.cordova.admob
@@ -257,8 +257,8 @@ Other Documentations:
 * [Notice for Android Proguard](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Notice-for-Android-Proguard)
 
 Demo projects:
-* [App demo for Ionic](https://github.com/jaivehall/admob-ionic-demo), by Jaive
-* [App demo for Ionic2](https://github.com/jaivehall/admob-ionic2-demo), by Jaive
+* [App demo for Ionic V1](https://github.com/jaivehall/admob-ionic-demo), by Jaive
+* [App demo for Ionic](https://github.com/jaivehall/admob-ionic2-demo), by Jaive
 * [Game demo using phaser game engine](https://github.com/floatinghotpot/admob-demo-game-phaser/tree/master/demo)
 * [Game demo using PIXI game engine](https://github.com/floatinghotpot/admob-demo-game-pixi/tree/master/demo)
 
@@ -274,8 +274,8 @@ Demo projects:
 
 More video by developers:
 * [How to add banner ads to phonegap apps using AdMob Pro for android](https://youtu.be/VzoukTxnbhc), by pointDeveloper
-* [How to add Banner ads To Ionic apps with Admob Pro For android](https://youtu.be/qNg8c4J03dE), by pointDeveloper
-* [How To Add Banner Ads To Ionic 2 with AdMob Cordova Plugin](https://youtu.be/dfHPlVvIUR0), by pointDeveloper
+* [How to add Banner ads To Ionic V1 apps with Admob Pro For android](https://youtu.be/qNg8c4J03dE), by pointDeveloper
+* [How To Add Banner Ads To Ionic with AdMob Cordova Plugin](https://youtu.be/dfHPlVvIUR0), by pointDeveloper
 * [How to add Interstitial Add on navigation for phonegap using JavaScript and AdMob Pro plugin](https://youtu.be/5YvikM3ySXc), by pointDeveloper
 * [How to add banner ads to jQuery Mobile Apps using Phonegap AdMob Pro Plugin](https://youtu.be/ceCHJl0c908), by pointDeveloper
 * [Intel XDK - Monetizando seu aplicativo com Admob e intel xdk.](https://youtu.be/Bo_deb1vKYk), in Portuguese, by XDK PLUS
