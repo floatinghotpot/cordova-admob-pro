@@ -190,7 +190,7 @@ Optional mediations to increase your revenue (Read about [AdMob Mediation Networ
 ```bash
 cordova plugin add cordova-plugin-admob-facebook
 cordova plugin add cordova-plugin-admob-flurry
-cordova plugin add cordova-plugin-admob-iad
+cordova plugin add cordova-plugin-admob-unityads
 cordova plugin add cordova-plugin-admob-inmobi
 cordova plugin add cordova-plugin-admob-mmedia
 cordova plugin add cordova-plugin-admob-mobfox
