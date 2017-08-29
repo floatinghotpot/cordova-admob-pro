@@ -33,7 +33,7 @@ extern NSString *const GADNativeCustomTemplateAdMediaViewKey;
 @property(nonatomic, readonly) NSString *templateID;
 
 /// Array of available asset keys.
-@property(nonatomic, readonly) NSArray *availableAssetKeys;
+@property(nonatomic, readonly) NSArray<NSString *> *availableAssetKeys;
 
 /// Returns video controller for controlling receiver's video.
 @property(nonatomic, readonly, strong) GADVideoController *videoController;
@@ -83,7 +83,7 @@ extern NSString *const GADNativeCustomTemplateAdMediaViewKey;
 @protocol GADNativeCustomTemplateAdLoaderDelegate<GADAdLoaderDelegate>
 
 /// Called when requesting an ad. Asks the delegate for an array of custom template ID strings.
-- (NSArray *)nativeCustomTemplateIDsForAdLoader:(GADAdLoader *)adLoader;
+- (NSArray<NSString *> *)nativeCustomTemplateIDsForAdLoader:(GADAdLoader *)adLoader;
 
 /// Tells the delegate that a native custom template ad was received.
 - (void)adLoader:(GADAdLoader *)adLoader

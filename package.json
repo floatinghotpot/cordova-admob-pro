@@ -1,6 +1,6 @@
 {
   "name": "cordova-plugin-admobpro-firebase",
-  "version": "2.29.21",
+  "version": "2.29.22",
   "description": "Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Used with Firebase. If you don't plan to include Firebase in your app, use the standalone version cordova-plugin-admobpro.",
   "cordova": {
     "id": "cordova-plugin-admobpro-firebase",
