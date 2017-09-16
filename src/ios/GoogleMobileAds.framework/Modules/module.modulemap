@@ -20,6 +20,7 @@ framework module GoogleMobileAds {
   link framework "MobileCoreServices"
   link framework "OpenGLES"
   link framework "SafariServices"
+  link framework "Security"
   link framework "StoreKit"
   link framework "SystemConfiguration"
   link framework "UIKit"

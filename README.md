@@ -120,8 +120,8 @@ If use other tools or online build services, see:
 * [x] Google Mobile Chrome App ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/05.-How-to-Use-with-Mobile-Chrome-App))
 * [x] Adobe PhoneGap Build. ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/00.-How-To-Use-with-PhoneGap-Build))
 * [x] Meteor ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/06.-How-To-Use-with-Meteor))
-* [x] Ionic, [Ionic Demo](https://github.com/jaivehall/admob-ionic-demo)
-* [x] Ionic2, [Ionic2 Demo](https://github.com/jaivehall/admob-ionic2-demo)
+* [x] Ionic V1, [Ionic V1 Demo](https://github.com/jaivehall/admob-ionic-demo)
+* [x] Ionic, [Ionic Demo](https://github.com/jaivehall/admob-ionic2-demo)
 
 What's difference of the 3 plugin IDs, which one shall I use ?
 * com.google.cordova.admob
@@ -261,8 +261,8 @@ Other Documentations:
 * [Notice for Android Proguard](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Notice-for-Android-Proguard)
 
 Demo projects:
-* [App demo for Ionic](https://github.com/jaivehall/admob-ionic-demo), by Jaive
-* [App demo for Ionic2](https://github.com/jaivehall/admob-ionic2-demo), by Jaive
+* [App demo for Ionic V1](https://github.com/jaivehall/admob-ionic-demo), by Jaive
+* [App demo for Ionic](https://github.com/jaivehall/admob-ionic2-demo), by Jaive
 * [Game demo using phaser game engine](https://github.com/floatinghotpot/admob-demo-game-phaser/tree/master/demo)
 * [Game demo using PIXI game engine](https://github.com/floatinghotpot/admob-demo-game-pixi/tree/master/demo)
 
@@ -320,7 +320,7 @@ RPM (revenue per 1000 impression) |  US$ 0.5~4 | US$ 10~50
 
 ⚠：Remember Google's slogan: "Don't be evil". Invalid usage violating Google rules, may cause your AdMob account suspended ! 
 
-* AdMob publisher may NOT abuse or encourage abuse any Google products, including Google Play, YouTube or Bolgger, incuding allow user downloading YouTube video, or embed YouTube video in your own apps.
+* AdMob publisher may NOT abuse or encourage abuse any Google products, including Google Play, YouTube or Blogger, incuding allow user downloading YouTube video, or embed YouTube video in your own apps.
 
 * Publishers may NOT click their own ads or use any means to inflate impressions and/or clicks artificially, including manual methods. Testing your own ads by clicking on them is not allowed.
 
