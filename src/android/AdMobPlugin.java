@@ -180,9 +180,11 @@ public class AdMobPlugin extends GenericAdPlugin {
     if(view instanceof PublisherAdView) {
       PublisherAdView dfpView = (PublisherAdView) view;
       return dfpView.getAdSize();
-    } else {
+    } else if(view instanceof AdView) {
       AdView admobView = (AdView) view;
       return admobView.getAdSize();
+    } else {
+      return new AdSize(0,0);
     }
   }
 

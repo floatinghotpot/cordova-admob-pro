@@ -46,7 +46,7 @@ extern NSString *const GADNativeCustomTemplateAdMediaViewKey;
 /// click action, otherwise set it to nil. If this property is set to a non-nil value, the ad's
 /// built-in click actions are ignored and |customClickHandler| is executed when a click on the
 /// asset is received.
-@property(atomic, copy) GADNativeAdCustomClickHandler customClickHandler;
+@property(atomic, copy, GAD_NULLABLE) GADNativeAdCustomClickHandler customClickHandler;
 
 /// Returns the native ad image corresponding to the specified key or nil if the image is not
 /// available.
