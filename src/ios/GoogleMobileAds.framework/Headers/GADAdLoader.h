@@ -31,6 +31,9 @@ GAD_ASSUME_NONNULL_BEGIN
 /// The ad loader's ad unit ID.
 @property(nonatomic, readonly) NSString *adUnitID;
 
+/// Indicates whether the ad loader is loading.
+@property(nonatomic, getter=isLoading, readonly) BOOL loading;
+
 /// Returns an initialized ad loader configured to load the specified ad types.
 ///
 /// @param rootViewController The root view controller is used to present ad click actions.

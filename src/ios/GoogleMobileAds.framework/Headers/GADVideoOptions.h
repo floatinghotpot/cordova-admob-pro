@@ -19,6 +19,9 @@ GAD_ASSUME_NONNULL_BEGIN
 /// Indicates if the requested video should have custom controls enabled for play/pause/mute/unmute.
 @property(nonatomic, assign) BOOL customControlsRequested;
 
+/// Indicates whether the requested video should have the click to expand behavior.
+@property(nonatomic, assign) BOOL clickToExpandRequested;
+
 @end
 
 GAD_ASSUME_NONNULL_END
