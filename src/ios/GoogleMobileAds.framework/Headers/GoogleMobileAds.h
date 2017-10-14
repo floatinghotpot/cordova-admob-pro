@@ -21,7 +21,6 @@ FOUNDATION_EXPORT const unsigned char GoogleMobileAdsVersionString[];
 // Header files.
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
-#import <GoogleMobileAds/GADAdDelegate.h>
 #import <GoogleMobileAds/GADAdNetworkExtras.h>
 #import <GoogleMobileAds/GADAdSize.h>
 #import <GoogleMobileAds/GADAudioVideoManagerDelegate.h>
@@ -71,6 +70,7 @@ FOUNDATION_EXPORT const unsigned char GoogleMobileAdsVersionString[];
 #import <GoogleMobileAds/GADNativeContentAdAssetIDs.h>
 #import <GoogleMobileAds/GADNativeCustomTemplateAd.h>
 
+#import <GoogleMobileAds/GADMultipleAdsAdLoaderOptions.h>
 #import <GoogleMobileAds/GADNativeAdImageAdLoaderOptions.h>
 #import <GoogleMobileAds/GADNativeAdViewAdOptions.h>
 
