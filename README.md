@@ -37,7 +37,7 @@ From May 2015, Cordova team announced the deprecation of Cordova registry, and s
 
 Platforms supported:
 - [x] Android, via SDK v10.0.1 (part of Google Play service, see [Release Notes](https://developers.google.com/admob/android/rel-notes))
-- [x] iOS, via SDK v7.15.0 (with bitcode support, see [Release Notes](https://developers.google.com/admob/ios/rel-notes))
+- [x] iOS, via SDK v7.24.1 (see [Release Notes](https://developers.google.com/admob/ios/rel-notes))
 - [x] Windows Phone, via SDK v6.5.13 (see [Release Notes](https://developers.google.com/admob/wp/rel-notes))
 - [x] Amazon-FireOS, via Android SDK (part of Google Play service)
 
@@ -108,6 +108,10 @@ Wanna quickly see the mobile ad on your simulator or device? Try the following c
 ```bash
 cordova plugin add cordova-plugin-admobpro
 ```
+Or,
+```bash
+cordova plugin add cordova-plugin-admobpro-firebase
+```
 
 If use other tools or online build services, see:
 * [x] Apache Cordova CLI, v3.0+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/01.-How-to-Use-with-Cordova-CLI))
@@ -119,10 +123,11 @@ If use other tools or online build services, see:
 * [x] Ionic V1, [Ionic V1 Demo](https://github.com/jaivehall/admob-ionic-demo)
 * [x] Ionic, [Ionic Demo](https://github.com/jaivehall/admob-ionic2-demo)
 
-What's difference of the 3 plugin IDs, which one shall I use ?
+What's difference of the 4 plugin IDs, which one shall I use ?
 * com.google.cordova.admob
-* cordova-plugin-admobpro
 * cordova-plugin-admob
+* cordova-plugin-admobpro
+* cordova-plugin-admobpro-firebase
 
 Read: [Difference of Plugin ID](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Difference-of-Plugin-IDs)
 
