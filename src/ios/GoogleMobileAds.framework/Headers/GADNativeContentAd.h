@@ -13,6 +13,7 @@
 #import <GoogleMobileAds/GADMediaView.h>
 #import <GoogleMobileAds/GADNativeAd.h>
 #import <GoogleMobileAds/GADNativeAdImage.h>
+#import <GoogleMobileAds/GADNativeContentAdAssetIDs.h>
 #import <GoogleMobileAds/GADVideoController.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
 
@@ -46,9 +47,21 @@ GAD_ASSUME_NONNULL_BEGIN
 /// Video controller for controlling video playback in GADNativeContentAdView's mediaView.
 @property(nonatomic, strong, readonly) GADVideoController *videoController;
 
-/// Registers ad view and asset views created from this native ad.
+/// Registers ad view and asset views created with this native ad.
 /// @param assetViews Dictionary of asset views keyed by asset IDs.
-- (void)registerAdView:(UIView *)adView assetViews:(NSDictionary<NSString *, UIView *> *)assetViews;
+- (void)registerAdView:(UIView *)adView
+            assetViews:(NSDictionary<GADNativeContentAdAssetID, UIView *> *)assetViews
+    GAD_DEPRECATED_MSG_ATTRIBUTE("Use -registerAdView:clickableAssetViews:nonclickableAssetViews:");
+
+/// Registers ad view, clickable asset views, and nonclickable asset views with this native ad.
+/// Media view shouldn't be registered as clickable.
+/// @param clickableAssetViews Dictionary of asset views that are clickable, keyed by asset IDs.
+/// @param nonclickableAssetViews Dictionary of asset views that are not clickable, keyed by asset
+///        IDs.
+- (void)registerAdView:(UIView *)adView
+       clickableAssetViews:(NSDictionary<GADNativeContentAdAssetID, UIView *> *)clickableAssetViews
+    nonclickableAssetViews:
+        (NSDictionary<GADNativeContentAdAssetID, UIView *> *)nonclickableAssetViews;
 
 /// Unregisters ad view from this native ad. The corresponding asset views will also be
 /// unregistered.

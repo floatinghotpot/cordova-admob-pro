@@ -21,7 +21,7 @@ GAD_ASSUME_NONNULL_BEGIN
 typedef void (^GADNativeAdCustomClickHandler)(NSString *assetID);
 
 /// Asset key for the GADMediaView asset view.
-extern NSString *const GADNativeCustomTemplateAdMediaViewKey;
+GAD_EXTERN NSString *const GADNativeCustomTemplateAdMediaViewKey;
 
 /// Native custom template ad. To request this ad type, you need to pass
 /// kGADAdLoaderAdTypeNativeCustomTemplate (see GADAdLoaderAdTypes.h) to the |adTypes| parameter in
