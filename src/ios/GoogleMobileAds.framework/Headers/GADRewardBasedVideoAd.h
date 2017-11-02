@@ -31,6 +31,11 @@ GAD_ASSUME_NONNULL_BEGIN
 /// events, this property returns the mediated custom event adapter.
 @property(nonatomic, readonly, copy, GAD_NULLABLE) NSString *adNetworkClassName;
 
+/// A unique identifier used to identify the user when making server-to-server reward callbacks.
+/// This value is used at both request time and during ad display. New values must only be set
+/// before ad requests.
+@property(nonatomic, copy, GAD_NULLABLE) NSString *userIdentifier;
+
 /// Returns the shared GADRewardBasedVideoAd instance.
 + (GADRewardBasedVideoAd *)sharedInstance;
 

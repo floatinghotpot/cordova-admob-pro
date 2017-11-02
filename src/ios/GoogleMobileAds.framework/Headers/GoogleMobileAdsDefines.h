@@ -14,13 +14,13 @@
 #endif  // defined(__cplusplus)
 
 #if defined(__has_feature) && defined(__has_attribute)
-#if __has_feature(attribute_GAD_DEPRECATED_with_message)
+#if __has_feature(attribute_deprecated_with_message)
 #define GAD_DEPRECATED_MSG_ATTRIBUTE(s) __attribute__((deprecated(s)))
 #elif __has_attribute(deprecated)
 #define GAD_DEPRECATED_MSG_ATTRIBUTE(s) __attribute__((deprecated))
 #else
 #define GAD_DEPRECATED_MSG_ATTRIBUTE(s)
-#endif  // __has_feature(attribute_GAD_DEPRECATED_with_message)
+#endif  // __has_feature(attribute_deprecated_with_message)
 #if __has_attribute(deprecated)
 #define GAD_DEPRECATED_ATTRIBUTE __attribute__((deprecated))
 #else

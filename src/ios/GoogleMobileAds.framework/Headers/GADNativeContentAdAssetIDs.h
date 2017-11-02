@@ -11,16 +11,18 @@
 
 GAD_ASSUME_NONNULL_BEGIN
 
-GAD_EXTERN NSString *const GADNativeContentHeadlineAsset;
-GAD_EXTERN NSString *const GADNativeContentBodyAsset;
-GAD_EXTERN NSString *const GADNativeContentCallToActionAsset;
-GAD_EXTERN NSString *const GADNativeContentAdvertiserAsset;
-GAD_EXTERN NSString *const GADNativeContentImageAsset;
-GAD_EXTERN NSString *const GADNativeContentLogoAsset;
-GAD_EXTERN NSString *const GADNativeContentAttributionIconAsset;
-GAD_EXTERN NSString *const GADNativeContentAttributionTextAsset;
-GAD_EXTERN NSString *const GADNativeContentMediaViewAsset;
-GAD_EXTERN NSString *const GADNativeContentAdChoicesViewAsset;
-GAD_EXTERN NSString *const GADNativeContentBackgroundAsset;
+typedef NSString *GADNativeContentAdAssetID GAD_STRING_ENUM;
+
+GAD_EXTERN GADNativeContentAdAssetID const GADNativeContentHeadlineAsset;
+GAD_EXTERN GADNativeContentAdAssetID const GADNativeContentBodyAsset;
+GAD_EXTERN GADNativeContentAdAssetID const GADNativeContentCallToActionAsset;
+GAD_EXTERN GADNativeContentAdAssetID const GADNativeContentAdvertiserAsset;
+GAD_EXTERN GADNativeContentAdAssetID const GADNativeContentImageAsset;
+GAD_EXTERN GADNativeContentAdAssetID const GADNativeContentLogoAsset;
+GAD_EXTERN GADNativeContentAdAssetID const GADNativeContentAttributionIconAsset;
+GAD_EXTERN GADNativeContentAdAssetID const GADNativeContentAttributionTextAsset;
+GAD_EXTERN GADNativeContentAdAssetID const GADNativeContentMediaViewAsset;
+GAD_EXTERN GADNativeContentAdAssetID const GADNativeContentAdChoicesViewAsset;
+GAD_EXTERN GADNativeContentAdAssetID const GADNativeContentBackgroundAsset;
 
 GAD_ASSUME_NONNULL_END

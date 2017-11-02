@@ -14,6 +14,6 @@ GAD_ASSUME_NONNULL_BEGIN
 /// Key for getting the server parameter configured in AdMob when mediating to a custom event
 /// adapter.
 /// Example: NSString *serverParameter = connector.credentials[GADCustomEventParametersServer].
-extern NSString *const GADCustomEventParametersServer;
+GAD_EXTERN NSString *const GADCustomEventParametersServer;
 
 GAD_ASSUME_NONNULL_END
