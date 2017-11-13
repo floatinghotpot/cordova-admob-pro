@@ -429,7 +429,7 @@ protected void __showInterstitial(Object interstitial) {
     if(mLocation != null) builder.setLocation(mLocation);
     if(mForFamily != null) {
       Bundle extras = new Bundle();
-      extras.putBoolean("is_designed_for_families", ("yes".compareToIgnoreCase(mForChild) == 0));
+      extras.putBoolean("is_designed_for_families", ("yes".compareToIgnoreCase(mForFamily) == 0));
       builder.addNetworkExtrasBundle(AdMobAdapter.class, extras);
     }
     if(mForChild != null) {
