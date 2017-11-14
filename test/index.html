@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8" />
-<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width" />
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, viewport-fit=cover" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black">
@@ -147,12 +147,34 @@ button {
           ', adEvent:' + data.adEvent); // adType: 'banner', 'interstitial', etc.
     });
     $(document).on('onAdLoaded', function(e){
+        if(typeof e.originalEvent !== 'undefined') e = e.originalEvent;
+        var data = e.data || e;
+
+        if(data.adType === 'interstitial') {
+            $('#h3_full').text('Interstitial Ready');
+            $('#btn_showfull').prop('disabled', false);
+
+        } else if(data.adType === 'rewardvideo') {
+            $('#h3_video').text('Rewarded Video Ready');
+            $('#btn_showvideo').prop('disabled', false);
+        }
     });
     $(document).on('onAdPresent', function(e){
     });
     $(document).on('onAdLeaveApp', function(e){
     });
     $(document).on('onAdDismiss', function(e){
+        if(typeof e.originalEvent !== 'undefined') e = e.originalEvent;
+        var data = e.data || e;
+
+        if(data.adType === 'interstitial') {
+            $('#h3_full').text('Interstitial');
+            $('#btn_showfull').prop('disabled', true);
+
+        } else if(data.adType === 'rewardvideo') {
+            $('#h3_video').text('Rewarded Video');
+            $('#btn_showvideo').prop('disabled', true);
+        }
     });
 
     $('#btn_create').click(createSelectedBanner);
@@ -206,6 +228,9 @@ button {
   });
 
   $(document).ready(function(){
+    $('#btn_showfull').prop('disabled', true);
+    $('#btn_showvideo').prop('disabled', true);
+
     // on mobile device, we must wait the 'deviceready' event fired by cordova
     if(/(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent)) {
       document.addEventListener('deviceready', onDeviceReady, false);
@@ -217,7 +242,7 @@ button {
 </script>
   <div id="fullpage">
     <p>Demo for AdMob Plugin</p>
-    <h3>Banner</h3>
+    <h3 id='h3_banner'>Banner</h3>
     <input type='checkbox' id='overlap' />overlap
     <input type='checkbox' id='offsetTopBar' />offsetTopBar
     <br/>
@@ -246,12 +271,12 @@ button {
     <button id='btn_hide'>hideBanner</button>
     <hr />
 
-    <h3>Interstitial</h3>
+    <h3 id='h3_full'>Interstitial</h3>
     <input type='checkbox' id='autoshow' checked />auto show when ready<br />
     <button id='btn_prepare'>prepareInterstitial</button>
     <button id='btn_showfull'>showInterstitial</button>
 
-    <h3>Rewarded Video</h3>
+    <h3 id='h3_video'>Rewarded Video</h3>
     <input type='checkbox' id='autoshowvideo' checked />auto show when ready<br />
     <button id='btn_preparevideo'>prepareRewardVideoAd</button>
     <button id='btn_showvideo'>showRewardVideoAd</button>
