@@ -7,13 +7,18 @@
 
 #import <Foundation/Foundation.h>
 
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
 @class GADDefaultInAppPurchase;
 @class GADInAppPurchase;
+
+GAD_ASSUME_NONNULL_BEGIN
 
 #pragma mark - Default Purchase Flow
 
 /// In-app purchase delegate protocol for default purchase handling. The delegate must deliver
 /// the purchased item then call the GADDefaultInAppPurchase object's finishTransaction method.
+GAD_DEPRECATED_ATTRIBUTE
 @protocol GADDefaultInAppPurchaseDelegate<NSObject>
 
 /// Called when the user successfully paid for a purchase. You must first deliver the purchased
@@ -33,6 +38,7 @@
 
 /// In-app purchase delegate protocol for custom purchase handling. The delegate must handle the
 /// product purchase flow then call the GADInAppPurchase object's reportPurchaseStatus: method.
+GAD_DEPRECATED_ATTRIBUTE
 @protocol GADInAppPurchaseDelegate<NSObject>
 
 /// Called when the user clicks on the buy button of an in-app purchase ad. After the receiver
@@ -40,3 +46,5 @@
 - (void)didReceiveInAppPurchase:(GADInAppPurchase *)purchase;
 
 @end
+
+GAD_ASSUME_NONNULL_END

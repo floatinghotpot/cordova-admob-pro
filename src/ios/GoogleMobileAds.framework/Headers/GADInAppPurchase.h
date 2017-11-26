@@ -8,6 +8,10 @@
 #import <Foundation/Foundation.h>
 #import <StoreKit/StoreKit.h>
 
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
+
 @protocol GADDefaultInAppPurchaseDelegate;
 
 #pragma mark - Default Purchase Flow
@@ -17,12 +21,13 @@
 /// Instances of this class are created and passed to your in-app purchase delegate after the user
 /// has successfully paid for a product. Your code must correctly deliver the product to the user
 /// and then call the didCompletePurchase method to finish the transaction.
+
+GAD_DEPRECATED_ATTRIBUTE
 @interface GADDefaultInAppPurchase : NSObject
 
 /// Enables the default consumable product in-app purchase flow handled by the Google Mobile Ads
 /// SDK. The GADDefaultInAppPurchaseDelegate object is retained while the default purchase flow is
-/// enabled. This method adds a SKPaymentTransactionObserver to the default SKPaymentQueue. Remove
-/// any existing transaction observers before calling this method.
+/// enabled. This method adds a SKPaymentTransactionObserver to the default SKPaymentQueue.
 ///
 /// Call this method early in your application to handle unfinished transactions from previous
 /// application sessions. For example, call this method in your application delegate's
@@ -53,6 +58,7 @@
 #pragma mark - Custom Purchase Flow
 
 /// Enum of the different statuses resulting from processing a purchase.
+GAD_DEPRECATED_ATTRIBUTE
 typedef NS_ENUM(NSInteger, GADInAppPurchaseStatus) {
   kGADInAppPurchaseStatusError = 0,          ///< Error occured while processing the purchase.
   kGADInAppPurchaseStatusSuccessful = 1,     ///< Purchase was completed successfully.
@@ -65,6 +71,7 @@ typedef NS_ENUM(NSInteger, GADInAppPurchaseStatus) {
 /// Instances of this class are created and passed to your GADInAppPurchaseDelegate object when
 /// users click a buy button. It is important to report the result of the purchase back to the SDK
 /// in order to track metrics about the transaction.
+GAD_DEPRECATED_ATTRIBUTE
 @interface GADInAppPurchase : NSObject
 
 /// The in-app purchase product ID.
@@ -79,3 +86,5 @@ typedef NS_ENUM(NSInteger, GADInAppPurchaseStatus) {
 - (void)reportPurchaseStatus:(GADInAppPurchaseStatus)purchaseStatus;
 
 @end
+
+GAD_ASSUME_NONNULL_END

@@ -7,6 +7,10 @@
 
 #import <Foundation/Foundation.h>
 
+#import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+
+GAD_ASSUME_NONNULL_BEGIN
+
 /// An object implementing this protocol contains information set by the publisher on the client
 /// device for a particular ad network.
 ///
@@ -14,3 +18,5 @@
 /// use.
 @protocol GADAdNetworkExtras<NSObject>
 @end
+
+GAD_ASSUME_NONNULL_END
