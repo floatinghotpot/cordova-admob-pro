@@ -298,8 +298,6 @@ Android Banner | Android Interstitial
 
 Some important tips, FYI.
 
-![Recomended](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/good.png)
-
 - [x] Why Google AdMob is recommended ?
 
 Advertisement is main business and income source of Google, so clients are all around the world. Google is one of the most rialable partners for its high standard service.
@@ -317,28 +315,31 @@ RPM (revenue per 1000 impression) |  US$ 0.5~4 | US$ 10~50
 
 - [x] Using SMART_BANNER to auto-fit the screen width, avoid using BANNER or FULL_BANNER (unless you are using DFP)
 
-![Warning](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/warning.png)
-
 ⚠：Remember Google's slogan: "Don't be evil". Invalid usage violating Google rules, may cause your AdMob account suspended ! 
 
 * AdMob publisher may NOT abuse or encourage abuse any Google products, including Google Play, YouTube or Blogger, incuding allow user downloading YouTube video, or embed YouTube video in your own apps.
 
 * Publishers may NOT click their own ads or use any means to inflate impressions and/or clicks artificially, including manual methods. Testing your own ads by clicking on them is not allowed.
 
-⚠：请记住谷歌的口号：“不作恶”。任何违反合作规范、损害广告商和用户利益的行为，会导致你的 APP 被下架，甚至你的 AdMob 帐号被禁用！
-
-* AdMob发布商不得滥用或鼓励滥用任何Google产品，如Google Play、YouTube或Blogger。这包括规避任何Google产品的政策或条款或提供规避途径，例如允许用户下载YouTube视频等。不得刻意引诱用户点击广告，也不可以在自己的APP中点击广告（测试只能使用非正式的测试广告）。
-
 More details, please read [AdMob & AdSense policies](https://support.google.com/admob/answer/6128543?hl=en&ref_topic=2745287)
 
 ## License
 
-You can use this plugin for free during trial purpose. If it earns less than $1000 for you, you can continue to use for free. 
+You can use the plugin for free, or you can also pay to get a license. IMPORTANT!!! Before using the plugin, please read the following content and accept the agreement. THIS WILL AVOID POTENTIAL PROBLEM AND DISPUTE.
 
-If use in commercial project, please [get a license](http://rjfun.github.io/), or, you have monetized more than $1000 using this plugin, you are also required to: either get a commercial license ($20), or, no need pay but share 2% Ad traffic, read the [License Agreement](https://github.com/floatinghotpot/cordova-admob-pro/wiki/License-Agreement) for details. As a commercial customer, you will be supported with high priority, via private email or even Skype chat.
+There are 3 license options, fully up to you:
+1. Free and Open Source, no support
+2. Commercial, with email/skype support
+3. Win-win partnership, with forum support
 
 If you hope to get a fully open source plugin (either need DIY, or hope to get full control on the code), use this open source one instead. Fork and pull request is welcome, but please mention it's derived source. Simply renaming then publishing to npm is forbidden. Open source project URL:
 https://github.com/floatinghotpot/cordova-plugin-admob
+
+If use in commercial project, please [get a license](http://rjfun.github.io/), or, you have monetized more than $1000 using this plugin, you are also required to either get a commercial license ($20). As a commercial customer, you will be supported with high priority, via private email or even Skype chat.
+
+If you don't want to get a license as your apps may not earn too much, or you don't have a PayPal account to pay, here is a compromised option. You don't have to pay, we are also okay if just share 2 percent user traffic, so that we can cover our effort and focus on maintenance and online support. (We have maintained this project over 3 years, and closed more than 560 support issues)
+
+Please read the [License Agreement](https://github.com/floatinghotpot/cordova-admob-pro/wiki/License-Agreement) for details.
 
 ## Credits
 
