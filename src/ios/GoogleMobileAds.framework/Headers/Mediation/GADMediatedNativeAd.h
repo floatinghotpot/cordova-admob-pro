@@ -7,8 +7,8 @@
 
 #import <Foundation/Foundation.h>
 
-#import <GoogleMobileAds/GADMediatedNativeAdDelegate.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+#import <GoogleMobileAds/Mediation/GADMediatedNativeAdDelegate.h>
 
 GAD_ASSUME_NONNULL_BEGIN
 

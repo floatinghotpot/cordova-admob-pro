@@ -8,8 +8,8 @@
 #import <Foundation/Foundation.h>
 
 #import <GoogleMobileAds/GADCustomEventNativeAd.h>
-#import <GoogleMobileAds/GADMediatedNativeAd.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+#import <GoogleMobileAds/Mediation/GADMediatedNativeAd.h>
 
 GAD_ASSUME_NONNULL_BEGIN
 

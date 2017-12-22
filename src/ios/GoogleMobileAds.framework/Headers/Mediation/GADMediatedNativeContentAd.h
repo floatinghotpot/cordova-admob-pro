@@ -7,9 +7,9 @@
 
 #import <Foundation/Foundation.h>
 
-#import <GoogleMobileAds/GADMediatedNativeAd.h>
 #import <GoogleMobileAds/GADNativeAdImage.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+#import <GoogleMobileAds/Mediation/GADMediatedNativeAd.h>
 
 GAD_ASSUME_NONNULL_BEGIN
 
@@ -38,6 +38,12 @@ GAD_ASSUME_NONNULL_BEGIN
 
 /// AdChoices view.
 - (UIView *GAD_NULLABLE_TYPE)adChoicesView;
+
+/// Media view.
+- (UIView *GAD_NULLABLE_TYPE)mediaView;
+
+/// Returns YES if the ad has video content.
+- (BOOL)hasVideoContent;
 
 @end
 

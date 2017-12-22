@@ -36,17 +36,17 @@ From May 2015, Cordova team announced the deprecation of Cordova registry, and s
 ## Features
 
 Platforms supported:
-- [x] Android, via SDK v10.0.1 (part of Google Play service, see [Release Notes](https://developers.google.com/admob/android/rel-notes))
-- [x] iOS, via SDK v7.25.0 (see [Release Notes](https://developers.google.com/admob/ios/rel-notes))
-- [x] Windows Phone, via SDK v6.5.13 (see [Release Notes](https://developers.google.com/admob/wp/rel-notes))
+- [x] iOS, via SDK v7.27.0 (see [Release Notes](https://developers.google.com/admob/ios/rel-notes))
+- [x] Android, via Android SDK (part of Google Play service, see [Release Notes](https://developers.google.com/admob/android/rel-notes))
 - [x] Amazon-FireOS, via Android SDK (part of Google Play service)
+- [x] Windows Phone, via SDK v6.5.13 (see [Release Notes](https://developers.google.com/admob/wp/rel-notes))
 
 Ad Types:
 - [x] Banner
-- [x] Interstitial (text, picture, video)
-- [x] Reward Video
-- [x] IAP Ad
-- [x] Native Ad (Google new product, on roadmap)
+- [x] Interstitial (text, picture, video), highly recommended. :fire:
+- [x] Reward Video, highly recommended. :fire:
+- [ ] Native Ads (on roadmap)
+- [ ] Native Ads Advanced (on roadmap)
 
 Mediation to other Ad networks:
 * [x] AdMob (built-in)
@@ -108,9 +108,14 @@ Wanna quickly see the mobile ad on your simulator or device? Try the following c
 ```bash
 cordova plugin add cordova-plugin-admobpro
 ```
-Or,
+Or, if you see conflict when using Firebase, use this one instead:
 ```bash
 cordova plugin add cordova-plugin-admobpro-firebase
+```
+
+If you are using cordova-android@7.0.0 (auto fetched by cordova CLI v8), use this one:
+```bash
+cordova plugin add cordova-plugin-admob-pro
 ```
 
 If use other tools or online build services, see:
@@ -123,11 +128,12 @@ If use other tools or online build services, see:
 * [x] Ionic V1, [Ionic V1 Demo](https://github.com/jaivehall/admob-ionic-demo)
 * [x] Ionic, [Ionic Demo](https://github.com/jaivehall/admob-ionic2-demo)
 
-What's difference of the 4 plugin IDs, which one shall I use ?
+What's difference of these plugin IDs, which one shall I use ?
 * com.google.cordova.admob
 * cordova-plugin-admob
 * cordova-plugin-admobpro
 * cordova-plugin-admobpro-firebase
+* cordova-plugin-admob-pro
 
 Read: [Difference of Plugin ID](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Difference-of-Plugin-IDs)
 
