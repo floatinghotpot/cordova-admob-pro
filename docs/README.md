@@ -293,7 +293,7 @@ AdMob.createBanner({
 ```
 ## AdMob.showBanner(position) ##
 
-> **Purpose**: show banner at given position. It can also be used to move banner to given position.  It's not needed to removeBannr and create a new one.
+> **Purpose**: show banner at given position. It can also be used to move banner to given position.  It's not needed to removeBanner and create a new one.
 
 Params:
 - **position**, *integer*, see description in **AdMob.setOptions()**
