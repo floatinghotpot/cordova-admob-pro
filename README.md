@@ -113,11 +113,6 @@ Or, if you see conflict when using Firebase, use this one instead:
 cordova plugin add cordova-plugin-admobpro-firebase
 ```
 
-If you are using cordova-android@7.0.0 (auto fetched by cordova CLI v8), use this one:
-```bash
-cordova plugin add cordova-plugin-admob-pro
-```
-
 If use other tools or online build services, see:
 * [x] Apache Cordova CLI, v3.0+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/01.-How-to-Use-with-Cordova-CLI))
 * [x] Intel XDK, r1095+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/02.-How-to-Use-with-Intel-XDK))
@@ -133,7 +128,6 @@ What's difference of these plugin IDs, which one shall I use ?
 * cordova-plugin-admob
 * cordova-plugin-admobpro
 * cordova-plugin-admobpro-firebase
-* cordova-plugin-admob-pro
 
 Read: [Difference of Plugin ID](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Difference-of-Plugin-IDs)
 
