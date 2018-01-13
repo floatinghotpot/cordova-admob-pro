@@ -24,10 +24,6 @@ GAD_ASSUME_NONNULL_BEGIN
 /// is empty.
 @interface GADMediaView : UIView
 
-/// The associated native ad. Setting this property displays the native ad's media assets in this
-/// view.
-@property(nonatomic, weak) GADNativeAd *nativeAd;
-
 @end
 
 GAD_ASSUME_NONNULL_END

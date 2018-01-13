@@ -20,10 +20,6 @@ GAD_ASSUME_NONNULL_BEGIN
 /// GADNativeAppInstallAdView and GADNativeContentAdView.
 @interface GADAdChoicesView : UIView
 
-/// Native ad object that contains the AdChoices asset. Set this property to populate this view's
-/// content.
-@property(nonatomic, weak) GADNativeAd *nativeAd;
-
 @end
 
 GAD_ASSUME_NONNULL_END

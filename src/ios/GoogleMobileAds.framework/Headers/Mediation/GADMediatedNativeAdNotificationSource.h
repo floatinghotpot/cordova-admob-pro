@@ -7,15 +7,13 @@
 
 #import <Foundation/Foundation.h>
 
-#import <GoogleMobileAds/GADMediatedNativeAd.h>
 #import <GoogleMobileAds/GoogleMobileAdsDefines.h>
+#import <GoogleMobileAds/Mediation/GADMediatedNativeAd.h>
 
 GAD_ASSUME_NONNULL_BEGIN
 
-/// Notifies the Google Mobile Ads SDK about the events performed by adapters. Adapters may perform
-/// some action (e.g. opening an in app browser or open the iTunes store) when handling callbacks
-/// from GADMediatedNativeAdDelegate. Adapters in such case should notify the Google Mobile Ads SDK
-/// by calling the relevant methods from this class.
+/// Used by mediation adapters to notify the Google Mobile Ads SDK about events occurring in the
+/// lifecycle of a GADMediatedNativeAd.
 @interface GADMediatedNativeAdNotificationSource : NSObject
 
 /// Called by the adapter when it has registered an impression on the tracked view. Adapter should
@@ -26,7 +24,7 @@ GAD_ASSUME_NONNULL_BEGIN
 /// only call this method if -[GADMAdNetworkAdapter handlesUserClicks] returns YES.
 + (void)mediatedNativeAdDidRecordClick:(id<GADMediatedNativeAd>)mediatedNativeAd;
 
-/// Must be called by the adapter just before mediatedNativeAd has opened an in app modal screen.
+/// Must be called by the adapter just before mediatedNativeAd has opened an in-app modal screen.
 + (void)mediatedNativeAdWillPresentScreen:(id<GADMediatedNativeAd>)mediatedNativeAd;
 
 /// Must be called by the adapter just before the in app modal screen opened by mediatedNativeAd is
@@ -37,8 +35,18 @@ GAD_ASSUME_NONNULL_BEGIN
 /// dismissed.
 + (void)mediatedNativeAdDidDismissScreen:(id<GADMediatedNativeAd>)mediatedNativeAd;
 
-/// Must be called by the adapter just before mediatedNativeAd has left the application.
+/// Must be called by the adapter just before mediatedNativeAd causes another app (such as a browser
+/// or the App Store) to take input focus.
 + (void)mediatedNativeAdWillLeaveApplication:(id<GADMediatedNativeAd>)mediatedNativeAd;
+
+/// Called by the adapter when native video playback has begun or resumed.
++ (void)mediatedNativeAdDidPlayVideo:(id<GADMediatedNativeAd>)mediatedNativeAd;
+
+/// Called by the adapter when native video playback has paused.
++ (void)mediatedNativeAdDidPauseVideo:(id<GADMediatedNativeAd>)mediatedNativeAd;
+
+/// Called by the adapter when native video playback has ended.
++ (void)mediatedNativeAdDidEndVideoPlayback:(id<GADMediatedNativeAd>)mediatedNativeAd;
 
 @end
 
