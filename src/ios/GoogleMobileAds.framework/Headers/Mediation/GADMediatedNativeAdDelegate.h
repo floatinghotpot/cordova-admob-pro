@@ -19,11 +19,13 @@ GAD_ASSUME_NONNULL_BEGIN
 
 @optional
 
-/// Tells the delegate that the mediated native ad has rendered in |view|. viewController should be
-/// used to present modal views for the ad.
+/// Tells the delegate that the mediated native ad has rendered in |view| with clickable asset views
+/// and nonclickable asset views. viewController should be used to present modal views for the ad.
 - (void)mediatedNativeAd:(id<GADMediatedNativeAd>)mediatedNativeAd
-         didRenderInView:(UIView *)view
-          viewController:(UIViewController *)viewController;
+           didRenderInView:(UIView *)view
+       clickableAssetViews:(NSDictionary<NSString *, UIView *> *)clickableAssetViews
+    nonclickableAssetViews:(NSDictionary<NSString *, UIView *> *)nonclickableAssetViews
+            viewController:(UIViewController *)viewController;
 
 /// Tells the delegate that the mediated native ad has recorded an impression. This method is called
 /// only once per mediated native ad.
@@ -43,6 +45,15 @@ GAD_ASSUME_NONNULL_BEGIN
 /// when the view in which the mediated native ad has rendered is deallocated.
 - (void)mediatedNativeAd:(id<GADMediatedNativeAd>)mediatedNativeAd
           didUntrackView:(nullable UIView *)view;
+
+/// Tells the delegate that the mediated native ad has rendered in |view|. viewController should be
+/// used to present modal views for the ad.
+- (void)mediatedNativeAd:(id<GADMediatedNativeAd>)mediatedNativeAd
+         didRenderInView:(UIView *)view
+          viewController:(UIViewController *)viewController GAD_DEPRECATED_MSG_ATTRIBUTE(
+                             "Use "
+                             "-mediatedNativeAd:didRenderInView:clickableAssetViews:"
+                             "nonclickableAssetViews:viewController instead.");
 
 @end
 

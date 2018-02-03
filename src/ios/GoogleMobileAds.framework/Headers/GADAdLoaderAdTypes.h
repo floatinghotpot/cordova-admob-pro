@@ -34,4 +34,8 @@ GAD_EXTERN GADAdLoaderAdType const kGADAdLoaderAdTypeNativeCustomTemplate;
 /// conform to the DFPBannerAdLoaderDelegate protocol. See DFPBannerView.h.
 GAD_EXTERN GADAdLoaderAdType const kGADAdLoaderAdTypeDFPBanner;
 
+/// Use with GADAdLoader to request native ads. To receive ads, the ad loader's delegate must
+/// conform to the GADUnifiedNativeAdLoaderDelegate protocol. See GADUnifiedNativeAd.h.
+GAD_EXTERN GADAdLoaderAdType const kGADAdLoaderAdTypeUnifiedNative;
+
 GAD_ASSUME_NONNULL_END
