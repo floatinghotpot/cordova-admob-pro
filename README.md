@@ -221,7 +221,7 @@ isInterstitialReady(function(ready){ if(ready){ } });
 
 // use reward video
 prepareRewardVideoAd(adId/options, success, fail);
-showRewardVideoAd();
+showRewardVideoAd(successCallback, failureCallback);
 
 // set values for configuration and targeting
 setOptions(options, success, fail);
