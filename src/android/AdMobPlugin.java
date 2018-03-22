@@ -676,7 +676,7 @@ protected void __showInterstitial(Object interstitial) {
       fireAdEvent(EVENT_AD_WILLPRESENT, ADTYPE_REWARDVIDEO);
     }
 
-    @Override
+    //@Override
     public void onRewardedVideoStarted() {
       fireAdEvent(EVENT_AD_WILLPRESENT, ADTYPE_REWARDVIDEO);
     }
