@@ -82,7 +82,7 @@ Wanna quickly see the mobile ad on your simulator or device? Try the following c
 
 ## Quick start
 ```bash
-	# create a demo project
+    # create a demo project
     cordova create test1 com.rjfun.test1 Test1
     cd test1
     cordova platform add android
