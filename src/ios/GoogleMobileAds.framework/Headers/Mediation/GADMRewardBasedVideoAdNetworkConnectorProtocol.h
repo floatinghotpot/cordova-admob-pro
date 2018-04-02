@@ -39,6 +39,10 @@
 - (void)adapterDidStartPlayingRewardBasedVideoAd:
         (id<GADMRewardBasedVideoAdNetworkAdapter>)rewardBasedVideoAdAdapter;
 
+/// Tells the delegate that a reward based video ad has completed playing.
+- (void)adapterDidCompletePlayingRewardBasedVideoAd:
+        (id<GADMRewardBasedVideoAdNetworkAdapter>)rewardBasedVideoAdAdapter;
+
 /// Tells the delegate that a reward based video ad has closed.
 - (void)adapterDidCloseRewardBasedVideoAd:
         (id<GADMRewardBasedVideoAdNetworkAdapter>)rewardBasedVideoAdAdapter;

@@ -681,6 +681,11 @@ protected void __showInterstitial(Object interstitial) {
       fireAdEvent(EVENT_AD_WILLPRESENT, ADTYPE_REWARDVIDEO);
     }
 
+    //@Override
+    public void onRewardedVideoCompleted() {
+      fireAdEvent(EVENT_AD_WILLDISMISS, ADTYPE_REWARDVIDEO);
+    }
+
     @Override
     public void onRewardedVideoAdClosed() {
       rewardVideoAd = null; //<-- Added line before the fireAdEvent
