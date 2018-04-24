@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-admobpro-firebase"
-        version="2.31.4">
+        version="2.31.5">
       
     <name>AdMob Plugin Pro</name>
     <description>Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Used with Firebase. If you don't plan to include Firebase in your app, use the standalone version cordova-plugin-admobpro.</description>
