@@ -1,10 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        id="cordova-plugin-admobpro"
-        version="2.31.5">
-      
+<plugin 
+    xmlns="http://apache.org/cordova/ns/plugins/1.0" 
+    xmlns:android="http://schemas.android.com/apk/res/android" id="cordova-plugin-admobpro" version="2.31.5">
     <name>AdMob Plugin Pro</name>
     <description>Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Show mobile Ad with single line of JavaScript. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, Ionic, Meteor, etc.</description>
     <author>Liming Xie</author>
@@ -12,30 +9,24 @@
     <keywords>rjfun,admob,google,ad</keywords>
     <repo>https://github.com/floatinghotpot/cordova-admob-pro.git</repo>
     <issue>https://github.com/floatinghotpot/cordova-admob-pro/issues</issue>
-
     <engines>
-        <engine name="cordova-android" version="&gt;=3.5.0" />
+        <engine name="cordova" version="&gt;=7.1.0"/>
+        <engine name="cordova-android" version="&gt;=6.3.0" />
         <engine name="cordova-ios" version="&gt;=3.5.0" />
     </engines>
-
     <js-module src="www/AdMob.js" name="AdMob">
         <clobbers target="window.AdMob" />
     </js-module>
-
     <dependency id="cordova-plugin-extension" />
-
     <!-- android, now build with gradle instead of ant -->
     <platform name="android">
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
-                      android:name="com.google.android.gms.ads.AdActivity"
-                      android:theme="@android:style/Theme.Translucent" />
-          </config-file>
+            <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" android:name="com.google.android.gms.ads.AdActivity" android:theme="@android:style/Theme.Translucent" />
+        </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET"/>
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-          </config-file>
-          
+        </config-file>
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="AdMob">
                 <param name="android-package" value="com.rjfun.cordova.admob.AdMobPlugin"/>
@@ -44,25 +35,21 @@
         </config-file>
         <source-file src="src/android/AdMobMediation.java" target-dir="src/com/rjfun/cordova/admob" />
         <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
-
         <!-- cordova CLI using gradle and it working well -->
-        <framework src="com.google.android.gms:play-services-ads:+" />
+        <preference name="PLAY_SERVICES_VERSION" default="+"/>
+        <framework src="com.google.android.gms:play-services-ads:$PLAY_SERVICES_VERSION" />
         <!-- but unfortunately, build.phonegap.com, Intel XDK, and some other tools still use ant -->
         <!-- dependency id="cordova-plugin-googleplayservices"/ -->
-     </platform>
-     
+    </platform>
     <!-- same as android, but use ant instead of gradle -->
     <platform name="amazon-fireos">
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
-                      android:name="com.google.android.gms.ads.AdActivity"
-                      android:theme="@android:style/Theme.Translucent" />
-          </config-file>
+            <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" android:name="com.google.android.gms.ads.AdActivity" android:theme="@android:style/Theme.Translucent" />
+        </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET"/>
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-          </config-file>
-
+        </config-file>
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="AdMob">
                 <param name="android-package" value="com.rjfun.cordova.admob.AdMobPlugin"/>
@@ -71,82 +58,61 @@
         </config-file>
         <source-file src="src/android/AdMobMediation.java" target-dir="src/com/rjfun/cordova/admob" />
         <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
-
         <!-- amazon-fireos still using ant, AND default android r19 -->
         <!-- framework src="com.google.android.gms:play-services-ads:+" /-->
         <dependency id="cordova-plugin-googleplayservices"/>
-     </platform>
-
-     <!-- ios -->
-     <platform name="ios">
-         <config-file target="config.xml" parent="/*">
-             <feature name="AdMob">
-                 <param name="ios-package" value="CDVAdMobPlugin" />
-                 <param name="onload" value="true" />
-             </feature>
-         </config-file>
-
-         <header-file src="src/ios/CDVAdMobPlugin.h"/>
-         <source-file src="src/ios/CDVAdMobPlugin.m"/>
-         <header-file src="src/ios/AdMobMediation.h"/>
-         <source-file src="src/ios/AdMobMediation.m"/>
-         
-         <framework src="src/ios/GoogleMobileAds.framework" custom="true" />
-         
-         <framework src="AdSupport.framework" />
-         <framework src="AudioToolbox.framework" />
-         <framework src="AVFoundation.framework" />
-         <framework src="CoreBluetooth.framework" />
-         <framework src="CoreGraphics.framework" />
-         <framework src="CoreLocation.framework" />
-         <framework src="CoreMedia.framework" />
-         <framework src="CoreMotion.framework" />
-         <framework src="CoreTelephony.framework" />
-         <framework src="CoreVideo.framework" />
-         <framework src="EventKit.framework" />
-         <framework src="EventKitUI.framework" />
-         <framework src="Foundation.framework" />
-         <framework src="GLKit.framework" />
-         <framework src="MediaPlayer.framework" />
-         <framework src="MessageUI.framework" />
-         <framework src="OpenGLES.framework" />
-         <framework src="SafariServices.framework" />
-         <framework src="StoreKit.framework" />
-         <framework src="SystemConfiguration.framework" />
-         <framework src="UIKit.framework" />
     </platform>
-
-     <!-- Windows Phone 8 -->
-     <platform name="wp8">
-          <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
-               <Capability Name="ID_CAP_LOCATION" />
-          </config-file>
-          <config-file target="config.xml" parent="/*">
-               <feature name="AdMob">
-                    <param name="wp-package" value="AdMobPlugin"/>
-               </feature>
-          </config-file>
-          <source-file src="src/wp8/AdMobPlugin.cs" />
-          <source-file src="src/wp8/AdMobOptions.cs" />
-          
-          <framework src="src/wp8/GoogleAds.dll" custom="true" />
-     </platform>
-
-     <!-- Windows Phone 8.1+ -->
-     <!-- 
-     <platform name="windows">
-         <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
-             <Capability Name="ID_CAP_LOCATION" />
-         </config-file>
-         <config-file target="config.xml" parent="/*">
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
             <feature name="AdMob">
-                    <param name="wp-package" value="AdMobPlugin"/>
+                <param name="ios-package" value="CDVAdMobPlugin" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
+        <header-file src="src/ios/CDVAdMobPlugin.h"/>
+        <source-file src="src/ios/CDVAdMobPlugin.m"/>
+        <header-file src="src/ios/AdMobMediation.h"/>
+        <source-file src="src/ios/AdMobMediation.m"/>
+        <framework src="src/ios/GoogleMobileAds.framework" custom="true" />
+        <framework src="AdSupport.framework" />
+        <framework src="AudioToolbox.framework" />
+        <framework src="AVFoundation.framework" />
+        <framework src="CoreBluetooth.framework" />
+        <framework src="CoreGraphics.framework" />
+        <framework src="CoreLocation.framework" />
+        <framework src="CoreMedia.framework" />
+        <framework src="CoreMotion.framework" />
+        <framework src="CoreTelephony.framework" />
+        <framework src="CoreVideo.framework" />
+        <framework src="EventKit.framework" />
+        <framework src="EventKitUI.framework" />
+        <framework src="Foundation.framework" />
+        <framework src="GLKit.framework" />
+        <framework src="MediaPlayer.framework" />
+        <framework src="MessageUI.framework" />
+        <framework src="OpenGLES.framework" />
+        <framework src="SafariServices.framework" />
+        <framework src="StoreKit.framework" />
+        <framework src="SystemConfiguration.framework" />
+        <framework src="UIKit.framework" />
+    </platform>
+    <!-- Windows Phone 8 -->
+    <platform name="wp8">
+        <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
+            <Capability Name="ID_CAP_LOCATION" />
+        </config-file>
+        <config-file target="config.xml" parent="/*">
+            <feature name="AdMob">
+                <param name="wp-package" value="AdMobPlugin"/>
             </feature>
         </config-file>
         <source-file src="src/wp8/AdMobPlugin.cs" />
         <source-file src="src/wp8/AdMobOptions.cs" />
-          
         <framework src="src/wp8/GoogleAds.dll" custom="true" />
     </platform>
+    <!-- Windows Phone 8.1+ -->
+    <!--
+     <platform name="windows"><config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities"><Capability Name="ID_CAP_LOCATION" /></config-file><config-file target="config.xml" parent="/*"><feature name="AdMob"><param name="wp-package" value="AdMobPlugin"/></feature></config-file><source-file src="src/wp8/AdMobPlugin.cs" /><source-file src="src/wp8/AdMobOptions.cs" /><framework src="src/wp8/GoogleAds.dll" custom="true" /></platform>
     -->
 </plugin>
