@@ -29,6 +29,7 @@ GAD_ASSUME_NONNULL_BEGIN
 ///   // Request an ad without any additional targeting information.
 ///   [adView loadRequest:[GADRequest request]];
 ///   </pre>
+GAD_DEPRECATED_ATTRIBUTE
 @interface GADNativeExpressAdView : UIView
 
 #pragma mark - Initialization

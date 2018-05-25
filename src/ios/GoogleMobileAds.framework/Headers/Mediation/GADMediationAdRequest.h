@@ -28,13 +28,6 @@
 /// enabled.
 - (NSNumber *)childDirectedTreatment;
 
-/// The end user's gender set by the publisher in GADRequest. Returns kGADGenderUnknown if it has
-/// not been specified.
-- (GADGender)userGender;
-
-/// The end user's birthday set by the publisher. Returns nil if it has not been specified.
-- (NSDate *)userBirthday;
-
 /// Returns YES if the publisher has specified latitude and longitude location.
 - (BOOL)userHasLocation;
 
@@ -52,5 +45,15 @@
 
 /// Keywords describing the user's current activity. Example: @"Sport Scores".
 - (NSArray *)userKeywords;
+
+#pragma mark Deprecated
+
+/// Deprecated. The end user's gender set by the publisher in GADRequest. Returns kGADGenderUnknown
+/// if it has not been specified.
+- (GADGender)userGender GAD_DEPRECATED_ATTRIBUTE;
+
+/// Deprecated. The end user's birthday set by the publisher. Returns nil if it has not been
+/// specified.
+- (NSDate *)userBirthday GAD_DEPRECATED_ATTRIBUTE;
 
 @end

@@ -373,11 +373,6 @@ protected void __showInterstitial(Object interstitial) {
       }
     }
 
-    if(mGender != null) {
-      if("male".compareToIgnoreCase(mGender) != 0) builder.setGender(AdRequest.GENDER_MALE);
-      else if("female".compareToIgnoreCase(mGender) != 0) builder.setGender(AdRequest.GENDER_FEMALE);
-      else builder.setGender(AdRequest.GENDER_UNKNOWN);
-    }
     if(mLocation != null) builder.setLocation(mLocation);
     if(mForFamily != null) {
       Bundle extras = new Bundle();
@@ -421,11 +416,6 @@ protected void __showInterstitial(Object interstitial) {
       builder = builder.addNetworkExtras(new AdMobExtras(bundle));
     }
 
-    if(mGender != null) {
-      if("male".compareToIgnoreCase(mGender) != 0) builder.setGender(AdRequest.GENDER_MALE);
-      else if("female".compareToIgnoreCase(mGender) != 0) builder.setGender(AdRequest.GENDER_FEMALE);
-      else builder.setGender(AdRequest.GENDER_UNKNOWN);
-    }
     if(mLocation != null) builder.setLocation(mLocation);
     if(mForFamily != null) {
       Bundle extras = new Bundle();
