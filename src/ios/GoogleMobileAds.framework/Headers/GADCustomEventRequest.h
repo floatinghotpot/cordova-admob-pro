@@ -18,12 +18,6 @@ GAD_ASSUME_NONNULL_BEGIN
 /// forwarded to custom events for purposes of populating an ad request to a 3rd party ad network.
 @interface GADCustomEventRequest : NSObject
 
-/// User's gender set in GADRequest. If not specified, returns kGADGenderUnknown.
-@property(nonatomic, readonly, assign) GADGender userGender;
-
-/// User's birthday set in GADRequest. If not specified, returns nil.
-@property(nonatomic, readonly, copy, GAD_NULLABLE) NSDate *userBirthday;
-
 /// If the user's latitude, longitude, and accuracy are not specified, userHasLocation returns NO,
 /// and userLatitude, userLongitude, and userLocationAccuracyInMeters return 0.
 @property(nonatomic, readonly, assign) BOOL userHasLocation;
@@ -53,6 +47,14 @@ GAD_ASSUME_NONNULL_BEGIN
 
 /// Indicates if the testing property has been set in GADRequest.
 @property(nonatomic, readonly, assign) BOOL isTesting;
+
+#pragma mark Deprecated methods
+
+/// Deprecated. User's gender set in GADRequest. If not specified, returns kGADGenderUnknown.
+@property(nonatomic, readonly, assign) GADGender userGender GAD_DEPRECATED_ATTRIBUTE;
+
+/// Deprecated. User's birthday set in GADRequest. If not specified, returns nil.
+@property(nonatomic, readonly, copy, GAD_NULLABLE) NSDate *userBirthday GAD_DEPRECATED_ATTRIBUTE;
 
 @end
 

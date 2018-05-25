@@ -173,11 +173,6 @@
         request.testDevices = [NSArray arrayWithObjects:deviceId, kGADSimulatorID, nil];
         NSLog(@"request.testDevices: %@, <Google> tips handled", deviceId);
     }
-    if(self.mGender) {
-        if( [self.mForChild caseInsensitiveCompare:@"male"] == NSOrderedSame ) request.gender = kGADGenderMale;
-        else if( [self.mForChild caseInsensitiveCompare:@"female"] == NSOrderedSame ) request.gender = kGADGenderFemale;
-        else  request.gender = kGADGenderMale;
-    }
     if(self.mLocation) {
         double lat = [[self.mLocation objectAtIndex:0] doubleValue];
         double lng = [[self.mLocation objectAtIndex:1] doubleValue];
