@@ -46,7 +46,8 @@
         <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
 
         <!-- cordova CLI using gradle and it working well -->
-        <framework src="com.google.android.gms:play-services-ads:+" />
+	<preference name="PLAY_SERVICES_VERSION" default="+"/>
+        <framework src="com.google.android.gms:play-services-ads:$PLAY_SERVICES_VERSION" />
         <!-- but unfortunately, build.phonegap.com, Intel XDK, and some other tools still use ant -->
         <!-- dependency id="cordova-plugin-googleplayservices"/ -->
      </platform>
