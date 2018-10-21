@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-admobpro-firebase"
-        version="2.31.6">
+        version="2.35.0">
       
     <name>AdMob Plugin Pro</name>
     <description>Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Used with Firebase. If you don't plan to include Firebase in your app, use the standalone version cordova-plugin-admobpro.</description>
@@ -23,6 +23,7 @@
     </js-module>
 
     <dependency id="cordova-plugin-extension" />
+    <dependency id="cordova-admobsdk" version="~7.35.0"/>
 
     <!-- android, now build with gradle instead of ant -->
     <platform name="android">
@@ -30,7 +31,7 @@
             <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
                       android:name="com.google.android.gms.ads.AdActivity"
                       android:theme="@android:style/Theme.Translucent" />
-          </config-file>
+        </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET"/>
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -46,7 +47,8 @@
         <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
 
         <!-- cordova CLI using gradle and it working well -->
-        <framework src="com.google.firebase:firebase-ads:+" />
+	    <preference name="PLAY_SERVICES_VERSION" default="16.0.0"/>
+	    <framework src="com.google.firebase:firebase-ads:$PLAY_SERVICES_VERSION" />
         <!-- but unfortunately, build.phonegap.com, Intel XDK, and some other tools still use ant -->
         <!-- dependency id="cordova-plugin-googleplayservices"/ -->
      </platform>
@@ -57,11 +59,11 @@
             <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
                       android:name="com.google.android.gms.ads.AdActivity"
                       android:theme="@android:style/Theme.Translucent" />
-          </config-file>
+        </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET"/>
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-          </config-file>
+        </config-file>
 
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="AdMob">
@@ -90,30 +92,8 @@
          <source-file src="src/ios/CDVAdMobPlugin.m"/>
          <header-file src="src/ios/AdMobMediation.h"/>
          <source-file src="src/ios/AdMobMediation.m"/>
-         
-         <framework src="src/ios/GoogleMobileAds.framework" custom="true" />
-         
-         <framework src="AdSupport.framework" />
-         <framework src="AudioToolbox.framework" />
-         <framework src="AVFoundation.framework" />
-         <framework src="CoreBluetooth.framework" />
-         <framework src="CoreGraphics.framework" />
-         <framework src="CoreLocation.framework" />
-         <framework src="CoreMedia.framework" />
-         <framework src="CoreMotion.framework" />
-         <framework src="CoreTelephony.framework" />
-         <framework src="CoreVideo.framework" />
-         <framework src="EventKit.framework" />
-         <framework src="EventKitUI.framework" />
-         <framework src="Foundation.framework" />
-         <framework src="GLKit.framework" />
-         <framework src="MediaPlayer.framework" />
-         <framework src="MessageUI.framework" />
-         <framework src="OpenGLES.framework" />
-         <framework src="SafariServices.framework" />
-         <framework src="StoreKit.framework" />
-         <framework src="SystemConfiguration.framework" />
-         <framework src="UIKit.framework" />
+
+         <!-- GoogleMobileAds.framework in dependency plugin: cordova-admobsdk, > 100MB -->
     </platform>
 
      <!-- Windows Phone 8 -->
