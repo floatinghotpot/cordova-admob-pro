@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-admobpro"
-        version="2.35.0">
+        version="2.35.1">
       
     <name>AdMob Plugin Pro</name>
     <description>Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Show mobile Ad with single line of JavaScript. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, Ionic, Meteor, etc.</description>
@@ -23,7 +23,6 @@
     </js-module>
 
     <dependency id="cordova-plugin-extension" />
-    <dependency id="cordova-admobsdk" version="~7.35.0"/>
 
     <!-- android, now build with gradle instead of ant -->
     <platform name="android">
@@ -51,7 +50,7 @@
 	    <framework src="com.google.android.gms:play-services-ads:$PLAY_SERVICES_VERSION" />
         <!-- but unfortunately, build.phonegap.com, Intel XDK, and some other tools still use ant -->
         <!-- dependency id="cordova-plugin-googleplayservices"/ -->
-     </platform>
+    </platform>
      
     <!-- same as android, but use ant instead of gradle -->
     <platform name="amazon-fireos">
@@ -79,54 +78,37 @@
         <dependency id="cordova-plugin-googleplayservices"/>
      </platform>
 
-     <!-- ios -->
-     <platform name="ios">
-         <config-file target="config.xml" parent="/*">
-             <feature name="AdMob">
-                 <param name="ios-package" value="CDVAdMobPlugin" />
-                 <param name="onload" value="true" />
-             </feature>
-         </config-file>
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="AdMob">
+                <param name="ios-package" value="CDVAdMobPlugin" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
 
-         <header-file src="src/ios/CDVAdMobPlugin.h"/>
-         <source-file src="src/ios/CDVAdMobPlugin.m"/>
-         <header-file src="src/ios/AdMobMediation.h"/>
-         <source-file src="src/ios/AdMobMediation.m"/>
+        <header-file src="src/ios/CDVAdMobPlugin.h"/>
+        <source-file src="src/ios/CDVAdMobPlugin.m"/>
+        <header-file src="src/ios/AdMobMediation.h"/>
+        <source-file src="src/ios/AdMobMediation.m"/>
 
-         <!-- GoogleMobileAds.framework in dependency plugin: cordova-admobsdk, > 100MB -->
+        <!-- GoogleMobileAds.framework in dependency plugin: cordova-admobsdk, > 100MB -->
+        <dependency id="cordova-admobsdk" version="~7.35.0"/>
     </platform>
 
-     <!-- Windows Phone 8 -->
-     <platform name="wp8">
-          <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
-               <Capability Name="ID_CAP_LOCATION" />
-          </config-file>
-          <config-file target="config.xml" parent="/*">
-               <feature name="AdMob">
-                    <param name="wp-package" value="AdMobPlugin"/>
-               </feature>
-          </config-file>
-          <source-file src="src/wp8/AdMobPlugin.cs" />
-          <source-file src="src/wp8/AdMobOptions.cs" />
-          
-          <framework src="src/wp8/GoogleAds.dll" custom="true" />
-     </platform>
-
-     <!-- Windows Phone 8.1+ -->
-     <!-- 
-     <platform name="windows">
-         <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
-             <Capability Name="ID_CAP_LOCATION" />
-         </config-file>
-         <config-file target="config.xml" parent="/*">
+    <!-- Windows Phone 8 -->
+    <platform name="wp8">
+        <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
+            <Capability Name="ID_CAP_LOCATION" />
+        </config-file>
+        <config-file target="config.xml" parent="/*">
             <feature name="AdMob">
-                    <param name="wp-package" value="AdMobPlugin"/>
+                <param name="wp-package" value="AdMobPlugin"/>
             </feature>
         </config-file>
         <source-file src="src/wp8/AdMobPlugin.cs" />
         <source-file src="src/wp8/AdMobOptions.cs" />
-          
+
         <framework src="src/wp8/GoogleAds.dll" custom="true" />
     </platform>
-    -->
 </plugin>
