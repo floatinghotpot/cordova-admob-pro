@@ -26,10 +26,22 @@
 
     <!-- android, now build with gradle instead of ant -->
     <platform name="android">
+        <!-- you can specify another play services version to avoid conflict with another plugin -->
+	    <preference name="PLAY_SERVICES_VERSION" default="16.0.0"/>
+
+        <!-- from play service v17.0.0, admob app id is required to avoid app crash -->
+        <preference name="ADMOB_APP_ID" default=""/>
+
+        <!-- cordova CLI using gradle and it working well -->
+	    <framework src="com.google.android.gms:play-services-ads:$PLAY_SERVICES_VERSION" />
+
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
                       android:name="com.google.android.gms.ads.AdActivity"
                       android:theme="@android:style/Theme.Translucent" />
+            <meta-data
+                android:name="com.google.android.gms.ads.APPLICATION_ID"
+                android:value="$ADMOB_APP_ID"/>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET"/>
@@ -44,16 +56,14 @@
         </config-file>
         <source-file src="src/android/AdMobMediation.java" target-dir="src/com/rjfun/cordova/admob" />
         <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
-
-        <!-- cordova CLI using gradle and it working well -->
-	    <preference name="PLAY_SERVICES_VERSION" default="16.0.0"/>
-	    <framework src="com.google.android.gms:play-services-ads:$PLAY_SERVICES_VERSION" />
-        <!-- but unfortunately, build.phonegap.com, Intel XDK, and some other tools still use ant -->
-        <!-- dependency id="cordova-plugin-googleplayservices"/ -->
     </platform>
      
     <!-- same as android, but use ant instead of gradle -->
     <platform name="amazon-fireos">
+        <!-- amazon-fireos still using ant, AND default android r19 -->
+        <!-- framework src="com.google.android.gms:play-services-ads:+" /-->
+        <dependency id="cordova-plugin-googleplayservices"/>
+
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
                       android:name="com.google.android.gms.ads.AdActivity"
@@ -72,14 +82,13 @@
         </config-file>
         <source-file src="src/android/AdMobMediation.java" target-dir="src/com/rjfun/cordova/admob" />
         <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
-
-        <!-- amazon-fireos still using ant, AND default android r19 -->
-        <!-- framework src="com.google.android.gms:play-services-ads:+" /-->
-        <dependency id="cordova-plugin-googleplayservices"/>
      </platform>
 
     <!-- ios -->
     <platform name="ios">
+        <!-- GoogleMobileAds.framework in dependency plugin: cordova-admobsdk, > 100MB -->
+        <dependency id="cordova-admobsdk" version="~7.35.0"/>
+
         <config-file target="config.xml" parent="/*">
             <feature name="AdMob">
                 <param name="ios-package" value="CDVAdMobPlugin" />
@@ -91,13 +100,12 @@
         <source-file src="src/ios/CDVAdMobPlugin.m"/>
         <header-file src="src/ios/AdMobMediation.h"/>
         <source-file src="src/ios/AdMobMediation.m"/>
-
-        <!-- GoogleMobileAds.framework in dependency plugin: cordova-admobsdk, > 100MB -->
-        <dependency id="cordova-admobsdk" version="~7.35.0"/>
     </platform>
 
     <!-- Windows Phone 8 -->
     <platform name="wp8">
+        <framework src="src/wp8/GoogleAds.dll" custom="true" />
+
         <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
             <Capability Name="ID_CAP_LOCATION" />
         </config-file>
@@ -108,7 +116,5 @@
         </config-file>
         <source-file src="src/wp8/AdMobPlugin.cs" />
         <source-file src="src/wp8/AdMobOptions.cs" />
-
-        <framework src="src/wp8/GoogleAds.dll" custom="true" />
     </platform>
 </plugin>
