@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-admobpro-firebase"
-        version="2.35.0">
+        version="2.35.2">
       
     <name>AdMob Plugin Pro</name>
     <description>Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Used with Firebase. If you don't plan to include Firebase in your app, use the standalone version cordova-plugin-admobpro.</description>
@@ -23,14 +23,25 @@
     </js-module>
 
     <dependency id="cordova-plugin-extension" />
-    <dependency id="cordova-admobsdk" version="~7.35.0"/>
 
     <!-- android, now build with gradle instead of ant -->
     <platform name="android">
+        <!-- you can specify another play services version to avoid conflict with another plugin -->
+	    <preference name="PLAY_SERVICES_VERSION" default="16.0.0"/>
+
+        <!-- from play service v17.0.0, admob app id is required to avoid app crash -->
+        <preference name="ADMOB_APP_ID" default=""/>
+
+        <!-- cordova CLI using gradle and it working well -->
+	    <framework src="com.google.android.gms:play-services-ads:$PLAY_SERVICES_VERSION" />
+
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
                       android:name="com.google.android.gms.ads.AdActivity"
                       android:theme="@android:style/Theme.Translucent" />
+            <meta-data
+                android:name="com.google.android.gms.ads.APPLICATION_ID"
+                android:value="$ADMOB_APP_ID"/>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET"/>
@@ -45,6 +56,7 @@
         </config-file>
         <source-file src="src/android/AdMobMediation.java" target-dir="src/com/rjfun/cordova/admob" />
         <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
+<<<<<<< HEAD
 
         <!-- cordova CLI using gradle and it working well -->
 	    <preference name="PLAY_SERVICES_VERSION" default="16.0.0"/>
@@ -52,9 +64,16 @@
         <!-- but unfortunately, build.phonegap.com, Intel XDK, and some other tools still use ant -->
         <!-- dependency id="cordova-plugin-googleplayservices"/ -->
      </platform>
+=======
+    </platform>
+>>>>>>> master
      
     <!-- same as android, but use ant instead of gradle -->
     <platform name="amazon-fireos">
+        <!-- amazon-fireos still using ant, AND default android r19 -->
+        <!-- framework src="com.google.android.gms:play-services-ads:+" /-->
+        <dependency id="cordova-plugin-googleplayservices"/>
+
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
             <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
                       android:name="com.google.android.gms.ads.AdActivity"
@@ -73,60 +92,46 @@
         </config-file>
         <source-file src="src/android/AdMobMediation.java" target-dir="src/com/rjfun/cordova/admob" />
         <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
+<<<<<<< HEAD
 
         <!-- amazon-fireos still using ant, AND default android r19 -->
         <!-- framework src="com.google.firebase:firebase-ads:+" /-->
         <dependency id="cordova-plugin-googleplayservices"/>
+=======
+>>>>>>> master
      </platform>
 
-     <!-- ios -->
-     <platform name="ios">
-         <config-file target="config.xml" parent="/*">
-             <feature name="AdMob">
-                 <param name="ios-package" value="CDVAdMobPlugin" />
-                 <param name="onload" value="true" />
-             </feature>
-         </config-file>
+    <!-- ios -->
+    <platform name="ios">
+        <!-- GoogleMobileAds.framework in dependency plugin: cordova-admobsdk, > 100MB -->
+        <dependency id="cordova-admobsdk" version="~7.35.0"/>
 
-         <header-file src="src/ios/CDVAdMobPlugin.h"/>
-         <source-file src="src/ios/CDVAdMobPlugin.m"/>
-         <header-file src="src/ios/AdMobMediation.h"/>
-         <source-file src="src/ios/AdMobMediation.m"/>
+        <config-file target="config.xml" parent="/*">
+            <feature name="AdMob">
+                <param name="ios-package" value="CDVAdMobPlugin" />
+                <param name="onload" value="true" />
+            </feature>
+        </config-file>
 
-         <!-- GoogleMobileAds.framework in dependency plugin: cordova-admobsdk, > 100MB -->
+        <header-file src="src/ios/CDVAdMobPlugin.h"/>
+        <source-file src="src/ios/CDVAdMobPlugin.m"/>
+        <header-file src="src/ios/AdMobMediation.h"/>
+        <source-file src="src/ios/AdMobMediation.m"/>
     </platform>
 
-     <!-- Windows Phone 8 -->
-     <platform name="wp8">
-          <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
-               <Capability Name="ID_CAP_LOCATION" />
-          </config-file>
-          <config-file target="config.xml" parent="/*">
-               <feature name="AdMob">
-                    <param name="wp-package" value="AdMobPlugin"/>
-               </feature>
-          </config-file>
-          <source-file src="src/wp8/AdMobPlugin.cs" />
-          <source-file src="src/wp8/AdMobOptions.cs" />
-          
-          <framework src="src/wp8/GoogleAds.dll" custom="true" />
-     </platform>
+    <!-- Windows Phone 8 -->
+    <platform name="wp8">
+        <framework src="src/wp8/GoogleAds.dll" custom="true" />
 
-     <!-- Windows Phone 8.1+ -->
-     <!-- 
-     <platform name="windows">
-         <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
-             <Capability Name="ID_CAP_LOCATION" />
-         </config-file>
-         <config-file target="config.xml" parent="/*">
+        <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
+            <Capability Name="ID_CAP_LOCATION" />
+        </config-file>
+        <config-file target="config.xml" parent="/*">
             <feature name="AdMob">
-                    <param name="wp-package" value="AdMobPlugin"/>
+                <param name="wp-package" value="AdMobPlugin"/>
             </feature>
         </config-file>
         <source-file src="src/wp8/AdMobPlugin.cs" />
         <source-file src="src/wp8/AdMobOptions.cs" />
-          
-        <framework src="src/wp8/GoogleAds.dll" custom="true" />
     </platform>
-    -->
 </plugin>
