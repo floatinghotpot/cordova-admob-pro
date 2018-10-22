@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-admobpro-firebase"
-        version="2.35.2">
+        version="2.35.3">
       
     <name>AdMob Plugin Pro</name>
     <description>Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Used with Firebase. If you don't plan to include Firebase in your app, use the standalone version cordova-plugin-admobpro.</description>
@@ -30,7 +30,7 @@
 	    <preference name="PLAY_SERVICES_VERSION" default="16.0.0"/>
 
         <!-- from play service v17.0.0, admob app id is required to avoid app crash -->
-        <preference name="ADMOB_APP_ID" default=""/>
+        <!-- preference name="ADMOB_APP_ID" default=""/ -->
 
         <!-- cordova CLI using gradle and it working well -->
 	    <framework src="com.google.android.gms:play-services-ads:$PLAY_SERVICES_VERSION" />
@@ -39,9 +39,9 @@
             <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
                       android:name="com.google.android.gms.ads.AdActivity"
                       android:theme="@android:style/Theme.Translucent" />
-            <meta-data
+            <!-- meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="$ADMOB_APP_ID"/>
+                android:value="$ADMOB_APP_ID"/ -->
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET"/>
