@@ -1,4 +1,19 @@
 .travis
+ # install cordova CLI
+    [sudo] npm install cordova -g
+
+    # install a small utility to run all the commands for you
+    [sudo] npm install plugin-verify -g
+
+    # Demo 1: run admob demo with sample index.html
+    plugin-verify cordova-plugin-admobpro
+
+    # Demo 2/3: run admob demo in game powered by PIXI/phaser HTML5 engine
+    plugin-verify admob-demo-game-pixi ios --landscape
+    plugin-verify admob-demo-game-phaser ios --landscape
+
+    # Demo 4: run admob demo in app powered by ionic/angular framework
+    plugin-verify admob-demo-app-ionic ios --portrait
 // use banner
 createBanner(adId/options, success, fail);
 removeBanner();
