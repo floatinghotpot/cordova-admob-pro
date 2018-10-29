@@ -1,1 +1,23 @@
 .travis
+// use banner
+createBanner(adId/options, success, fail);
+removeBanner();
+showBanner(position);
+showBannerAtXY(x, y);
+hideBanner();
+
+// use interstitial
+prepareInterstitial(adId/options, success, fail);
+showInterstitial();
+isInterstitialReady(function(ready){ if(ready){ } });
+
+// use reward video
+prepareRewardVideoAd(adId/options, success, fail);
+showRewardVideoAd();
+
+// set values for configuration and targeting
+setOptions(options, success, fail);
+
+// get user ad settings
+getAdSettings(function(inf){ inf.adId; inf.adTrackingEnabled; }, fail);
+.json
