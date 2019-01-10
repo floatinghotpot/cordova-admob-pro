@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-admobpro-firebase"
-        version="2.35.4">
+        version="2.37.0">
       
     <name>AdMob Plugin Pro</name>
     <description>Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Used with Firebase. If you don't plan to include Firebase in your app, use the standalone version cordova-plugin-admobpro.</description>
@@ -87,7 +87,7 @@
     <!-- ios -->
     <platform name="ios">
         <!-- GoogleMobileAds.framework in dependency plugin: cordova-admobsdk, > 100MB -->
-        <dependency id="cordova-admobsdk" version="~7.35.0"/>
+        <dependency id="cordova-admobsdk" version="~7.37.0"/>
 
         <config-file target="config.xml" parent="/*">
             <feature name="AdMob">
