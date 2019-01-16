@@ -17,7 +17,11 @@ cordova plugin add cordova-plugin-admobpro
 * If use with PhoneGap Buid, just configure in config.xml:
 
 ```javascript
-<gap:plugin name="cordova-plugin-admobpro" source="npm"/>
+<preference name="android-build-tool" value="gradle" />
+<preference name="phonegap-version" value="cli-7.1.0" />
+<plugin name="cordova-plugin-admobpro" source="npm">
+  <variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
+</plugin>
 ```
 
 * If use with Intel XDK (not support npm yet):

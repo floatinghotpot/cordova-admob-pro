@@ -117,6 +117,8 @@ cordova plugin add cordova-plugin-admobpro-firebase
 
 * If use with PhoneGap Build:
 ```xml
+<preference name="android-build-tool" value="gradle" />
+<preference name="phonegap-version" value="cli-7.1.0" />
 <plugin name="cordova-admob-pro" source="npm">
 <variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
 </plugin>
