@@ -108,7 +108,7 @@ Wanna quickly see the mobile ad on your simulator or device? Try the following c
 ```bash
 cordova plugin add cordova-plugin-admobpro
 
-cordova plugin add cordova-plugin-admobpro --save --variable PLAY_SERVICES_VERSION=16.0.0
+cordova plugin add cordova-plugin-admobpro --save --variable PLAY_SERVICES_VERSION=16.0.0 --variable ADMOB_APP_ID="__your_admob_app_id___"
 ```
 Or, if you see conflict when using Firebase, use this one instead:
 ```bash

@@ -24,10 +24,12 @@
 
     <dependency id="cordova-plugin-extension" />
 
+    <preference name="ADMOB_APP_ID" default=""/>
+    <preference name="PLAY_SERVICES_VERSION" default="16.0.0"/>
+
     <!-- android, now build with gradle instead of ant -->
     <platform name="android">
         <!-- you can specify another play services version to avoid conflict with another plugin -->
-	    <preference name="PLAY_SERVICES_VERSION" default="16.0.0"/>
 
         <!-- from play service v17.0.0, admob app id is required to avoid app crash -->
         <!-- preference name="ADMOB_APP_ID" default=""/ -->
@@ -39,15 +41,15 @@
             <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
                       android:name="com.google.android.gms.ads.AdActivity"
                       android:theme="@android:style/Theme.Translucent" />
-            <!-- meta-data
+            <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="$ADMOB_APP_ID"/ -->
+                android:value="$ADMOB_APP_ID"/>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET"/>
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-          </config-file>
-          
+        </config-file>
+
         <config-file target="res/xml/config.xml" parent="/*">
             <feature name="AdMob">
                 <param name="android-package" value="com.rjfun.cordova.admob.AdMobPlugin"/>
@@ -87,13 +89,17 @@
     <!-- ios -->
     <platform name="ios">
         <!-- GoogleMobileAds.framework in dependency plugin: cordova-admobsdk, > 100MB -->
-        <dependency id="cordova-admobsdk" version="~7.37.0"/>
+        <dependency id="cordova-admobsdk" version="~7.49.0"/>
 
         <config-file target="config.xml" parent="/*">
             <feature name="AdMob">
                 <param name="ios-package" value="CDVAdMobPlugin" />
                 <param name="onload" value="true" />
             </feature>
+        </config-file>
+
+        <config-file target="*-Info.plist" parent="GADApplicationIdentifier">
+            <string>$ADMOB_APP_ID</string>
         </config-file>
 
         <header-file src="src/ios/CDVAdMobPlugin.h"/>
