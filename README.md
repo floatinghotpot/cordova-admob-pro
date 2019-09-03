@@ -112,7 +112,7 @@ Wanna quickly see the mobile ad on your simulator or device? Try the following c
 ```bash
 cordova plugin add cordova-plugin-admobpro
 
-cordova plugin add cordova-plugin-admobpro --save --variable PLAY_SERVICES_VERSION=16.0.0
+cordova plugin add cordova-plugin-admobpro --save --variable PLAY_SERVICES_VERSION=16.0.0 --variable ADMOB_APP_ID="__your_admob_app_id___"
 ```
 Or, if you see conflict when using Firebase, use this one instead:
 ```bash
@@ -121,7 +121,9 @@ cordova plugin add cordova-plugin-admobpro-firebase
 
 * If use with PhoneGap Build:
 ```xml
-<plugin name="cordova-admob-pro" source="npm">
+<preference name="android-build-tool" value="gradle" />
+<preference name="phonegap-version" value="cli-7.1.0" />
+<plugin name="cordova-plugin-admobpro" source="npm">
 <variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
 </plugin>
 ```
