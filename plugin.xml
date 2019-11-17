@@ -24,7 +24,8 @@
 
     <dependency id="cordova-plugin-extension" />
 
-    <preference name="ADMOB_APP_ID" default=""/>
+    <preference name="ADMOB_ANDROID_APP_ID" default=""/>
+    <preference name="ADMOB_IOS_APP_ID" default=""/>
     <preference name="PLAY_SERVICES_VERSION" default="16.0.0"/>
 
     <!-- android, now build with gradle instead of ant -->
@@ -43,7 +44,7 @@
                       android:theme="@android:style/Theme.Translucent" />
             <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
-                android:value="$ADMOB_APP_ID"/>
+                android:value="$ADMOB_ANDROID_APP_ID"/>
         </config-file>
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET"/>
@@ -99,7 +100,7 @@
         </config-file>
 
         <config-file target="*-Info.plist" parent="GADApplicationIdentifier">
-            <string>$ADMOB_APP_ID</string>
+            <string>$ADMOB_IOS_APP_ID</string>
         </config-file>
 
         <header-file src="src/ios/CDVAdMobPlugin.h"/>
