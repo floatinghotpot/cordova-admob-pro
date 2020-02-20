@@ -70,8 +70,8 @@ namespace Cordova.Extension.Commands
 		public const string OPT_BANNER_ID = "bannerId";
 		public const string OPT_INTERSTITIAL_ID = "interstitialId";
 		
-		private const string TEST_BANNER_ID = "ca-app-pub-6869992474017983/9375997553";
-		private const string TEST_INTERSTITIAL_ID = "ca-app-pub-6869992474017983/1355127956";
+		private const string TEST_BANNER_ID = "ca-app-pub-3940256099942544/8743215490";
+		private const string TEST_INTERSTITIAL_ID = "ca-app-pub-3940256099942544/1219948697";
 		
 		// banner positions 
 		public const int NO_CHANGE = 0;
@@ -174,8 +174,8 @@ namespace Cordova.Extension.Commands
                         if (!string.IsNullOrEmpty(options.adId))
                             adId = options.adId;
 
-                        //if (options.ContainsKey(OPT_AUTO_SHOW))
-                        //    autoShow = Convert.ToBoolean(options[OPT_AUTO_SHOW]);
+                        if (options.autoShow.HasValue)
+                            autoShow = options.autoShow.Value;
 
                         __createBanner(adId, autoShow);
                     }
@@ -277,8 +277,8 @@ namespace Cordova.Extension.Commands
                         {
                             adId = options.adId;
 
-                            //if (options.ContainsKey(OPT_AUTO_SHOW))
-                            //    autoShow = Convert.ToBoolean(options[OPT_AUTO_SHOW]);
+                            if (options.autoShow.HasValue)
+                                autoShow = options.autoShow.Value;
 
                             __prepareInterstitial(adId, autoShow);
                         }

@@ -17,7 +17,11 @@ cordova plugin add cordova-plugin-admobpro
 * If use with PhoneGap Buid, just configure in config.xml:
 
 ```javascript
-<gap:plugin name="cordova-plugin-admobpro" source="npm"/>
+<preference name="android-build-tool" value="gradle" />
+<preference name="phonegap-version" value="cli-7.1.0" />
+<plugin name="cordova-plugin-admobpro" source="npm">
+  <variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
+</plugin>
 ```
 
 * If use with Intel XDK (not support npm yet):
@@ -134,17 +138,28 @@ Check the [test/index.html] (https://github.com/floatinghotpot/cordova-admob-pro
 ## API Overview ##
 
 ### Methods ###
-```javascript```
-AdMob.setOptions(options);
+```javascript
+// use banner
+createBanner(adId/options, success, fail);
+removeBanner();
+showBanner(position);
+showBannerAtXY(x, y);
+hideBanner();
 
-AdMob.createBanner(adId/options, success, fail);
-AdMob.removeBanner();
-AdMob.showBanner(position);
-AdMob.showBannerAtXY(x, y);
-AdMob.hideBanner();
+// use interstitial
+prepareInterstitial(adId/options, success, fail);
+showInterstitial();
+isInterstitialReady(function(ready){ if(ready){ } });
 
-AdMob.prepareInterstitial(adId/options, success, fail);
-AdMob.showInterstitial();
+// use reward video
+prepareRewardVideoAd(adId/options, success, fail);
+showRewardVideoAd();
+
+// set default value for other methods
+setOptions(options, success, fail);
+
+// get user ad settings
+getAdSettings(function(inf){ inf.adId; inf.adTrackingEnabled; }, fail);
 ```
 
 ### Events ###
@@ -157,6 +172,7 @@ AdMob.showInterstitial();
 'onAdPresent'
 'onAdLeaveapp'
 'onAdDismiss'
+```
 
 ## Methods ##
 
@@ -200,24 +216,35 @@ AdMob.AD_POSITION.POS_XY 		= 10, // use the given X and Y, see params 'x' and 'y
 ```
 - **x**, *integer*, x in pixels. Valid when *overlap*:true and *position*:AdMob.AD_POSITION.POS_XY. Default: 0
 - **y**, *integer*, y in pixels. Valid when *overlap*:true and *position*:AdMob.AD_POSITION.POS_XY. Default: 0
-- **isTesting**, *boolean*, set to true, to receiving test ad for testing purpose
+- **isTesting**, *boolean*, set to true, to receiving test ad for testing purpose, see [Google docs](https://developers.google.com/admob/ios/targeting#test_ads), No need to handle it in your javascript code, as the plugin has handled it for you.
 - **autoShow**, *boolean*, auto show interstitial ad when loaded, set to false if hope to control the show timing with prepareInterstitial/showInterstitial
 - **orientationRenew**, *boolean*, re-create the banner on web view orientation change (not screen orientation), or else just move the banner. Default:true.
 - **offsetTopBar**, *boolean*, offset position of banner and webview to avoid overlap by status bar (iOS7+)
-- **bgColor**, *string*, background color of parent view, value may be color name like 'black', 'white', etc, or '#RRGGBB'
-- **adExtras**, *json object*, set extra color style for Ad.
-```javascript
-{
-	color_bg: 'AAAAFF',
-	color_bg_top: 'FFFFFF',
-	color_border: 'FFFFFF',
-	color_link: '000080',
-	color_text: '808080',
-	color_url: '008000'
-}
-- **location**, *array*, set location for Ad, [latitude, longitude].
 
+- Notice: the bgcolor and other styles can be customized in your admob portal. See: [issue #322](https://github.com/floatinghotpot/cordova-admob-pro/issues/322)
+
+
+### Targetting Options
+
+The following options can be used to show Ad to target end-user more accurately.
+
+- **location**, *array*, set location for Ad, [latitude, longitude], see [Google docs](https://developers.google.com/admob/ios/targeting#location), you can get the location with navigator API, then pass to ad plugin.
+- **gender**, *string*, valid options: "male", "female", "unknown", see [Google docs](https://developers.google.com/admob/ios/targeting#gender)
+- **forChild**, *string*, Child-directed setting, value options: "yes", "no", see [Google docs](https://developers.google.com/admob/ios/targeting#child-directed_setting)
+- **forFamily**, *string*, Designed for Families setting, valid options: "yes", "no", see [Google docs](https://developers.google.com/mobile-ads-sdk/docs/dfp/android/targeting#designed_for_families_setting)
+- **contentUrl**, *string*, set content url, see [Google docs](https://developers.google.com/admob/ios/targeting#content_url)
+
+- **customTargeting**, *json*, DFP only, set custom targeting, see [Google docs](https://developers.google.com/mobile-ads-sdk/docs/dfp/ios/targeting#custom_targeting), example:
+```javascript
+AdMob.setOptions({
+  customTargeting: {
+    job: "sailor",
+    age: "23",
+    interest: ["boats","ports"],
+  },
+});
 ```
+- **exclude**, *array*, DFP only, set exclude category, example: ["cars", "pets"]
 
 Example Code:
 ```javascript
@@ -232,7 +259,8 @@ var defaultOptions = {
 	x: 0,		// valid when set position to POS_XY
 	y: 0,		// valid when set position to POS_XY
 	isTesting: true,
-	autoShow: true
+	autoShow: true,
+    forChild: "yes"
 };
 AdMob.setOptions( defaultOptions );
 ```
@@ -269,7 +297,7 @@ AdMob.createBanner({
 ```
 ## AdMob.showBanner(position) ##
 
-> **Purpose**: show banner at given position. It can also be used to move banner to given position.  It's not needed to removeBannr and create a new one.
+> **Purpose**: show banner at given position. It can also be used to move banner to given position.  It's not needed to removeBanner and create a new one.
 
 Params:
 - **position**, *integer*, see description in **AdMob.setOptions()**
@@ -307,7 +335,9 @@ Extra key/value for param **options**
 - **success**, *function*, callback when success.
 - **error**, *function*, call back when fail.
 
-> Note: it will take some time to get Ad resource before it can be showed. You may buffer the Ad by calling **requestInterstitial**, and show it later.
+> Note: it will take some time to get Ad resource before it can be showed. You may buffer the Ad by calling **prepareInterstitial**, and show it later.
+
+## AdMob.isInterstitialReady() ##
 
 ## AdMob.showInterstitial() ##
 
@@ -326,9 +356,50 @@ AdMob.prepareInterstitial({
 	adId: admobid.interstitial,
 	autoShow: false
 });
+
 // check and show it at end of a game level
-if(isready) AdMob.showInterstitial();
+AdMob.isInterstitialReady(function(ready){
+  if(ready) AdMob.showInterstitial();
+});
 ```
+
+## AdMob.prepareRewardVideoAd(adId/options, success, fail) ##
+
+> **Purpose**: prepare an revard video Ad for showing.
+
+Params:
+- **adId**, *string*, Ad unit Id for the reward video Ad. You need configure mediation in AdMob portal.
+- **options**, *string*, see **AdMob.setOptions()*
+- **success**, *function*, callback when success, can be null or missing.
+- **fail**, *function*, callback when fail, can be null or missing.
+
+Extra key/value for param **options**
+- **adId**, *string*, Ad unit Id for this interstitial.
+- **success**, *function*, callback when success.
+- **error**, *function*, call back when fail.
+
+> Note: it will take some time to get Ad resource before it can be showed. You may buffer the Ad by calling **prepareRewardVideoAd**, and show it later.
+
+## AdMob.showRewardVideoAd() ##
+
+> **Purpose**: show reward video Ad when it's ready.
+
+To give user reward when he/she watched the video, you need listen to event 'onAdPresent', check the adType 'rewardvideo'.
+
+document.addEventListener('onAdPresent', function(data){
+  if(data.adType == 'rewardvideo') {
+    console.log( data.rewardType );
+    console.log( data.rewardAmount );
+  }
+});
+
+## AdMob.getAdSettings() ##
+
+Get advertising Id and isTrackingEnabled.
+
+See:
+[Google Docs](http://developer.android.com/google/play-services/id.html)
+[Apple Docs](https://developer.apple.com/library/ios/documentation/AdSupport/Reference/ASIdentifierManager_Ref/)
 
 ## Events ##
 

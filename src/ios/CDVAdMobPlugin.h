@@ -32,4 +32,7 @@
 - (void) __showInterstitial:(NSObject*)interstitial;
 - (void) __destroyInterstitial:(NSObject*)interstitial;
 
+- (NSObject*) __prepareRewardVideoAd:(NSString*)adId;
+- (BOOL) __showRewardVideoAd:(NSObject*)rewardvideo;
+
 @end

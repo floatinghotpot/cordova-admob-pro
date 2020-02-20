@@ -15,8 +15,9 @@
 #import "CDVAdMobPlugin.h"
 #import "AdMobMediation.h"
 
-#define TEST_BANNER_ID           @"ca-app-pub-6869992474017983/1794817552"
-#define TEST_INTERSTITIALID      @"ca-app-pub-6869992474017983/3271550750"
+#define TEST_BANNER_ID           @"ca-app-pub-3940256099942544/2934735716"
+#define TEST_INTERSTITIALID      @"ca-app-pub-3940256099942544/4411468910"
+#define TEST_REWARDVIDEOID       @"ca-app-pub-3940256099942544/1712485313"
 
 #define OPT_ADCOLONY        @"AdColony"
 #define OPT_ADCOLONY        @"AdColony"
@@ -27,20 +28,31 @@
 #define OPT_MOBFOX          @"MobFox"
 #define OPT_IAD             @"iAd"
 
+#define OPT_GENDER          @"gender"
 #define OPT_LOCATION        @"location"
+#define OPT_FORCHILD        @"forChild"
+#define OPT_CONTENTURL      @"contentURL"
+#define OPT_CUSTOMTARGETING @"customTargeting"
+#define OPT_EXCLUDE         @"exclude"
 
-@interface CDVAdMobPlugin()<GADBannerViewDelegate, GADInterstitialDelegate>
+@interface CDVAdMobPlugin()<GADBannerViewDelegate, GADInterstitialDelegate, GADRewardBasedVideoAdDelegate>
 
 @property (assign) GADAdSize adSize;
 @property (nonatomic, retain) NSDictionary* adExtras;
 @property (nonatomic, retain) NSMutableDictionary* mediations;
 
-@property (assign) BOOL mLocationSet;
-@property (assign) double mLatitude;
-@property (assign) double mLongitude;
+@property (nonatomic, retain) NSString* mGender;
+@property (nonatomic, retain) NSArray* mLocation;
+@property (nonatomic, retain) NSString* mForChild;
+@property (nonatomic, retain) NSString* mContentURL;
+
+@property (nonatomic, retain) NSDictionary* mCustomTargeting;
+@property (nonatomic, retain) NSArray* mExclude;
+
+@property (nonatomic, retain) NSString* rewardVideoAdId;
 
 - (GADAdSize)__AdSizeFromString:(NSString *)str;
-- (GADRequest*) __buildAdRequest:(BOOL)forBanner;
+- (GADRequest*) __buildAdRequest:(BOOL)forBanner forDFP:(BOOL)fordfp;
 - (NSString *) __getAdMobDeviceId;
 
 @end
@@ -54,9 +66,15 @@
     self.adSize = [self __AdSizeFromString:@"SMART_BANNER"];
     self.mediations = [[NSMutableDictionary alloc] init];
     
-    self.mLocationSet = NO;
-    self.mLatitude = 0.0;
-    self.mLongitude = 0.0;
+    self.mGender = nil;
+    self.mLocation = nil;
+    self.mForChild = nil;
+    self.mContentURL = nil;
+
+    self.mCustomTargeting = nil;
+    self.mExclude = nil;
+
+    self.rewardVideoAdId = nil;
 }
 
 - (NSString*) __getProductShortName { return @"AdMob"; }
@@ -67,6 +85,9 @@
 - (NSString*) __getTestInterstitialId {
     return TEST_INTERSTITIALID;
 }
+- (NSString*) __getTestRewardVideoId {
+  return TEST_REWARDVIDEOID;
+}
 
 - (void) parseOptions:(NSDictionary *)options
 {
@@ -74,18 +95,33 @@
     
     NSString* str = [options objectForKey:OPT_AD_SIZE];
     if(str) self.adSize = [self __AdSizeFromString:str];
-    
     self.adExtras = [options objectForKey:OPT_AD_EXTRAS];
-    
     if(self.mediations) {
         // TODO: if mediation need code in, add here
     }
-    
     NSArray* arr = [options objectForKey:OPT_LOCATION];
     if(arr != nil) {
-        self.mLatitude = [[arr objectAtIndex:0] doubleValue];
-        self.mLongitude = [[arr objectAtIndex:1] doubleValue];
-        self.mLocationSet = YES;
+        self.mLocation = arr;
+    }
+    NSString* n = [options objectForKey:OPT_FORCHILD];
+    if(n != nil) {
+        self.mForChild = n;
+    }
+    str = [options objectForKey:OPT_CONTENTURL];
+    if(str != nil){
+        self.mContentURL = str;
+    }
+    str = [options objectForKey:OPT_GENDER];
+    if(str != nil){
+        self.mGender = str;
+    }
+    NSDictionary* dict = [options objectForKey:OPT_CUSTOMTARGETING];
+    if(dict != nil) {
+        self.mCustomTargeting = dict;
+    }
+    arr = [options objectForKey:OPT_EXCLUDE];
+    if(arr != nil) {
+        self.mExclude = arr;
     }
 }
 
@@ -97,9 +133,11 @@
     if(GADAdSizeEqualToSize(self.adSize, kGADAdSizeInvalid)) {
         self.adSize = [self __isLandscape] ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait;
     }
-    
-    GADBannerView* ad;
-    
+
+    // safety check to avoid crash if adId is empty
+    if(adId==nil || [adId length]==0) adId = TEST_BANNER_ID;
+
+    GADBannerView* ad = nil;
     if(* [adId UTF8String] == '/') {
         ad = [[DFPBannerView alloc] initWithAdSize:self.adSize];
     } else {
@@ -113,16 +151,42 @@
     return ad;
 }
 
-- (GADRequest*) __buildAdRequest:(BOOL)forBanner
+- (GADRequest*) __buildAdRequest:(BOOL)forBanner forDFP:(BOOL)fordfp
 {
-    GADRequest *request = [GADRequest request];
-    
+    GADRequest *request = nil;
+
+    if(fordfp) {
+        DFPRequest * req = [DFPRequest request];
+        if(self.mCustomTargeting) {
+            req.customTargeting = self.mCustomTargeting;
+        }
+        if(self.mExclude) {
+            req.categoryExclusions = self.mExclude;
+        }
+        request = req;
+
+    } else {
+        request = [GADRequest request];
+    }
     if (self.isTesting) {
         NSString* deviceId = [self __getAdMobDeviceId];
         request.testDevices = [NSArray arrayWithObjects:deviceId, kGADSimulatorID, nil];
         NSLog(@"request.testDevices: %@, <Google> tips handled", deviceId);
     }
-    
+    if(self.mLocation) {
+        double lat = [[self.mLocation objectAtIndex:0] doubleValue];
+        double lng = [[self.mLocation objectAtIndex:1] doubleValue];
+        [request setLocationWithLatitude:lat longitude:lng accuracy:kCLLocationAccuracyBest];
+    }
+    if(self.mForChild) {
+        BOOL forChild = NO;
+        if( [self.mForChild caseInsensitiveCompare:@"yes"] == NSOrderedSame ) forChild = YES;
+        else if( [self.mForChild intValue] != 0 ) forChild = YES;
+        [request tagForChildDirectedTreatment:forChild];
+    }
+    if(self.mContentURL) {
+        request.contentURL = self.mContentURL;
+    }
     if (self.adExtras) {
         GADExtras *extras = [[GADExtras alloc] init];
         NSMutableDictionary *modifiedExtrasDict = [[NSMutableDictionary alloc] initWithDictionary:self.adExtras];
@@ -131,18 +195,12 @@
         extras.additionalParameters = modifiedExtrasDict;
         [request registerAdNetworkExtras:extras];
     }
-    
     [self.mediations enumerateKeysAndObjectsUsingBlock:^(id key, id obj, BOOL *stop) {
         AdMobMediation* adMed = (AdMobMediation*) obj;
         if(adMed) {
             [adMed joinAdRequest:request];
         }
     }];
-    
-    if(self.mLocationSet) {
-        [request setLocationWithLatitude:self.mLatitude longitude:self.mLongitude accuracy:kCLLocationAccuracyBest];
-    }
-    
     return request;
 }
 
@@ -166,6 +224,8 @@
         return kGADAdSizeLeaderboard;
     } else if ([str isEqualToString:@"SKYSCRAPER"]) {
         return kGADAdSizeSkyscraper;
+    } else if ([str isEqualToString:@"LARGE_BANNER"]) {
+        return kGADAdSizeLargeBanner;
     } else {
         return kGADAdSizeInvalid;
     }
@@ -208,10 +268,11 @@
     
     if([view class] == [DFPBannerView class]) {
         DFPBannerView* ad = (DFPBannerView*) view;
-        [ad loadRequest:[self __buildAdRequest:true]];
+        [ad loadRequest:[self __buildAdRequest:true forDFP:true]];
+
     } else if([view class] == [GADBannerView class]) {
         GADBannerView* ad = (GADBannerView*) view;
-        [ad loadRequest:[self __buildAdRequest:true]];
+        [ad loadRequest:[self __buildAdRequest:true forDFP:false]];
     }
 }
 
@@ -235,15 +296,30 @@
 }
 
 - (NSObject*) __createInterstitial:(NSString*)adId {
-    GADInterstitial* ad = [[GADInterstitial alloc] initWithAdUnitID:adId];
+    self.interstitialReady = false;
+    // safety check to avoid crash if adId is empty
+    if(adId==nil || [adId length]==0) adId = TEST_INTERSTITIALID;
+
+    GADInterstitial* ad = nil;
+    if(* [adId UTF8String] == '/') {
+        ad = [[DFPInterstitial alloc] initWithAdUnitID:adId];
+    } else {
+        ad = [[GADInterstitial alloc] initWithAdUnitID:adId];
+    }
     ad.delegate = self;
     return ad;
 }
 
 - (void) __loadInterstitial:(NSObject*)interstitial {
-    GADInterstitial* ad = (GADInterstitial*) interstitial;
-    if(ad) {
-        [ad loadRequest:[self __buildAdRequest:false]];
+    if([interstitial class] == [DFPInterstitial class]) {
+        DFPInterstitial* ad = (DFPInterstitial*) interstitial;
+        [ad loadRequest:[self __buildAdRequest:true forDFP:true]];
+
+    } else if([interstitial class] == [GADInterstitial class]) {
+        GADInterstitial* ad = (GADInterstitial*) interstitial;
+        if(ad) {
+            [ad loadRequest:[self __buildAdRequest:false forDFP:false]];
+        }
     }
 }
 
@@ -259,6 +335,21 @@
     if(ad) {
         ad.delegate = nil;
     }
+}
+
+- (NSObject*) __prepareRewardVideoAd:(NSString*)adId {
+    [GADRewardBasedVideoAd sharedInstance].delegate = self;
+    [[GADRewardBasedVideoAd sharedInstance] loadRequest:[GADRequest request]
+                                           withAdUnitID:adId];
+    return nil;
+}
+
+- (BOOL) __showRewardVideoAd:(NSObject*)rewardvideo {
+    if ([[GADRewardBasedVideoAd sharedInstance] isReady]) {
+        [[GADRewardBasedVideoAd sharedInstance] presentFromRootViewController:[self getViewController]];
+        return true;
+    }
+    return false;
 }
 
 #pragma mark GADBannerViewDelegate implementation
@@ -307,6 +398,7 @@
 }
 
 - (void)interstitialDidReceiveAd:(GADInterstitial *)interstitial {
+    self.interstitialReady = true;
     if (self.interstitial && self.autoShowInterstitial) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self __showInterstitial:self.interstitial];
@@ -330,6 +422,49 @@
 
 - (void)interstitialWillLeaveApplication:(GADInterstitial *)ad {
     [self fireAdEvent:EVENT_AD_LEAVEAPP withType:ADTYPE_INTERSTITIAL];
+}
+
+#pragma mark GADRewardBasedVideoAdDelegate
+
+/**
+ * document.addEventListener('onAdLoaded', function(data));
+ * document.addEventListener('onAdFailLoad', function(data));
+ * document.addEventListener('onAdPresent', function(data)); // data.rewardType, data.rewardAmount
+ * document.addEventListener('onAdDismiss', function(data));
+ * document.addEventListener('onAdLeaveApp', function(data));
+ */
+
+- (void)rewardBasedVideoAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd
+   didRewardUserWithReward:(GADAdReward *)reward {
+    NSString* obj = [self __getProductShortName];
+    NSString* json = [NSString stringWithFormat:@"{'adNetwork':'%@','adType':'%@','adEvent':'%@','rewardType':'%@','rewardAmount':%lf}",
+                      obj, ADTYPE_REWARDVIDEO, EVENT_AD_PRESENT, reward.type, [reward.amount doubleValue]];
+    [self fireEvent:obj event:EVENT_AD_PRESENT withData:json];
+}
+
+- (void)rewardBasedVideoAdDidReceiveAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_REWARDVIDEO];
+}
+
+- (void)rewardBasedVideoAdDidOpen:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    [self fireAdEvent:EVENT_AD_WILLPRESENT withType:ADTYPE_REWARDVIDEO];
+}
+
+- (void)rewardBasedVideoAdDidStartPlaying:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    [self fireAdEvent:EVENT_AD_WILLPRESENT withType:ADTYPE_REWARDVIDEO];
+}
+
+- (void)rewardBasedVideoAdDidClose:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_REWARDVIDEO];
+}
+
+- (void)rewardBasedVideoAdWillLeaveApplication:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
+    [self fireAdEvent:EVENT_AD_LEAVEAPP withType:ADTYPE_REWARDVIDEO];
+}
+
+- (void)rewardBasedVideoAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd
+    didFailToLoadWithError:(NSError *)error {
+    [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_REWARDVIDEO];
 }
 
 @end
