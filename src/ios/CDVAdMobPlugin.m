@@ -34,6 +34,7 @@
 #define OPT_CONTENTURL      @"contentURL"
 #define OPT_CUSTOMTARGETING @"customTargeting"
 #define OPT_EXCLUDE         @"exclude"
+#define OPT_USER_ID         @"userId"
 
 @interface CDVAdMobPlugin()<GADBannerViewDelegate, GADInterstitialDelegate, GADRewardBasedVideoAdDelegate>
 
@@ -122,6 +123,10 @@
     arr = [options objectForKey:OPT_EXCLUDE];
     if(arr != nil) {
         self.mExclude = arr;
+    }    
+    str = [options objectForKey:OPT_USER_ID];
+    if(str != nil){
+        self.mUserId = str;
     }
 }
 
@@ -339,6 +344,9 @@
 
 - (NSObject*) __prepareRewardVideoAd:(NSString*)adId {
     [GADRewardBasedVideoAd sharedInstance].delegate = self;
+    if (self.mUserId) {
+        [GADRewardBasedVideoAd sharedInstance].userIdentifier = self.mUserId;
+    }
     [[GADRewardBasedVideoAd sharedInstance] loadRequest:[GADRequest request]
                                            withAdUnitID:adId];
     return nil;

@@ -64,7 +64,8 @@ public class AdMobPlugin extends GenericAdPlugin {
   public static final String OPT_FORFAMILY = "forFamily";
   public static final String OPT_CONTENTURL = "contentUrl";
   public static final String OPT_CUSTOMTARGETING = "customTargeting";
-  public static final String OPT_EXCLUDE = "exclude";
+  public static final String OPT_EXCLUDE = "exclude";  
+  public static final String OPT_USER_ID = "userId";
 
   protected String mGender = null;
   protected String mForChild = null;
@@ -140,6 +141,9 @@ public class AdMobPlugin extends GenericAdPlugin {
     }
     if(options.has(OPT_EXCLUDE)) {
       mExclude = options.optJSONArray(OPT_EXCLUDE);
+    }    
+    if(options.has(OPT_USER_ID)) {
+      mUserId = options.optString(OPT_USER_ID);
     }
   }
 
@@ -309,6 +313,10 @@ protected void __showInterstitial(Object interstitial) {
 
     RewardedVideoAd ad = MobileAds.getRewardedVideoAdInstance(getActivity());
     ad.setRewardedVideoAdListener(new RewardVideoListener());
+
+    // if an useId is set, provide it to admob and it will be sent in server callback verification
+    if(mUserId != null)
+      ad.setUserId(mUserId);
 
     synchronized (mLock) {
       if (!mIsRewardedVideoLoading) {
