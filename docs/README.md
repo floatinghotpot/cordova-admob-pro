@@ -241,6 +241,7 @@ AdMob.setOptions({
     job: "sailor",
     age: "23",
     interest: ["boats","ports"],
+	userId: "YOUR_USER_IDENTIFIER" // necessary if you plan to use some kind of server validation to reward-videos https://developers.google.com/admob/android/rewarded-video-ssv
   },
 });
 ```
@@ -379,6 +380,7 @@ Extra key/value for param **options**
 - **error**, *function*, call back when fail.
 
 > Note: it will take some time to get Ad resource before it can be showed. You may buffer the Ad by calling **prepareRewardVideoAd**, and show it later.
+> Note #2: if you plan to use some kind of server-side validation to reward your users, please use the setConfig method to provide identifier of the user seeing the video before prepare any video. Ref.: https://developers.google.com/admob/android/rewarded-video-ssv.
 
 ## AdMob.showRewardVideoAd() ##
 
