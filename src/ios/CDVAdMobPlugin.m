@@ -6,11 +6,12 @@
 //
 //
 
+#import <CoreLocation/CLLocation.h>
+#import <AppTrackingTransparency/AppTrackingTransparency.h>
+#import <AdSupport/AdSupport.h>
 #import <AdSupport/ASIdentifierManager.h>
 
-#import <GoogleMobileAds/GoogleMobileAds.h>
-
-#import <CoreLocation/CLLocation.h>
+@import GoogleMobileAds;
 
 #import "CDVAdMobPlugin.h"
 #import "AdMobMediation.h"
@@ -35,7 +36,7 @@
 #define OPT_CUSTOMTARGETING @"customTargeting"
 #define OPT_EXCLUDE         @"exclude"
 
-@interface CDVAdMobPlugin()<GADBannerViewDelegate, GADInterstitialDelegate, GADRewardBasedVideoAdDelegate>
+@interface CDVAdMobPlugin()<GADBannerViewDelegate, GADFullScreenContentDelegate>
 
 @property (assign) GADAdSize adSize;
 @property (nonatomic, retain) NSDictionary* adExtras;
@@ -127,11 +128,8 @@
 
 - (UIView*) __createAdView:(NSString*)adId {
     
-    if(GADAdSizeEqualToSize(self.adSize, kGADAdSizeInvalid)) {
-        self.adSize = GADAdSizeFromCGSize( CGSizeMake(self.adWidth, self.adHeight) );
-    }
-    if(GADAdSizeEqualToSize(self.adSize, kGADAdSizeInvalid)) {
-        self.adSize = [self __isLandscape] ? kGADAdSizeSmartBannerLandscape : kGADAdSizeSmartBannerPortrait;
+    if(GADAdSizeEqualToSize(self.adSize, GADAdSizeInvalid)) {
+        self.adSize = GADAdSizeBanner;
     }
 
     // safety check to avoid crash if adId is empty
@@ -139,7 +137,7 @@
 
     GADBannerView* ad = nil;
     if(* [adId UTF8String] == '/') {
-        ad = [[DFPBannerView alloc] initWithAdSize:self.adSize];
+        ad = [[GAMBannerView alloc] initWithAdSize:self.adSize];
     } else {
         ad = [[GADBannerView alloc] initWithAdSize:self.adSize];
     }
@@ -156,7 +154,7 @@
     GADRequest *request = nil;
 
     if(fordfp) {
-        DFPRequest * req = [DFPRequest request];
+        GAMRequest * req = [GAMRequest request];
         if(self.mCustomTargeting) {
             req.customTargeting = self.mCustomTargeting;
         }
@@ -170,7 +168,7 @@
     }
     if (self.isTesting) {
         NSString* deviceId = [self __getAdMobDeviceId];
-        request.testDevices = [NSArray arrayWithObjects:deviceId, kGADSimulatorID, nil];
+        GADMobileAds.sharedInstance.requestConfiguration.testDeviceIdentifiers =[NSArray arrayWithObjects:deviceId, GADSimulatorID, nil];
         NSLog(@"request.testDevices: %@, <Google> tips handled", deviceId);
     }
     if(self.mLocation) {
@@ -182,7 +180,7 @@
         BOOL forChild = NO;
         if( [self.mForChild caseInsensitiveCompare:@"yes"] == NSOrderedSame ) forChild = YES;
         else if( [self.mForChild intValue] != 0 ) forChild = YES;
-        [request tagForChildDirectedTreatment:forChild];
+        [GADMobileAds.sharedInstance.requestConfiguration tagForChildDirectedTreatment:forChild];
     }
     if(self.mContentURL) {
         request.contentURL = self.mContentURL;
@@ -206,28 +204,22 @@
 
 - (GADAdSize)__AdSizeFromString:(NSString *)str
 {
-    if ([str isEqualToString:@"BANNER"]) {
-        return kGADAdSizeBanner;
-    } else if ([str isEqualToString:@"SMART_BANNER"]) {
-        // Have to choose the right Smart Banner constant according to orientation.
-        if([self __isLandscape]) {
-            return kGADAdSizeSmartBannerLandscape;
-        }
-        else {
-            return kGADAdSizeSmartBannerPortrait;
-        }
+    if ([str isEqualToString:@"SMART_BANNER"]) { // smart banner, deprecated
+        return GADAdSizeBanner;
+    } else if ([str isEqualToString:@"BANNER"]) {
+        return GADAdSizeBanner;
     } else if ([str isEqualToString:@"MEDIUM_RECTANGLE"]) {
-        return kGADAdSizeMediumRectangle;
+        return GADAdSizeMediumRectangle;
     } else if ([str isEqualToString:@"FULL_BANNER"]) {
-        return kGADAdSizeFullBanner;
+        return GADAdSizeFullBanner;
     } else if ([str isEqualToString:@"LEADERBOARD"]) {
-        return kGADAdSizeLeaderboard;
+        return GADAdSizeLeaderboard;
     } else if ([str isEqualToString:@"SKYSCRAPER"]) {
-        return kGADAdSizeSkyscraper;
+        return GADAdSizeSkyscraper;
     } else if ([str isEqualToString:@"LARGE_BANNER"]) {
-        return kGADAdSizeLargeBanner;
+        return GADAdSizeLargeBanner;
     } else {
-        return kGADAdSizeInvalid;
+        return GADAdSizeInvalid;
     }
 }
 
@@ -240,15 +232,23 @@
 - (void) __showBanner:(int) position atX:(int)x atY:(int)y
 {
     GADBannerView* ad = (GADBannerView*) self.banner;
+    CGRect frame = ad.frame;
+    // Here safe area is taken into account, hence the view frame is used after
+    // the view has been laid out.
+    if (@available(iOS 11.0, *)) {
+        frame = UIEdgeInsetsInsetRect(ad.frame, ad.safeAreaInsets);
+    }
+    // Determine the view width to use for the ad width.
+    CGFloat viewWidth = frame.size.width;
     if([self __isLandscape]) {
-        if(GADAdSizeEqualToSize(ad.adSize, kGADAdSizeSmartBannerPortrait)) {
-            if(self.isTesting) NSLog(@"change smart banner to landscape mode");
-            ad.adSize = kGADAdSizeSmartBannerLandscape;
+        if(GADAdSizeEqualToSize(ad.adSize, GADAdSizeBanner)) {
+            if(self.isTesting) NSLog(@"change banner to landscape mode");
+            ad.adSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(viewWidth);
         }
     } else {
-        if(GADAdSizeEqualToSize(ad.adSize, kGADAdSizeSmartBannerLandscape)) {
-            if(self.isTesting) NSLog(@"change smart banner to portrait mode");
-            ad.adSize = kGADAdSizeSmartBannerPortrait;
+        if( ad.adSize.size.width > viewWidth) {
+            if(self.isTesting) NSLog(@"change banner to portrait mode");
+            ad.adSize = GADCurrentOrientationAnchoredAdaptiveBannerAdSizeWithWidth(viewWidth);
         }
     }
 
@@ -265,14 +265,29 @@
 
 - (void) __loadAdView:(UIView*)view {
     if(! view) return;
-    
-    if([view class] == [DFPBannerView class]) {
-        DFPBannerView* ad = (DFPBannerView*) view;
-        [ad loadRequest:[self __buildAdRequest:true forDFP:true]];
 
-    } else if([view class] == [GADBannerView class]) {
-        GADBannerView* ad = (GADBannerView*) view;
-        [ad loadRequest:[self __buildAdRequest:true forDFP:false]];
+    if (@available(iOS 14, *)) {
+        [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
+            // Tracking authorization completed. Start loading ads here.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if([view class] == [GAMBannerView class]) {
+                    GAMBannerView* ad = (GAMBannerView*) view;
+                    [ad loadRequest:[self __buildAdRequest:true forDFP:true]];
+                } else if([view class] == [GADBannerView class]) {
+                    GADBannerView* ad = (GADBannerView*) view;
+                    [ad loadRequest:[self __buildAdRequest:true forDFP:false]];
+                }
+            });
+        }];
+    } else {
+        // Fallback on earlier versions
+        if([view class] == [GAMBannerView class]) {
+            GAMBannerView* ad = (GAMBannerView*) view;
+            [ad loadRequest:[self __buildAdRequest:true forDFP:true]];
+        } else if([view class] == [GADBannerView class]) {
+            GADBannerView* ad = (GADBannerView*) view;
+            [ad loadRequest:[self __buildAdRequest:true forDFP:false]];
+        }
     }
 }
 
@@ -286,67 +301,150 @@
     if(! view) return;
     [view removeFromSuperview];
     
-    if([view class] == [DFPBannerView class]) {
-        DFPBannerView* ad = (DFPBannerView*) view;
+    if([view class] == [GAMBannerView class]) {
+        GAMBannerView* ad = (GAMBannerView*) view;
         ad.delegate = nil;
     } else if([view class] == [GADBannerView class]) {
         GADBannerView* ad = (GADBannerView*) view;
         ad.delegate = nil;
     }
 }
-
 - (NSObject*) __createInterstitial:(NSString*)adId {
+
+    if (@available(iOS 14, *)) {
+        [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
+            // Tracking authorization completed. Start loading ads here.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self __createInterstitialInternal:adId];
+            });
+        }];
+    } else {
+        return [self __createInterstitialInternal:adId];
+    }
+    return nil;
+}
+
+- (NSObject*) __createInterstitialInternal:(NSString*)adId {
+    if (self.interstitial)
+        return  nil;
+
     self.interstitialReady = false;
     // safety check to avoid crash if adId is empty
     if(adId==nil || [adId length]==0) adId = TEST_INTERSTITIALID;
-
-    GADInterstitial* ad = nil;
     if(* [adId UTF8String] == '/') {
-        ad = [[DFPInterstitial alloc] initWithAdUnitID:adId];
+        GAMRequest *request = [GAMRequest request];
+        [GAMInterstitialAd loadWithAdManagerAdUnitID:adId
+                                             request:request
+                                   completionHandler:^(GAMInterstitialAd * _Nullable ad, NSError * _Nullable error) {
+            if (error) {
+                NSLog(@"Failed to load interstitial ad with error: %@", [error localizedDescription]);
+               [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_INTERSTITIAL];
+                return;
+            }
+            self.interstitial = ad;
+            self.interstitialReady= YES;
+            ad.fullScreenContentDelegate = self;
+            [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_INTERSTITIAL];
+         }];
+        if (self.interstitial && self.autoShowInterstitial) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self __showInterstitial:self.interstitial];
+            });
+        }
     } else {
-        ad = [[GADInterstitial alloc] initWithAdUnitID:adId];
+        GADRequest *request = [GADRequest request];
+        [GADInterstitialAd loadWithAdUnitID:adId
+                                    request:request
+                          completionHandler:^(GADInterstitialAd *ad, NSError *error) {
+            if (error) {
+                [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_INTERSTITIAL];
+                return;
+            }
+            if (self.interstitial)
+                return;
+            self.interstitial = ad;
+            self.interstitialReady= YES;
+            ad.fullScreenContentDelegate = self;
+                [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_INTERSTITIAL];
+                if (self.interstitial && self.autoShowInterstitial) {
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [self __showInterstitial:self.interstitial];
+                });
+            }
+        }];
     }
-    ad.delegate = self;
-    return ad;
+    return nil;
 }
 
 - (void) __loadInterstitial:(NSObject*)interstitial {
-    if([interstitial class] == [DFPInterstitial class]) {
-        DFPInterstitial* ad = (DFPInterstitial*) interstitial;
-        [ad loadRequest:[self __buildAdRequest:true forDFP:true]];
-
-    } else if([interstitial class] == [GADInterstitial class]) {
-        GADInterstitial* ad = (GADInterstitial*) interstitial;
-        if(ad) {
-            [ad loadRequest:[self __buildAdRequest:false forDFP:false]];
-        }
-    }
 }
 
 - (void) __showInterstitial:(NSObject*)interstitial {
-    GADInterstitial* ad = (GADInterstitial*) interstitial;
-    if(ad && ad.isReady) {
+    GADInterstitialAd * ad = (GADInterstitialAd *) interstitial;
+    if(ad  ) {
         [ad presentFromRootViewController:[self getViewController]];
     }
 }
 
 - (void) __destroyInterstitial:(NSObject*)interstitial {
-    GADInterstitial* ad = (GADInterstitial*) interstitial;
+    GADInterstitialAd* ad = (GADInterstitialAd*) interstitial;
     if(ad) {
-        ad.delegate = nil;
+        ad.fullScreenContentDelegate = nil;
     }
 }
 
 - (NSObject*) __prepareRewardVideoAd:(NSString*)adId {
-    [GADRewardBasedVideoAd sharedInstance].delegate = self;
-    [[GADRewardBasedVideoAd sharedInstance] loadRequest:[GADRequest request]
-                                           withAdUnitID:adId];
+    if (@available(iOS 14, *)) {
+        [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
+            // Tracking authorization completed. Start loading ads here.
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self __prepareRewardVideoAdInternal:adId];
+            });
+        }];
+    } else {
+        return [self __prepareRewardVideoAdInternal:adId];
+    }
     return nil;
 }
 
+- (NSObject*) __prepareRewardVideoAdInternal:(NSString*)adId {
+    GADRequest *request = [GADRequest request];
+    [GADRewardedAd loadWithAdUnitID:adId
+                            request:request
+                  completionHandler:^(GADRewardedAd *ad, NSError *error) {
+        if (error) {
+            NSLog(@"Rewarded ad fail load");
+            /// document.addEventListener('onAdFailLoad', function(data));
+            [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_REWARDVIDEO];
+            return;
+        }
+        NSLog(@"Rewarded ad loaded");
+        self.rewardvideo = ad;
+        ad.fullScreenContentDelegate = self;
+
+        // document.addEventListener('onAdLoaded', function(data));
+        [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_REWARDVIDEO];
+
+        // if want auto show, then show it immediately
+        if (self.rewardvideo && self.autoShowRewardVideo) {
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self __showRewardVideoAd:self.rewardvideo];
+            });
+         }
+     }];
+   return nil;
+}
+
 - (BOOL) __showRewardVideoAd:(NSObject*)rewardvideo {
-    if ([[GADRewardBasedVideoAd sharedInstance] isReady]) {
-        [[GADRewardBasedVideoAd sharedInstance] presentFromRootViewController:[self getViewController]];
+    GADRewardedAd* ad = (GADRewardedAd*) rewardvideo;
+    if (ad) {
+        [ad presentFromRootViewController:[self getViewController] userDidEarnRewardHandler:^{
+            GADAdReward *reward = ad.adReward;
+            NSString* obj = [self __getProductShortName];
+            NSString* json = [NSString stringWithFormat:@"{'adNetwork':'%@','adType':'%@','adEvent':'%@','rewardType':'%@','rewardAmount':%lf}",
+                obj, ADTYPE_REWARDVIDEO, EVENT_AD_PRESENT, reward.type, [reward.amount doubleValue]];
+            [self fireEvent:obj event:EVENT_AD_PRESENT withData:json];
+        }];
         return true;
     }
     return false;
@@ -357,11 +455,12 @@
 /**
  * document.addEventListener('onAdLoaded', function(data));
  * document.addEventListener('onAdFailLoad', function(data));
+ * document.addEventListener('onAdWillPresent', function(data));
  * document.addEventListener('onAdPresent', function(data));
  * document.addEventListener('onAdDismiss', function(data));
  * document.addEventListener('onAdLeaveApp', function(data));
  */
-- (void)adViewDidReceiveAd:(GADBannerView *)adView {
+- (void)bannerViewDidReceiveAd:(GADBannerView *)adView {
     if((! self.bannerVisible) && self.autoShowBanner) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [self __showBanner:self.adPosition atX:self.posX atY:self.posY];
@@ -370,101 +469,68 @@
     [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_BANNER];
 }
 
-- (void)adView:(GADBannerView *)view didFailToReceiveAdWithError:(GADRequestError *)error {
+- (void)bannerView:(GADBannerView *)view didFailToReceiveAdWithError:(NSError *)error  {
     [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_BANNER];
 }
 
-- (void)adViewWillLeaveApplication:(GADBannerView *)adView {
-    [self fireAdEvent:EVENT_AD_LEAVEAPP withType:ADTYPE_BANNER];
+- (void)bannerViewWillPresentScreen:(GADBannerView *)adView {
+    [self fireAdEvent:EVENT_AD_WILLPRESENT withType:ADTYPE_BANNER];
 }
 
-- (void)adViewWillPresentScreen:(GADBannerView *)adView {
+- (void)bannerViewDidRecordImpression:(GADBannerView *)bannerView {
     [self fireAdEvent:EVENT_AD_PRESENT withType:ADTYPE_BANNER];
 }
 
-- (void)adViewDidDismissScreen:(GADBannerView *)adView {
+- (void)banerViewWillDismissScreen:(GADBannerView *)adView {
+    [self fireAdEvent:EVENT_AD_WILLDISMISS withType:ADTYPE_BANNER];
+}
+
+- (void)bannerViewDidDismissScreen:(GADBannerView *)adView {
     [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_BANNER];
 }
 
+#pragma mark GADFullScreenContentDelegate implementation
+
 /**
- * document.addEventListener('onAdLoaded', function(data));
- * document.addEventListener('onAdFailLoad', function(data));
  * document.addEventListener('onAdPresent', function(data));
  * document.addEventListener('onAdDismiss', function(data));
  * document.addEventListener('onAdLeaveApp', function(data));
  */
-- (void)interstitial:(GADInterstitial *)ad didFailToReceiveAdWithError:(GADRequestError *)error {
-    [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_INTERSTITIAL];
+
+/// Tells the delegate that the ad failed to present full screen content.
+- (void)ad:(nonnull id<GADFullScreenPresentingAd>)ad
+    didFailToPresentFullScreenContentWithError:(nonnull NSError *)error {
+    if ([ad class] == [GADInterstitialAd class])
+        [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_INTERSTITIAL];
+    if ([ad class] == [GADRewardedAd class])
+        [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_REWARDVIDEO];
 }
 
-- (void)interstitialDidReceiveAd:(GADInterstitial *)interstitial {
-    self.interstitialReady = true;
-    if (self.interstitial && self.autoShowInterstitial) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self __showInterstitial:self.interstitial];
-        });
-    }
-    [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_INTERSTITIAL];
+/// Tells the delegate that the ad presented full screen content.
+- (void)adDidPresentFullScreenContent:(nonnull id<GADFullScreenPresentingAd>)ad {
+    if ([ad class] == [GADInterstitialAd class])
+        [self fireAdEvent:EVENT_AD_PRESENT withType:ADTYPE_INTERSTITIAL];
+    else if ([ad class] == [GADRewardedAd class])
+        [self fireAdEvent:EVENT_AD_PRESENT withType:ADTYPE_REWARDVIDEO];
 }
 
-- (void)interstitialWillPresentScreen:(GADInterstitial *)interstitial {
-    [self fireAdEvent:EVENT_AD_PRESENT withType:ADTYPE_INTERSTITIAL];
-}
-
-- (void)interstitialDidDismissScreen:(GADInterstitial *)interstitial {
-    [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_INTERSTITIAL];
-    
-    if(self.interstitial) {
-        [self __destroyInterstitial:self.interstitial];
-        self.interstitial = nil;
-    }
-}
-
-- (void)interstitialWillLeaveApplication:(GADInterstitial *)ad {
-    [self fireAdEvent:EVENT_AD_LEAVEAPP withType:ADTYPE_INTERSTITIAL];
-}
-
-#pragma mark GADRewardBasedVideoAdDelegate
-
-/**
- * document.addEventListener('onAdLoaded', function(data));
- * document.addEventListener('onAdFailLoad', function(data));
- * document.addEventListener('onAdPresent', function(data)); // data.rewardType, data.rewardAmount
- * document.addEventListener('onAdDismiss', function(data));
- * document.addEventListener('onAdLeaveApp', function(data));
- */
-
-- (void)rewardBasedVideoAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd
-   didRewardUserWithReward:(GADAdReward *)reward {
-    NSString* obj = [self __getProductShortName];
-    NSString* json = [NSString stringWithFormat:@"{'adNetwork':'%@','adType':'%@','adEvent':'%@','rewardType':'%@','rewardAmount':%lf}",
-                      obj, ADTYPE_REWARDVIDEO, EVENT_AD_PRESENT, reward.type, [reward.amount doubleValue]];
-    [self fireEvent:obj event:EVENT_AD_PRESENT withData:json];
-}
-
-- (void)rewardBasedVideoAdDidReceiveAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
-    [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_REWARDVIDEO];
-}
-
-- (void)rewardBasedVideoAdDidOpen:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
-    [self fireAdEvent:EVENT_AD_WILLPRESENT withType:ADTYPE_REWARDVIDEO];
-}
-
-- (void)rewardBasedVideoAdDidStartPlaying:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
-    [self fireAdEvent:EVENT_AD_WILLPRESENT withType:ADTYPE_REWARDVIDEO];
-}
-
-- (void)rewardBasedVideoAdDidClose:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
-    [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_REWARDVIDEO];
-}
-
-- (void)rewardBasedVideoAdWillLeaveApplication:(GADRewardBasedVideoAd *)rewardBasedVideoAd {
-    [self fireAdEvent:EVENT_AD_LEAVEAPP withType:ADTYPE_REWARDVIDEO];
-}
-
-- (void)rewardBasedVideoAd:(GADRewardBasedVideoAd *)rewardBasedVideoAd
-    didFailToLoadWithError:(NSError *)error {
-    [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_REWARDVIDEO];
+/// Tells the delegate that the ad dismissed full screen content.
+- (void)adDidDismissFullScreenContent:(nonnull id<GADFullScreenPresentingAd>)ad {
+    if ( [ad class] == [GADInterstitialAd class]){
+        [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_INTERSTITIAL];
+        if (self.interstitial)
+        {
+            [self __destroyInterstitial:self.interstitial];
+            self.interstitial = nil;
+        }
+    }else if ([ad class] == [GADRewardedAd class]){
+        [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_REWARDVIDEO];
+        if (self.rewardvideo)
+            {
+                [self __destroyInterstitial:self.rewardvideo];
+                self.rewardvideo = nil;
+            }
+        }
 }
 
 @end

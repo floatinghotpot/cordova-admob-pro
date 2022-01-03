@@ -36,24 +36,22 @@ From May 2015, Cordova team announced the deprecation of Cordova registry, and s
 ## Features
 
 Platforms supported:
-- [x] iOS, via SDK v7.37.0 (see [Release Notes](https://developers.google.com/admob/ios/rel-notes))
+- [x] iOS, via SDK v8.13.0 (see [Release Notes](https://developers.google.com/admob/ios/rel-notes))
 - [x] Android, via Android SDK (part of Google Play service, see [Release Notes](https://developers.google.com/admob/android/rel-notes))
-- [x] Amazon-FireOS, via Android SDK (part of Google Play service)
-- [x] Windows Phone, via SDK v6.5.13 (see [Release Notes](https://developers.google.com/admob/wp/rel-notes))
 
 Ad Types:
 - [x] Banner
 - [x] Interstitial (text, picture, video), highly recommended. :fire:
 - [x] Reward Video, highly recommended. :fire:
-- [ ] Native Ads (on roadmap)
-- [ ] Native Ads Advanced (on roadmap)
+- [ ] Reward Interstitial (on roadmap)
+- [ ] Native Ads (not applicable to Cordova web apps)
+- [ ] Native Ads Advanced (not applicable to Cordova web apps)
 
 Mediation to other Ad networks:
 * [x] AdMob (built-in)
 * [x] DFP (DoubleClick for Publisher, built-in)
-* [x] Facebook Audience Network
+* [x] Meta Audience Network
 * [x] Flurry
-* [x] iAd
 * [x] InMobi
 * [x] Millennial Media
 * [x] MobFox
@@ -108,39 +106,15 @@ Wanna quickly see the mobile ad on your simulator or device? Try the following c
 ```bash
 cordova plugin add cordova-plugin-admobpro
 
-cordova plugin add cordova-plugin-admobpro --save --variable PLAY_SERVICES_VERSION=16.0.0 --variable ADMOB_ANDROID_APP_ID="__your_admob_android_app_id___" --variable ADMOB_IOS_APP_ID="__your_admob_ios_app_id___"
-```
-Or, if you see conflict when using Firebase, use this one instead:
-```bash
-cordova plugin add cordova-plugin-admobpro-firebase
-```
-
-* If use with PhoneGap Build:
-```xml
-<preference name="android-build-tool" value="gradle" />
-<preference name="phonegap-version" value="cli-7.1.0" />
-<plugin name="cordova-plugin-admobpro" source="npm">
-<variable name="PLAY_SERVICES_VERSION" value="16.0.0" />
-</plugin>
+cordova plugin add cordova-plugin-admobpro --save --variable PLAY_SERVICES_VERSION=20.4.0 --variable ADMOB_ANDROID_APP_ID="__your_admob_android_app_id___" --variable ADMOB_IOS_APP_ID="__your_admob_ios_app_id___"
 ```
 
 If use other tools or online build services, see:
-* [x] Apache Cordova CLI, v3.0+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/01.-How-to-Use-with-Cordova-CLI))
-* [x] Intel XDK, r1095+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/02.-How-to-Use-with-Intel-XDK))
-* [x] IBM Worklight, v6.2+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/04.-How-to-Use-with-IBM-Worklight))
+* [x] Apache Cordova CLI, v7.0+ ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/01.-How-to-Use-with-Cordova-CLI))
 * [x] Google Mobile Chrome App ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/05.-How-to-Use-with-Mobile-Chrome-App))
-* [x] Adobe PhoneGap Build. ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/00.-How-To-Use-with-PhoneGap-Build))
 * [x] Meteor ([How To ...](https://github.com/floatinghotpot/cordova-admob-pro/wiki/06.-How-To-Use-with-Meteor))
 * [x] Ionic V1, [Ionic V1 Demo](https://github.com/jaivehall/admob-ionic-demo)
 * [x] Ionic, [Ionic Demo](https://github.com/jaivehall/admob-ionic2-demo)
-
-What's difference of these plugin IDs, which one shall I use ?
-* com.google.cordova.admob
-* cordova-plugin-admob
-* cordova-plugin-admobpro
-* cordova-plugin-admobpro-firebase
-
-Read: [Difference of Plugin ID](https://github.com/floatinghotpot/cordova-admob-pro/wiki/Difference-of-Plugin-IDs)
 
 Notice:
 * If build locally using ```cordova-plugin-admobpro```, to avoid build error, you need install some extras in Android SDK manager (type ```android sdk``` to launch it):
@@ -160,12 +134,7 @@ Step 1: Create Ad Unit Id for your banner and interstitial, in [AdMob portal](ht
       banner: 'ca-app-pub-xxx/xxx', // or DFP format "/6253334/dfp_example_ad"
       interstitial: 'ca-app-pub-xxx/yyy'
     };
-  } else if(/(ipod|iphone|ipad)/i.test(navigator.userAgent)) { // for ios
-    admobid = {
-      banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
-      interstitial: 'ca-app-pub-xxx/kkk'
-    };
-  } else { // for windows phone
+  } else { // for ios
     admobid = {
       banner: 'ca-app-pub-xxx/zzz', // or DFP format "/6253334/dfp_example_ad"
       interstitial: 'ca-app-pub-xxx/kkk'
@@ -252,6 +221,46 @@ document.addEventListener('onAdFailLoad', function(e){
     // handle the event
 });
 ```
+## Use AdMobPro with Ionic
+
+Use with Capacitor:
+```bash
+$ npm install cordova-plugin-admobpro
+$ npm install @awesome-cordova-plugins/admob-pro
+$ ionic cap sync
+```
+Or, use with Cordova:
+```bash
+$ ionic cordova plugin add cordova-plugin-admobpro
+$ npm install @awesome-cordova-plugins/admob-pro
+```
+
+Code for Angular:
+```javascript
+import { AdMobPro } from '@awesome-cordova-plugins/admob-pro/ngx';
+import { Platform } from '@ionic/angular';
+
+constructor(private admob: AdMobPro, private platform: Platform ) { }
+
+ionViewDidLoad() {
+  this.admob.onAdDismiss()
+    .subscribe(() => { console.log('User dismissed ad'); });
+}
+
+onClick() {
+  let adId;
+  if(this.platform.is('android')) {
+    adId = 'YOUR_ADID_ANDROID';
+  } else if (this.platform.is('ios')) {
+    adId = 'YOUR_ADID_IOS';
+  }
+  this.admob.prepareInterstitial({adId: adId})
+    .then(() => { this.admob.showInterstitial(); });
+}
+```
+
+See more:
+[https://ionicframework.com/docs/native/admob-pro](https://ionicframework.com/docs/native/admob-pro)
 
 ## Wiki and Docs
 
@@ -289,12 +298,9 @@ Demo projects:
 [![Video](https://github.com/floatinghotpot/cordova-admob-pro/raw/master/docs/youtube_video.jpg)](http://youtu.be/GsBI97WjFQo)
 
 More video by developers:
-* [How to add banner ads to phonegap apps using AdMob Pro for android](https://youtu.be/VzoukTxnbhc), by pointDeveloper
 * [How to add Banner ads To Ionic apps with Admob Pro For android](https://youtu.be/qNg8c4J03dE), by pointDeveloper
 * [How To Add Banner Ads To Ionic 2 with AdMob Cordova Plugin](https://youtu.be/dfHPlVvIUR0), by pointDeveloper
 * [How to add Interstitial Add on navigation for phonegap using JavaScript and AdMob Pro plugin](https://youtu.be/5YvikM3ySXc), by pointDeveloper
-* [How to add banner ads to jQuery Mobile Apps using Phonegap AdMob Pro Plugin](https://youtu.be/ceCHJl0c908), by pointDeveloper
-* [Intel XDK - Monetizando seu aplicativo com Admob e intel xdk.](https://youtu.be/Bo_deb1vKYk), in Portuguese, by XDK PLUS
 * Interesting [Evolution of cordova-admob-pro (Gource Visualization)](https://youtu.be/yH66cHnY06M), by Landon Wilkins
 
 ## Screenshots

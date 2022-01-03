@@ -3,7 +3,7 @@
 <plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
         xmlns:android="http://schemas.android.com/apk/res/android"
         id="cordova-plugin-admobpro"
-        version="2.49.0">
+        version="8.13.0">
       
     <name>AdMob Plugin Pro</name>
     <description>Ultimate Cordova Plugin for Google AdMob and DFP to monetize hybrid apps. Show mobile Ad with single line of JavaScript. Compatible with Cordova CLI, PhoneGap Build, Intel XDK/Crosswalk, Google ChromeApp, Ionic, Meteor, etc.</description>
@@ -14,8 +14,9 @@
     <issue>https://github.com/floatinghotpot/cordova-admob-pro/issues</issue>
 
     <engines>
-        <engine name="cordova-android" version="&gt;=3.5.0" />
-        <engine name="cordova-ios" version="&gt;=3.5.0" />
+        <engine name="cordova" version=">=7.0" />
+        <engine name="cordova-android" version=">=6.0.0" />
+        <engine name="cordova-ios" version=">=5.0.0" />
     </engines>
 
     <js-module src="www/AdMob.js" name="AdMob">
@@ -24,28 +25,33 @@
 
     <dependency id="cordova-plugin-extension" />
 
-    <preference name="ADMOB_ANDROID_APP_ID" default=""/>
-    <preference name="ADMOB_IOS_APP_ID" default=""/>
-    <preference name="PLAY_SERVICES_VERSION" default="16.0.0"/>
-
     <!-- android, now build with gradle instead of ant -->
     <platform name="android">
+        <preference name="ADMOB_ANDROID_APP_ID" default="ca-app-pub-1855415514372943~9063671314"/>
+        <preference name="PLAY_SERVICES_VERSION" default="20.4.0"/>
         <!-- you can specify another play services version to avoid conflict with another plugin -->
-
-        <!-- from play service v17.0.0, admob app id is required to avoid app crash -->
-        <!-- preference name="ADMOB_APP_ID" default=""/ -->
+        <!-- Notice: 20.5.0 will cause a conflict,
+         of minCompileSdk (31) and compileSdkVersion (android-30),
+         in Dependency: androidx.work:work-runtime:2.7.0 -->
 
         <!-- cordova CLI using gradle and it working well -->
 	    <framework src="com.google.android.gms:play-services-ads:$PLAY_SERVICES_VERSION" />
 
         <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
-                      android:name="com.google.android.gms.ads.AdActivity"
-                      android:theme="@android:style/Theme.Translucent" />
+            <activity
+                android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+                android:name="com.google.android.gms.ads.AdActivity"
+                android:excludeFromRecents="true"
+                android:noHistory="true" />
             <meta-data
                 android:name="com.google.android.gms.ads.APPLICATION_ID"
                 android:value="$ADMOB_ANDROID_APP_ID"/>
+            <!-- from play service v17.0.0, admob app id is required to avoid app crash -->
+            <meta-data
+                android:name="com.google.android.gms.ads.DELAY_APP_MEASUREMENT_INIT"
+                android:value="true"/>
         </config-file>
+
         <config-file target="AndroidManifest.xml" parent="/*">
             <uses-permission android:name="android.permission.INTERNET"/>
             <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
@@ -57,40 +63,18 @@
                 <param name="onload" value="true" />
             </feature>
         </config-file>
+
         <source-file src="src/android/AdMobMediation.java" target-dir="src/com/rjfun/cordova/admob" />
         <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
     </platform>
      
-    <!-- same as android, but use ant instead of gradle -->
-    <platform name="amazon-fireos">
-        <!-- amazon-fireos still using ant, AND default android r19 -->
-        <!-- framework src="com.google.android.gms:play-services-ads:+" /-->
-        <dependency id="cordova-plugin-googleplayservices"/>
-
-        <config-file target="AndroidManifest.xml" parent="/manifest/application">
-            <activity android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize" 
-                      android:name="com.google.android.gms.ads.AdActivity"
-                      android:theme="@android:style/Theme.Translucent" />
-        </config-file>
-        <config-file target="AndroidManifest.xml" parent="/*">
-            <uses-permission android:name="android.permission.INTERNET"/>
-            <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-        </config-file>
-
-        <config-file target="res/xml/config.xml" parent="/*">
-            <feature name="AdMob">
-                <param name="android-package" value="com.rjfun.cordova.admob.AdMobPlugin"/>
-                <param name="onload" value="true" />
-            </feature>
-        </config-file>
-        <source-file src="src/android/AdMobMediation.java" target-dir="src/com/rjfun/cordova/admob" />
-        <source-file src="src/android/AdMobPlugin.java" target-dir="src/com/rjfun/cordova/admob" />
-     </platform>
-
     <!-- ios -->
     <platform name="ios">
+        <preference name="ADMOB_IOS_APP_ID" default="ca-app-pub-1855415514372943~7447337312"/>
+        <preference name="disableSDKCrashReporting" default="false" />
+
         <!-- GoogleMobileAds.framework in dependency plugin: cordova-admobsdk, > 100MB -->
-        <dependency id="cordova-admobsdk" version="~7.49.0"/>
+        <dependency id="cordova-admobsdk" version="~8.13.0"/>
 
         <config-file target="config.xml" parent="/*">
             <feature name="AdMob">
@@ -103,25 +87,13 @@
             <string>$ADMOB_IOS_APP_ID</string>
         </config-file>
 
+        <config-file target="*-Info.plist" parent="GADDelayAppMeasurementInit">
+            <true/>
+        </config-file>
+
         <header-file src="src/ios/CDVAdMobPlugin.h"/>
         <source-file src="src/ios/CDVAdMobPlugin.m"/>
         <header-file src="src/ios/AdMobMediation.h"/>
         <source-file src="src/ios/AdMobMediation.m"/>
-    </platform>
-
-    <!-- Windows Phone 8 -->
-    <platform name="wp8">
-        <framework src="src/wp8/GoogleAds.dll" custom="true" />
-
-        <config-file target="Properties/WMAppManifest.xml" parent="/Deployment/App/Capabilities">
-            <Capability Name="ID_CAP_LOCATION" />
-        </config-file>
-        <config-file target="config.xml" parent="/*">
-            <feature name="AdMob">
-                <param name="wp-package" value="AdMobPlugin"/>
-            </feature>
-        </config-file>
-        <source-file src="src/wp8/AdMobPlugin.cs" />
-        <source-file src="src/wp8/AdMobOptions.cs" />
     </platform>
 </plugin>
