@@ -117,6 +117,15 @@ public class AdMobPlugin extends GenericAdPlugin {
     }
   }
 
+  private boolean optBool(JSONObject options, String key) {
+    if(options.optBoolean(key)) return true;
+    String str = options.optString(key);
+    if("yes".equalsIgnoreCase(str) || "true".equalsIgnoreCase(str)) return true;
+    int n = options.optInt(key);
+    if(n != 0) return true;
+    return false;
+  }
+
   @Override
   public void setOptions(JSONObject options) {
     super.setOptions(options);
@@ -126,8 +135,8 @@ public class AdMobPlugin extends GenericAdPlugin {
       adSize = new AdSize(adWidth, adHeight);
     }
 
-    mForFamily = options.optBoolean(OPT_FORFAMILY);
-    mForChild = options.optBoolean(OPT_FORCHILD);
+    mForFamily = optBool(options, OPT_FORFAMILY);
+    mForChild = optBool(options, OPT_FORCHILD);
 
     if(options.has(OPT_GENDER)) {
       mGender = options.optString(OPT_GENDER);

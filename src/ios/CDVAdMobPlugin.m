@@ -44,17 +44,20 @@
 
 @property (nonatomic, retain) NSString* mGender;
 @property (nonatomic, retain) NSArray* mLocation;
-@property (nonatomic, retain) NSString* mForChild;
 @property (nonatomic, retain) NSString* mContentURL;
+@property (assign) BOOL mForChild;
 
 @property (nonatomic, retain) NSDictionary* mCustomTargeting;
 @property (nonatomic, retain) NSArray* mExclude;
 
-@property (nonatomic, retain) NSString* rewardVideoAdId;
+@property (assign) BOOL mInited;
+@property (nonatomic, retain) NSObject* mInterstitialAd;
+@property (nonatomic, retain) GADRewardedAd* mRewardedAd;
 
 - (GADAdSize)__AdSizeFromString:(NSString *)str;
 - (GADRequest*) __buildAdRequest:(BOOL)forBanner forDFP:(BOOL)fordfp;
 - (NSString *) __getAdMobDeviceId;
+- (void) ensureInited;
 
 @end
 
@@ -69,13 +72,15 @@
     
     self.mGender = nil;
     self.mLocation = nil;
-    self.mForChild = nil;
     self.mContentURL = nil;
+    self.mForChild = NO;
 
     self.mCustomTargeting = nil;
     self.mExclude = nil;
 
-    self.rewardVideoAdId = nil;
+    self.mInited = NO;
+    self.mInterstitialAd = nil;
+    self.mRewardedAd = nil;
 }
 
 - (NSString*) __getProductShortName { return @"AdMob"; }
@@ -90,6 +95,25 @@
   return TEST_REWARDVIDEOID;
 }
 
+- (void) ensureInited {
+    if(! self.mInited) {
+        [[GADMobileAds sharedInstance] startWithCompletionHandler:nil];
+        self.mInited = YES;
+    }
+}
+
+- (BOOL) optBool:(NSDictionary*) options forKey:(NSString*)key {
+    BOOL value = NO;
+    NSString* str = [options objectForKey:key];
+    if(str != nil) {
+        if([str caseInsensitiveCompare:@"yes"] == NSOrderedSame) value = YES;
+        if([str caseInsensitiveCompare:@"true"] == NSOrderedSame) value = YES;
+        if([str boolValue]) value = YES;
+        if([str intValue] != 0) value = YES;
+    }
+    return value;
+}
+
 - (void) parseOptions:(NSDictionary *)options
 {
     [super parseOptions:options];
@@ -100,14 +124,14 @@
     if(self.mediations) {
         // TODO: if mediation need code in, add here
     }
+
     NSArray* arr = [options objectForKey:OPT_LOCATION];
     if(arr != nil) {
         self.mLocation = arr;
     }
-    NSString* n = [options objectForKey:OPT_FORCHILD];
-    if(n != nil) {
-        self.mForChild = n;
-    }
+
+    self.mForChild = [self optBool:options forKey:OPT_FORCHILD];
+
     str = [options objectForKey:OPT_CONTENTURL];
     if(str != nil){
         self.mContentURL = str;
@@ -124,10 +148,22 @@
     if(arr != nil) {
         self.mExclude = arr;
     }
+
+    [self ensureInited];
+
+    if (self.isTesting) {
+        NSString* deviceId = [self __getAdMobDeviceId];
+        GADMobileAds.sharedInstance.requestConfiguration.testDeviceIdentifiers =[NSArray arrayWithObjects:deviceId, GADSimulatorID, nil];
+        NSLog(@"request.testDevices: %@, <Google> tips handled", deviceId);
+    }
+    if(self.mForChild) {
+        [GADMobileAds.sharedInstance.requestConfiguration tagForChildDirectedTreatment:YES];
+    }
 }
 
 - (UIView*) __createAdView:(NSString*)adId {
-    
+    [self ensureInited];
+
     if(GADAdSizeEqualToSize(self.adSize, GADAdSizeInvalid)) {
         self.adSize = GADAdSizeBanner;
     }
@@ -166,21 +202,10 @@
     } else {
         request = [GADRequest request];
     }
-    if (self.isTesting) {
-        NSString* deviceId = [self __getAdMobDeviceId];
-        GADMobileAds.sharedInstance.requestConfiguration.testDeviceIdentifiers =[NSArray arrayWithObjects:deviceId, GADSimulatorID, nil];
-        NSLog(@"request.testDevices: %@, <Google> tips handled", deviceId);
-    }
     if(self.mLocation) {
         double lat = [[self.mLocation objectAtIndex:0] doubleValue];
         double lng = [[self.mLocation objectAtIndex:1] doubleValue];
         [request setLocationWithLatitude:lat longitude:lng accuracy:kCLLocationAccuracyBest];
-    }
-    if(self.mForChild) {
-        BOOL forChild = NO;
-        if( [self.mForChild caseInsensitiveCompare:@"yes"] == NSOrderedSame ) forChild = YES;
-        else if( [self.mForChild intValue] != 0 ) forChild = YES;
-        [GADMobileAds.sharedInstance.requestConfiguration tagForChildDirectedTreatment:forChild];
     }
     if(self.mContentURL) {
         request.contentURL = self.mContentURL;
@@ -310,27 +335,17 @@
     }
 }
 - (NSObject*) __createInterstitial:(NSString*)adId {
+    [self ensureInited];
 
-    if (@available(iOS 14, *)) {
-        [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
-            // Tracking authorization completed. Start loading ads here.
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self __createInterstitialInternal:adId];
-            });
-        }];
-    } else {
-        return [self __createInterstitialInternal:adId];
-    }
-    return nil;
-}
-
-- (NSObject*) __createInterstitialInternal:(NSString*)adId {
-    if (self.interstitial)
-        return  nil;
-
-    self.interstitialReady = false;
     // safety check to avoid crash if adId is empty
     if(adId==nil || [adId length]==0) adId = TEST_INTERSTITIALID;
+
+    return adId;
+}
+
+- (void) __loadInterstitialInternal:(NSString*)adId {
+    self.interstitialReady = false;
+
     if(* [adId UTF8String] == '/') {
         GAMRequest *request = [GAMRequest request];
         [GAMInterstitialAd loadWithAdManagerAdUnitID:adId
@@ -338,19 +353,23 @@
                                    completionHandler:^(GAMInterstitialAd * _Nullable ad, NSError * _Nullable error) {
             if (error) {
                 NSLog(@"Failed to load interstitial ad with error: %@", [error localizedDescription]);
-               [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_INTERSTITIAL];
+                self.mInterstitialAd = nil;
+                [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_INTERSTITIAL];
                 return;
             }
-            self.interstitial = ad;
-            self.interstitialReady= YES;
+
+            self.mInterstitialAd = ad;
             ad.fullScreenContentDelegate = self;
+            self.interstitialReady = true;
+
             [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_INTERSTITIAL];
-         }];
-        if (self.interstitial && self.autoShowInterstitial) {
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self __showInterstitial:self.interstitial];
-            });
-        }
+
+            if (self.mInterstitialAd && self.autoShowInterstitial) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self __showInterstitial:self.interstitial];
+                });
+            }
+        }];
     } else {
         GADRequest *request = [GADRequest request];
         [GADInterstitialAd loadWithAdUnitID:adId
@@ -360,40 +379,71 @@
                 [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_INTERSTITIAL];
                 return;
             }
-            if (self.interstitial)
-                return;
-            self.interstitial = ad;
-            self.interstitialReady= YES;
+
+            self.mInterstitialAd = ad;
             ad.fullScreenContentDelegate = self;
-                [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_INTERSTITIAL];
-                if (self.interstitial && self.autoShowInterstitial) {
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        [self __showInterstitial:self.interstitial];
+            self.interstitialReady= true;
+
+            [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_INTERSTITIAL];
+
+            if (self.mInterstitialAd && self.autoShowInterstitial) {
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self __showInterstitial:self.interstitial];
                 });
             }
         }];
     }
-    return nil;
 }
 
 - (void) __loadInterstitial:(NSObject*)interstitial {
+    if([interstitial isKindOfClass:[NSString class]]) {
+        NSString* adId = (NSString*) interstitial;
+
+        if (@available(iOS 14, *)) {
+            [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
+                // Tracking authorization completed. Start loading ads here.
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [self __loadInterstitialInternal:adId];
+                });
+            }];
+        } else {
+            [self __loadInterstitialInternal:adId];
+        }
+    }
 }
 
 - (void) __showInterstitial:(NSObject*)interstitial {
-    GADInterstitialAd * ad = (GADInterstitialAd *) interstitial;
-    if(ad  ) {
+    if(! self.mInterstitialAd) return;
+
+    if([self.mInterstitialAd isKindOfClass:[GAMInterstitialAd class]]) {
+        GAMInterstitialAd* ad = (GAMInterstitialAd*) self.mInterstitialAd;
+        [ad presentFromRootViewController:[self getViewController]];
+
+    } else if([self.mInterstitialAd isKindOfClass:[GADInterstitialAd class]]) {
+        GADInterstitialAd* ad = (GADInterstitialAd*) self.mInterstitialAd;
         [ad presentFromRootViewController:[self getViewController]];
     }
+    self.interstitialReady = false;
 }
 
 - (void) __destroyInterstitial:(NSObject*)interstitial {
-    GADInterstitialAd* ad = (GADInterstitialAd*) interstitial;
-    if(ad) {
+    if(! self.mInterstitialAd) return;
+
+    if([self.mInterstitialAd isKindOfClass:[GAMInterstitialAd class]]) {
+        GAMInterstitialAd* ad = (GAMInterstitialAd*) self.mInterstitialAd;
+        ad.fullScreenContentDelegate = nil;
+
+    } else if([self.mInterstitialAd isKindOfClass:[GADInterstitialAd class]]) {
+        GADInterstitialAd* ad = (GADInterstitialAd*) self.mInterstitialAd;
         ad.fullScreenContentDelegate = nil;
     }
+    self.mInterstitialAd = nil;
+    self.interstitialReady = false;
 }
 
 - (NSObject*) __prepareRewardVideoAd:(NSString*)adId {
+    [self ensureInited];
+
     if (@available(iOS 14, *)) {
         [ATTrackingManager requestTrackingAuthorizationWithCompletionHandler:^(ATTrackingManagerAuthorizationStatus status) {
             // Tracking authorization completed. Start loading ads here.
@@ -402,9 +452,9 @@
             });
         }];
     } else {
-        return [self __prepareRewardVideoAdInternal:adId];
+        [self __prepareRewardVideoAdInternal:adId];
     }
-    return nil;
+    return adId;
 }
 
 - (NSObject*) __prepareRewardVideoAdInternal:(NSString*)adId {
@@ -418,15 +468,16 @@
             [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_REWARDVIDEO];
             return;
         }
+
         NSLog(@"Rewarded ad loaded");
-        self.rewardvideo = ad;
+        self.mRewardedAd = ad;
         ad.fullScreenContentDelegate = self;
 
         // document.addEventListener('onAdLoaded', function(data));
         [self fireAdEvent:EVENT_AD_LOADED withType:ADTYPE_REWARDVIDEO];
 
         // if want auto show, then show it immediately
-        if (self.rewardvideo && self.autoShowRewardVideo) {
+        if (self.mRewardedAd && self.autoShowRewardVideo) {
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self __showRewardVideoAd:self.rewardvideo];
             });
@@ -436,7 +487,9 @@
 }
 
 - (BOOL) __showRewardVideoAd:(NSObject*)rewardvideo {
-    GADRewardedAd* ad = (GADRewardedAd*) rewardvideo;
+    if(! self.mRewardedAd) return false;
+
+    GADRewardedAd* ad = self.mRewardedAd;
     if (ad) {
         [ad presentFromRootViewController:[self getViewController] userDidEarnRewardHandler:^{
             GADAdReward *reward = ad.adReward;
@@ -500,37 +553,49 @@
 /// Tells the delegate that the ad failed to present full screen content.
 - (void)ad:(nonnull id<GADFullScreenPresentingAd>)ad
     didFailToPresentFullScreenContentWithError:(nonnull NSError *)error {
-    if ([ad class] == [GADInterstitialAd class])
+    if ([ad class] == [GAMInterstitialAd class])
         [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_INTERSTITIAL];
-    if ([ad class] == [GADRewardedAd class])
+    else if ([ad class] == [GADInterstitialAd class])
+        [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_INTERSTITIAL];
+    else if ([ad class] == [GADRewardedAd class])
         [self fireAdErrorEvent:EVENT_AD_FAILLOAD withCode:(int)error.code withMsg:[error localizedDescription] withType:ADTYPE_REWARDVIDEO];
 }
 
 /// Tells the delegate that the ad presented full screen content.
 - (void)adDidPresentFullScreenContent:(nonnull id<GADFullScreenPresentingAd>)ad {
-    if ([ad class] == [GADInterstitialAd class])
+    if ([ad class] == [GAMInterstitialAd class]) {
         [self fireAdEvent:EVENT_AD_PRESENT withType:ADTYPE_INTERSTITIAL];
-    else if ([ad class] == [GADRewardedAd class])
+        self.interstitialReady = false;
+    } else if ([ad class] == [GADInterstitialAd class]) {
+        [self fireAdEvent:EVENT_AD_PRESENT withType:ADTYPE_INTERSTITIAL];
+        self.interstitialReady = false;
+    } else if ([ad class] == [GADRewardedAd class]) {
         [self fireAdEvent:EVENT_AD_PRESENT withType:ADTYPE_REWARDVIDEO];
+    }
 }
 
 /// Tells the delegate that the ad dismissed full screen content.
 - (void)adDidDismissFullScreenContent:(nonnull id<GADFullScreenPresentingAd>)ad {
-    if ( [ad class] == [GADInterstitialAd class]){
+    if ( [ad class] == [GAMInterstitialAd class]){
         [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_INTERSTITIAL];
-        if (self.interstitial)
-        {
+        if (self.interstitial) {
             [self __destroyInterstitial:self.interstitial];
             self.interstitial = nil;
         }
-    }else if ([ad class] == [GADRewardedAd class]){
-        [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_REWARDVIDEO];
-        if (self.rewardvideo)
-            {
-                [self __destroyInterstitial:self.rewardvideo];
-                self.rewardvideo = nil;
-            }
+    } else if ( [ad class] == [GADInterstitialAd class]){
+        [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_INTERSTITIAL];
+        if (self.interstitial) {
+            [self __destroyInterstitial:self.interstitial];
+            self.interstitial = nil;
         }
+    } else if ([ad class] == [GADRewardedAd class]){
+        [self fireAdEvent:EVENT_AD_DISMISS withType:ADTYPE_REWARDVIDEO];
+        if (self.rewardvideo) {
+            self.mRewardedAd.fullScreenContentDelegate = nil;
+            self.mRewardedAd = nil;
+            self.rewardvideo = nil;
+        }
+    }
 }
 
 @end
