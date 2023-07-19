@@ -317,7 +317,7 @@ Some important tips, FYI.
 
 - [x] Why Google AdMob is recommended ?
 
-Advertisement is main business and income source of Google, so clients are all around the world. Google is one of the most rialable partners for its high standard service.
+Advertisement is main business and income source of Google, so clients are all around the world. Google is one of the most reliable partners for its high standard service.
 
 * High fill rate, nearly 100% all around world.
 * High quality Ad, bring high RPM.
